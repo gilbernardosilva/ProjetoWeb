@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('cart_id')->references('id')->on('cart');
             $table->rememberToken();
             $table->timestamps();
         });

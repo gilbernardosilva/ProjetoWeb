@@ -23,7 +23,6 @@ class User extends Authenticatable
         'lastName',
         'email',
         'address',
-        'cart_id',
         'password',
     ];
 
