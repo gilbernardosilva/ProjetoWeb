@@ -6,3 +6,18 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.btn-primary:hover,.btn-primary:focus,.btn-primary::after,.btn-primary{
+    color: pink;
+    background-color: aqua;
+
+}
+
+.btn-primary:active:focus   {
+    color:yellow;
+    background-color: black;
+}
+
+body{
+    background-color: $gray-900;
+}
