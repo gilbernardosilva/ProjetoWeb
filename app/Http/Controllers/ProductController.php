@@ -35,8 +35,10 @@ class ProductController extends Controller
             'category' => 'required',
             'price' => 'required',
             'description' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ]);
-
+        $filename = $request->file('image')->getClientOriginalName();
+        $request->file('image')->storeAs('images/products',$filename,'public');
         Products::create($request->all());
         return redirect('/');
     }
