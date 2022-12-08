@@ -80,7 +80,7 @@
 
 			<section>
 				<header>
-					<h2 class="section-title">promotion</h2>
+					<h2 class="section-title">Promotion</h2>
 					<a href="#" class="all">Show All</a>
 				</header>
 
