@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Products;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -12,7 +12,10 @@ class ProductController extends Controller
      * @return void
      */
     public function index(){
-        $products = Products::paginate(10);
+        $products = Product::latest()->paginate(4);
+
+        return view('index', ['products' => $products]);
+
     }
 
     /**
@@ -21,7 +24,7 @@ class ProductController extends Controller
      */
     
     public function create(){
-        return view('product.create');
+        return view('products.create');
     }
 
 
@@ -38,35 +41,43 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ]);
         $filename = $request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('images/products',$filename,'public');
-        Products::create($request->all());
-        return redirect('/');
+        $request->file('image')->store('public/images/products/');
+        $product = new Product;
+        $product->name = $request->input('name');
+        $product->type = $request->input('type');
+        $product->category = $request->input('category');
+        $product->price = $request->input('price');
+        $product->description = $request->input('description');
+        $product->image = $filename;
+        $product->path = $request->file('image')->hashName();
+        $product->save();
+        return redirect()->back()->with('Product added sucessfully!');
     }
 
     /**
      * Show Product page
-     * @param Products $user
+     * @param Product $product
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Products $product){
-        return view('product.show', ['product' => $product]);
+    public function show(Product $product){
+        return view('index', ['product' => $product]);
     }
 
     /**
      * Edit Product page
-     * @param Products $product
+     * @param Product $product
      */
-    public function edit(Products $product){
+    public function edit(Product $product){
         return view('product.edit', ['product' => $product]);
     }
 
     /**
      * Update Product information
      * @param Request $request
-     * @param Products $product
+     * @param Product $product
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, Products $product){
+    public function update(Request $request, Product $product){
         $product->update($request->all());
         return view('product.show', ['product' => $product]);
     }
@@ -74,10 +85,10 @@ class ProductController extends Controller
 
     /**
      * Deletes product from database
-     * @param Products $product
+     * @param Product $product
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(Products $product){
+    public function destroy(Product $product){
         $product->delete();
         return redirect('/');
     }

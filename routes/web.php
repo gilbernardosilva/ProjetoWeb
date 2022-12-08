@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +14,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/', function () {
+    return view('index');
+});
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
+
+Route::get('/',[ProductController::class,'index']);
+
+Route::get('/products/create', [ProductController::class, 'create']);
+Route::post('/products', [ProductController::class, 'store']);

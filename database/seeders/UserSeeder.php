@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         'email' => 'peido@gmail.com',
         'address' => 'Rua das Camélias',
         'password' => 'peido1234',
-        'cart_id' => '3',
+        'image'=>'https://source.unsplash.com/random',
        ],
     ];
         	User::insert($user);

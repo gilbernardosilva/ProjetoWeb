@@ -45,8 +45,8 @@ class UserController extends Controller
                 'password' => 'required|min:8|max:20',
                 'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             ]);
-            $filename = $request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs('images/users',$filename,'public');
+            $filename = $request->input('name');
+            $request->file('image')->storeAs('images/users',$filename.'.png','public');
             User::create($request->all());
         }else{
             $request->validate([

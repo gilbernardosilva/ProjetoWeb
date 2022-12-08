@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('price');
             $table->string('description')->nullable();
             $table->string('image');
+            $table->string('path');
             $table->timestamps();
         });
     }
