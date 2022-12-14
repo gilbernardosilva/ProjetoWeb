@@ -16,12 +16,12 @@ class UserSeeder extends Seeder
     {
        $user=[
         [
-        'name'  => 'cucabeludo',
+        'name'  => 'cbeludo',
         'firstName' => 'Pauleta',
         'lastName' => 'Josefino',
         'email' => 'peido@gmail.com',
         'address' => 'Rua das Camélias',
-        'password' => 'peido1234',
+        'password' => 'po1234',
         'image'=>'https://source.unsplash.com/random',
        ],
     ];
