@@ -60,7 +60,7 @@ class ProductController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Product $product){
-        return view('index', ['product' => $product]);
+        return view('products.show', ['product' => $product]);
     }
 
     /**

@@ -8,7 +8,7 @@
 		<small class="price">{{$product->price}} €</small>
 		<p>{{$product->description}}</p>
 		<a href="cart.html" class="button">Add to cart</a>
-		<a href="#" class="button muted">Read Details</a>
+		<a href="{{ url('/products/show/'.$product->id) }} " class="button muted">Read Details</a>
 	</div>
 </div> <!-- .product -->
 

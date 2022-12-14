@@ -1,141 +1,126 @@
-<!doctype html>
-<html lang="en">
+@extends('layouts.app')
+@section('content')
+<div class="breadcrumbs">
+	<div class="container">
+		<a href="index.html">Home</a>
+		<a href="products.html">{{ $product->type }}</a>
+		<span>{{ $product->name }}</span>
+	</div>
+</div>
+</div> <!-- .container -->
+</div> <!-- .site-header -->
 
-<head>
-    <title>Website menu 02</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script nonce="76c8c536-9520-485a-9cd9-cd7e8da5554d">
-        (function(w, d) {
-            ! function(cM, cN, cO, cP) {
-                cM.zarazData = cM.zarazData || {};
-                cM.zarazData.executed = [];
-                cM.zaraz = {
-                    deferred: [],
-                    listeners: []
-                };
-                cM.zaraz.q = [];
-                cM.zaraz._f = function(cQ) {
-                    return function() {
-                        var cR = Array.prototype.slice.call(arguments);
-                        cM.zaraz.q.push({
-                            m: cQ,
-                            a: cR
-                        })
-                    }
-                };
-                for (const cS of ["track", "set", "debug"]) cM.zaraz[cS] = cM.zaraz._f(cS);
-                cM.zaraz.init = () => {
-                    var cT = cN.getElementsByTagName(cP)[0],
-                        cU = cN.createElement(cP),
-                        cV = cN.getElementsByTagName("title")[0];
-                    cV && (cM.zarazData.t = cN.getElementsByTagName("title")[0].text);
-                    cM.zarazData.x = Math.random();
-                    cM.zarazData.w = cM.screen.width;
-                    cM.zarazData.h = cM.screen.height;
-                    cM.zarazData.j = cM.innerHeight;
-                    cM.zarazData.e = cM.innerWidth;
-                    cM.zarazData.l = cM.location.href;
-                    cM.zarazData.r = cN.referrer;
-                    cM.zarazData.k = cM.screen.colorDepth;
-                    cM.zarazData.n = cN.characterSet;
-                    cM.zarazData.o = (new Date).getTimezoneOffset();
-                    if (cM.dataLayer)
-                        for (const cZ of Object.entries(Object.entries(dataLayer).reduce(((c_, da) => ({
-                                ...c_[1],
-                                ...da[1]
-                            }))))) zaraz.set(cZ[0], cZ[1], {
-                            scope: "page"
-                        });
-                    cM.zarazData.q = [];
-                    for (; cM.zaraz.q.length;) {
-                        const db = cM.zaraz.q.shift();
-                        cM.zarazData.q.push(db)
-                    }
-                    cU.defer = !0;
-                    for (const dc of [localStorage, sessionStorage]) Object.keys(dc || {}).filter((de => de.startsWith("_zaraz_"))).forEach((dd => {
-                        try {
-                            cM.zarazData["z_" + dd.slice(7)] = JSON.parse(dc.getItem(dd))
-                        } catch {
-                            cM.zarazData["z_" + dd.slice(7)] = dc.getItem(dd)
-                        }
-                    }));
-                    cU.referrerPolicy = "origin";
-                    cU.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(cM.zarazData)));
-                    cT.parentNode.insertBefore(cU, cT)
-                };
-                ["complete", "interactive"].includes(cN.readyState) ? zaraz.init() : cM.addEventListener("DOMContentLoaded", zaraz.init)
-            }(w, d, 0, "script");
-        })(window, document);
-    </script>
-</head>
+<main class="main-content">
+	<div class="container">
+		<div class="page">
 
-<body>
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Website menu #02</h2>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col">
-                    <a class="navbar-brand" href="index.html">Papermag <span>Magazine</span></a>
-                </div>
-                <div class="col d-flex justify-content-end">
-                    <div class="social-media">
-                        <p class="mb-0 d-flex">
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="fa fa-bars"></span> Menu
-                </button>
-                <form action="#" class="searchform order-lg-last">
-                    <div class="form-group d-flex">
-                        <input type="text" class="form-control pl-3" placeholder="Search">
-                        <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>
-                    </div>
-                </form>
-                <div class="collapse navbar-collapse" id="ftco-nav">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active"><a href="#" class="nav-link">Home</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Page</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="#">Page 1</a>
-                                <a class="dropdown-item" href="#">Page 2</a>
-                                <a class="dropdown-item" href="#">Page 3</a>
-                                <a class="dropdown-item" href="#">Page 4</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a href="#" class="nav-link">Catalog</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+			<div class="entry-content">
+				<div class="row">
+					<div class="col-sm-6 col-md-4">
+						<div class="product-images">
+							<figure class="large-image">
+								<a href="{{ asset('storage/images/products/'.$product->path) }}">
+									<img src="{{ asset('storage/images/products/'.$product->path) }}" alt="{{$product->name}}">
+								</a>
+							</figure>
+							<div class="thumbnails">
+								<a href="dummy/image-2.jpg"><img src="{{ asset('storage/images/products/'.$product->path) }}" alt=""></a>
+								<a href="dummy/image-3.jpg"><img src="{{ asset('storage/images/products/'.$product->path) }}" alt=""></a>
+								<a href="dummy/image-4.jpg"><img src="{{ asset('storage/images/products/'.$product->path) }}" alt=""></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-8">
+						<h2 class="entry-title">{{ $product->name }}</h2>
+						<small class="price">{{ $product->price }}€ </small>
 
-    </section>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"776651083f3994f2","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.11.3","si":100}' crossorigin="anonymous"></script>
-</body>
+						<p>{{ $product->description }}</p>
 
-</html>
+						<div class="addtocart-bar">
+							<form action="#">
+								<label for="#">Quantity</label>
+								<select name="#">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+								</select>
+								<input type="submit" value="Add to cart">
+							</form>
+
+							<div class="social-links square">
+								<strong>Share</strong>
+								<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+								<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+								<a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+								<a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<section>
+				<header>
+					<h2 class="section-title">Similiar Product</h2>
+				</header>
+				<div class="product-list">
+					<div class="product">
+						<div class="inner-product">
+							<div class="figure-image">
+								<img src="dummy/game-1.jpg" alt="Game 1">
+							</div>
+							<h3 class="product-title"><a href="#">Alpha Protocol</a></h3>
+							<small class="price">$20.00</small>
+							<p>Lorem ipsum dolor sit consectetur adipiscing elit do eiusmod tempor...</p>
+							<a href="#" class="button">Add to cart</a>
+							<a href="#" class="button muted">Read Details</a>
+						</div>
+					</div> <!-- .product -->
+
+					<div class="product">
+						<div class="inner-product">
+							<div class="figure-image">
+								<img src="dummy/game-2.jpg" alt="Game 2">
+							</div>
+							<h3 class="product-title"><a href="#">Grand Theft Auto V</a></h3>
+							<small class="price">$20.00</small>
+							<p>Lorem ipsum dolor sit consectetur adipiscing elit do eiusmod tempor...</p>
+							<a href="#" class="button">Add to cart</a>
+							<a href="#" class="button muted">Read Details</a>
+						</div>
+					</div> <!-- .product -->
+
+					<div class="product">
+						<div class="inner-product">
+							<div class="figure-image">
+								<img src="dummy/game-3.jpg" alt="Game 3">
+							</div>
+							<h3 class="product-title"><a href="#">Need for Speed rivals</a></h3>
+							<small class="price">$20.00</small>
+							<p>Lorem ipsum dolor sit consectetur adipiscing elit do eiusmod tempor...</p>
+							<a href="#" class="button">Add to cart</a>
+							<a href="#" class="button muted">Read Details</a>
+						</div>
+					</div> <!-- .product -->
+
+					<div class="product">
+						<div class="inner-product">
+							<div class="figure-image">
+								<img src="dummy/game-4.jpg" alt="Game 4">
+							</div>
+							<h3 class="product-title"><a href="#">Big game hunter</a></h3>
+							<small class="price">$20.00</small>
+							<p>Lorem ipsum dolor sit consectetur adipiscing elit do eiusmod tempor...</p>
+							<a href="#" class="button">Add to cart</a>
+							<a href="#" class="button muted">Read Details</a>
+						</div>
+					</div> <!-- .product -->
+
+				</div> <!-- .product-list -->
+			</section>
+
+
+		</div>
+	</div> <!-- .container -->
+</main> <!-- .main-content -->
+@endsection

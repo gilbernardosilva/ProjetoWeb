@@ -23,5 +23,6 @@ Route::post('/users', [UserController::class, 'store']);
 
 Route::get('/', [ProductController::class,'index']);
 
+Route::get('/products/show/{product}',[ProductController::class,'show']);
 Route::get('/products/create', [ProductController::class, 'create']);
 Route::post('/products', [ProductController::class, 'store']);
