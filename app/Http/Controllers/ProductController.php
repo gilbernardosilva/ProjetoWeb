@@ -41,7 +41,7 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ]);
         $filename = $request->file('image')->getClientOriginalName();
-        $request->file('image')->store('public/images/products/');
+        $request->file('image')->store('/public/images/products');
         $product = new Product;
         $product->name = $request->input('name');
         $product->type = $request->input('type');

@@ -61,7 +61,7 @@
 					<div class="product">
 						<div class="inner-product">
 							<div class="figure-image">
-								<a href="single.html"><img src="{{ asset('products/'.$product->path) }}" alt="{{$product->name}}"></a>
+								<a href="single.html"><img src="{{ asset('/products/'.$product->path) }}" alt="{{$product->name}}"></a>
 							</div>
 							<h3 class="product-title"><a href="#">{{ $product->name }}</a></h3>
 							<small class="price">{{$product->price}} €</small>

@@ -21,7 +21,7 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
-Route::get('/',[ProductController::class,'index']);
+Route::get('/', [ProductController::class,'index']);
 
 Route::get('/products/create', [ProductController::class, 'create']);
 Route::post('/products', [ProductController::class, 'store']);
