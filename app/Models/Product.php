@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Game;
-use App\Models\User;
-use App\Models\Platform;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -37,4 +34,17 @@ class Product extends Model
     public function platform(){
         return $this->belongsTo(Platform::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasOne(OrderItem::class);
+    }
+
 }
+
+
