@@ -39,8 +39,7 @@ class GameController extends Controller
         $request->file('image')->store('/public/images/products');
         $game = new Game;
         $game->name = $request->input('name');
-        DB::insert('insert into categories (id, name) values (?, ?)', [1, 'Dayle']);
-        // $product->category = $request->input('category');
+        $game->categories_id = $request->input('category');
         $game->description = $request->input('description');
         //$product->image = $filename;
        // $product->path = $request->file('image')->hashName();
