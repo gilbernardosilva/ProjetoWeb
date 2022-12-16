@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ProductController extends Controller
 {
@@ -12,10 +13,10 @@ class ProductController extends Controller
      * @return void
      */
     public function index(){
-        $products = Product::latest()->paginate(4);
+        //$cart = Cart::content();
+        //$products = Product::latest()->paginate(4);
 
-        return view('index', ['products' => $products]);
-
+        return view('index');
     }
 
     /**

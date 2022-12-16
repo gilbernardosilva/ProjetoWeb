@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +22,11 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
-Route::get('/', [ProductController::class,'index']);
+Route::post('/', [CartController::class,'store']);
 
+
+
+Route::get('/', [ProductController::class,'index'])->name('mainpage');
 Route::get('/products/show/{product}',[ProductController::class,'show']);
 Route::get('/products/create', [ProductController::class, 'create']);
 Route::post('/products', [ProductController::class, 'store']);

@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <div class="home-slider">
 	<ul class="slides">
 		<li data-bg-image="dummy/slide-1.jpg">
@@ -55,9 +54,13 @@
 					<h2 class="section-title">New Products</h2>
 					<a href="#" class="all">Show All</a>
 				</header>
-
+				@if (session('message'))
+				<div class="alert alert-success">
+					<strong>{{ session('message') }}!</strong>
+				</div>
+				@endif
 				<div class="product-list">
-				@include('partials.list')
+					@livewire('products-table')
 				</div> <!-- .product-list -->
 
 			</section>
