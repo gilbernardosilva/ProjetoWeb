@@ -2,13 +2,24 @@
 
 namespace Database\Factories;
 
+use App\Models\Game;
+use App\Models\User;
+use App\Models\Platform;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
 class ProductFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Product::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,12 +28,11 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'type' => fake()->name(),
-            'category' => fake()->name(),
-            'price' => fake()->randomFloat,
-            'description' => fake()->name(),
-            'image' => fake()->image('storage\app\public\images\products',400,300)
+            'game_id' => Game::all()->random()->id,
+            'user_id' => User::all()->random()->id,
+            'platform_id' => Platform::all()->random()->id,
+            'price' => fake() -> randomFloat(2,0,100),
+            'discount' => fake() -> randomFloat(0,0,100),
         ];
     }
 }
