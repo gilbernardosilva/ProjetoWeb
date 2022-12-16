@@ -185,7 +185,6 @@ return [
         /*
          * Package Service Providers...
          */
-
         /*
          * Application Service Providers...
          */
@@ -195,6 +194,8 @@ return [
         App\Providers\EventServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
 
     ],
 
