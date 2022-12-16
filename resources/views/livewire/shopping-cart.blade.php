@@ -32,9 +32,7 @@
                                     </td>
                                     <td class="product-price">{{ $product->price }}€</td>
                                     <td class="product-qty">
-                                        <select name="#">
-                                            <option value="{{ $product->qty }}">{{ $product->qty }}</option>
-                                        </select>
+                                        <input type="number" min="0">
                                     </td>
                                     <td class="product-total">{{ $product->price * $product->qty }} €</td>
                                     <td class="action"><button type="submit"><i class="fa fa-times"></i></button></td>

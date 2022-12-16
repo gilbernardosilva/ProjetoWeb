@@ -15,7 +15,7 @@
             <input type="hidden" name="product_id" value="{{$product->id}}">
             <input type="hidden" name="product_name" value="{{$product->name}}">
             <input type="hidden" name="product_price" value="{{$product->price}}">
-            <input wire:model="quantity.{{$product->id}}" type="number" value="{{$product->quantity}}">
+            <input type="hidden" name="product_quantity" wire:model="quantity.{{$product->id}}" value="1">
 
             <button type="submit" class="button">Add to cart</button>
         </form>
