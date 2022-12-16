@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class ProductsTable extends Component
@@ -11,7 +12,6 @@ class ProductsTable extends Component
     public array $quantity = [];
     public $allProducts;
     public $lastProducts;
-
     public function mount()
     {
         $this->allProducts = Product::all();
@@ -33,7 +33,26 @@ class ProductsTable extends Component
             $product["name"],
             $this->quantity[$product["id"]],
             $product["price"],
+            0,
+            ['path' => $product['path'],
+            'description' => $product['description']
+            ]
+
         );
         $this->emit('cart_updated');
+    }
+
+    public function removeFromCart(Request $request){
+        Cart::remove($request->input('product_rowId'));
+        $cart = Cart::content();
+
+        return view('livewire.shopping-cart', compact('cart'));
+    }
+
+    public function showCart()
+    {
+
+        $cart = Cart::content();
+        return view('livewire.shopping-cart', compact('cart'));
     }
 }

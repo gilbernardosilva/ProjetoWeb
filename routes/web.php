@@ -3,6 +3,8 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\ProductsTable;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +24,8 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
-Route::post('/', [CartController::class,'store']);
+Route::get('/shopping-cart', [ProductsTable::class,'showCart']);
+Route::post('/shopping-cart', [ProductsTable::class,'removeFromCart']);
 
 
 
