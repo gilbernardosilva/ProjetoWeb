@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\TwitterController;
 use App\Http\Controllers\Auth\FacebookController;
+use App\Http\Controllers\GameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +35,9 @@ Route::post('/shopping-cart', [ProductsTable::class,'removeFromCart']);
 
 
 Route::get('/', [ProductController::class,'index'])->name('mainpage');
-Route::get('/products/show/{product}',[ProductController::class,'show']);
-Route::get('/products/create', [ProductController::class, 'create']);
-Route::post('/products', [ProductController::class, 'store']);
+Route::get('/products/show/{product}',[GameController::class,'show']);
+Route::get('/games/create', [GameController::class, 'create']);
+Route::post('/games', [GameController::class, 'store']);
 
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
