@@ -50,7 +50,7 @@
                     <p><strong>Discount:</strong> **INSERIR CODIGO DE DESCONTO**</p>
                     <p class="total"><strong>Total</strong><span class="num">{{ Cart::initial() }}€</span></p>
                     <p>
-                        <a href="#" class="button muted">Continue Shopping</a>
+                        <a href="{{ url('/') }}" class="button muted">Continue Shopping</a>
                         <a href="#" class="button">Finalize and pay</a>
                     </p>
                 </div> <!-- .cart-total -->
