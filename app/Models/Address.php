@@ -17,7 +17,8 @@ class Address extends Model
     protected $fillable = [
         'street',
         'city',
-        'zip',
+        'user_id',
+        'zip_code',
         'state',
     ];
 

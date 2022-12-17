@@ -30,7 +30,7 @@ class GoogleController extends Controller
     {
         try {
 
-            $user = Socialite::driver('google')->user();
+            $user = Socialite::driver('google')->stateless()->user();
 
             $finduser = User::where('social_id', $user->id)->first();
 
@@ -53,9 +53,8 @@ class GoogleController extends Controller
 
                 return redirect()->intended('dashboard');
             }
-
         } catch (Exception $e) {
-            dd($e->getMessage());
+            dd($e);
         }
     }
 }

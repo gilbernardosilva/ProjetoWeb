@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('street');
-            $table->string('city');
-            $table->string('zip');
-            $table->string('state');
+            $table->string('street')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

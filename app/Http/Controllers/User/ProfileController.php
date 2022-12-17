@@ -6,6 +6,7 @@ use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -15,46 +16,76 @@ class ProfileController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $address = Address::where('user_id', $user->id)->first();
+        $address = $user->address;
 
-        return view('profile', [
+        return view('user.update-profile', [
             'user' => $user,
             'address' => $address,
         ]);
     }
 
-    public function update(Request $request)
+    public function updateUserInfo(Request $request)
     {
         $user = Auth::user();
-        $address = Address::where('user_id', $user->id)->first();
+        dd($request->all());
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+        $request->validate([
             'password' => 'nullable|string|min:6|confirmed',
-            'address_line_1' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'zip_code' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+
+        $user->update([
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        return Redirect::back()->with('success', 'Your password has been updated!');
+    }
+
+
+    public function updateAddressInfo(Request $request)
+    {
+
+        $user = Auth::user();
+        $address = $user->address;
+
+        $request->validate([
+            'street' => 'required|string|max:50',
+            'city' => 'required|string|max:20',
+            'state' => 'required|string|max:20',
+            'zip_code' => 'required|string|max:10',
+        ]);
+
+        $address->update([
+            'street' => $request->input('street'),
+            'city' => $request->input('city'),
+            'zip_code' => $request->input('zip_code'),
+            'state' => $request->input('state'),
+        ]);
+
+        return Redirect::back()->with('success', 'Your address has been updated!');
+    }
+
+    public function updatePhotoInfo(Request $request)
+    {
+
+        $user = Auth::user();
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
+        if($user->photo){
+            $fileName=public_path('images\\' .$user->photo);
+            File::delete($fileName);
         }
 
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        if ($request->input('password')) {
-            $user->password = Hash::make($request->input('password'));
-        }
-        $user->save();
+        $user->update([
+            'photo' => $imageName,
+        ]);
 
-        $address->Street = $request->input('address_line_1');
-        $address->city = $request->input('city');
-        $address->state = $request->input('state');
-        $address->zip_code = $request->input('zip_code');
-        $address->save();
-
-        return Redirect::back()->with('success', 'Your profile has been updated!');
+        return Redirect::back()->with('success', 'Your address has been updated!');
     }
 }
