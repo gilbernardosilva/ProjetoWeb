@@ -16,10 +16,11 @@
                     </thead>
                     <tbody>
                         @forelse($cart as $product)
-                            <form wire:submit.prevent="removeFromCart({{$product->id}})" action="{{ url('/shopping-cart') }}" method="POST">
+                            <form wire:submit.prevent="removeFromCart({{ $product->id }})"
+                                action="{{ url('/shopping-cart') }}" method="POST">
                                 @csrf
                                 <tr>
-                                    <input type="hidden" name="product_rowId" value="{{$product->rowId}}">
+                                    <input type="hidden" name="product_rowId" value="{{ $product->rowId }}">
                                     <td class="product-name">
                                         <div class="product-thumbnail">
                                             <img src="{{ asset('storage/images/products/' . $product->options['path']) }}"
@@ -49,7 +50,12 @@
                     <p class="total"><strong>Total</strong><span class="num">{{ Cart::initial() }}€</span></p>
                     <p>
                         <a href="{{ url('/') }}" class="button muted">Continue Shopping</a>
-                        <a href="#" class="button">Finalize and pay</a>
+                        @if(!$cart->isEmpty())
+                        <form action="{{ route('checkout') }}" method="POST">
+                            @csrf
+                            <button class="button">Finalize and pay</button>
+                        </form>
+                        @endif
                     </p>
                 </div> <!-- .cart-total -->
 

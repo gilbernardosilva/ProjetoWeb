@@ -23,7 +23,7 @@ class ProductController extends Controller
      * Show the form for creating a new Product.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    
+
     public function create(){
         return view('products.create');
     }

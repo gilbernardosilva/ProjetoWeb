@@ -31,6 +31,11 @@ Route::post('/users', [UserController::class, 'store']);
 
 Route::get('/shopping-cart', [ProductsTable::class,'showCart']);
 Route::post('/shopping-cart', [ProductsTable::class,'removeFromCart']);
+Route::post('/checkout', [ProductsTable::class,'checkout'])->name('checkout');
+Route::get('/success', [ProductsTable::class,'success'])->name('checkout.success');
+Route::get('/cancel', [ProductsTable::class,'cancel'])->name('checkout.cancel');
+Route::post('/webhook', [ProductsTable::class,'webhook'])->name('checkout.webhook');
+
 
 
 
