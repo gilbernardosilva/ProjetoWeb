@@ -1,13 +1,15 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\TwitterController;
+use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\Auth\FacebookController;
-use App\Http\Controllers\User\ProfileController;
-use GuzzleHttp\Middleware;
+use App\Http\Controllers\User\AddressController;
+use App\Http\Controllers\User\PhotoController;
+use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,22 +22,41 @@ use GuzzleHttp\Middleware;
 |
 */
 
-Route::get('/home', function () {
-    return view('home');
-});
+
+
+
 
 Auth::routes();
 
+Route::middleware('auth')->group(function(){
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users/{id}', 'show');
+    Route::post('/users', 'store')->name('users.store');
+
+});
+
+Route::get('/profile', function () {
+    $user=Auth::user();
+    return view('users.profile',compact('user'));
+})->name('users.profile');
+
+Route::controller(AddressController::class)->group(function () {
+    Route::get('/address/{id}', 'show');
+    Route::post('/address', 'store')->name('address.store');
+});
+Route::controller(PhotoController::class)->group(function () {
+    Route::get('/photos/{id}', 'show');
+    Route::post('/photos', 'store')->name('photos.store');
+});
+});
 
 
-Route::controller(ProfileController::class)->group(function(){
-    Route::get('/profile', 'show')->name('profile.show');
-    Route::post('profileUpdateUserInfo', 'updateUserInfo')->name('profile.updateUserInfo');
-    Route::post('profileUpdateAddressInfo', 'updateAddressInfo')->name('profile.updateAddressInfo');
-    Route::post('profileUpdatePhotoInfo', 'updatePhotoInfo')->name('profile.updatePhotoInfo');
-})->middleware('auth');
+
+Route::controller(ProductController::class)->group(function(){
+    Route::get('/products','index')->name('products.index');
+    Route::get('/products/{product}', 'show')->name('products.show');
+});
 
 Route::controller(GoogleController::class)->group(function(){
     Route::get('auth/google','redirectToGoogle')->name('auth.google');
