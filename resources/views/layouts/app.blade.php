@@ -23,6 +23,8 @@
         @include('partials.navbar')
         <main class="container">
             @yield('content')
+            <br>
+            @include('partials.sessionerrors')
         </main>
     </div>
 </body>

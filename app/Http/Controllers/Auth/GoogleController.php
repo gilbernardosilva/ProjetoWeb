@@ -11,21 +11,13 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function handleCallback()
     {
         try {
@@ -46,6 +38,7 @@ class GoogleController extends Controller
                     'email' => $user->email,
                     'social_id'=> $user->id,
                     'social_type'=> 'google',
+                    'role' => 'user',
                     'password' => encrypt('my-google')
                 ]);
 

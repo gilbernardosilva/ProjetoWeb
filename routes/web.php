@@ -28,29 +28,31 @@ use App\Http\Controllers\User\UserController;
 
 Auth::routes();
 
-Route::middleware('auth')->group(function(){
+Route::middleware(['auth','user.access'])->group(function(){
+
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/users/{id}', 'show');
-    Route::post('/users', 'store')->name('users.store');
+    Route::get('/users','index')->name('users.index');
+    Route::get('/users/show/{user}','show')->name('users.show');
+    Route::get('/users/edit/{user}','edit')->name('users.edit');
+    Route::get('/users/create', 'create')->name('users.create');
+    Route::post('/users/update/{user}', 'update')->name('users.update');
+    Route::post('/users/store/{user}','store')->name('users.store');
+    Route::post('/users/destroy/{user}', 'destroy')->name('users.destroy');
+    });
 
+
+    Route::controller(AddressController::class)->group(function () {
+        Route::post('/address/store/{user}','store')->name('address.store');
+        Route::post('/address/update/{user}','update')->name('address.update');
+    });
 });
 
-Route::get('/profile', function () {
-    $user=Auth::user();
-    return view('users.profile',compact('user'));
-})->name('users.profile');
 
-Route::controller(AddressController::class)->group(function () {
-    Route::get('/address/{id}', 'show');
-    Route::post('/address', 'store')->name('address.store');
-});
-Route::controller(PhotoController::class)->group(function () {
-    Route::get('/photos/{id}', 'show');
-    Route::post('/photos', 'store')->name('photos.store');
-});
-});
-
+Route::get('/dashboard', function() {
+    $user=Auth::user()->id;
+    return view('home',compact('user'));
+})->name('dashboard');
 
 
 Route::controller(ProductController::class)->group(function(){

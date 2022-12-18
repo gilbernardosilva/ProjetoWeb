@@ -1,7 +1,5 @@
-<div class="row mb-5">
-    <div class="col-6 offset-3">
-        <h3 class="text-secondary">Address Info</h3>
-        <form method="post" action="{{ route('address.store') }}">
+<h3 class="text-secondary">Address Info</h3>
+        <form method="post" action="{{ route('address.store', compact('user')) }}">
             @csrf
             <div class="form-group">
                 <label for="street">Street</label>
@@ -47,4 +45,3 @@
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
         </form>
-    </div>
