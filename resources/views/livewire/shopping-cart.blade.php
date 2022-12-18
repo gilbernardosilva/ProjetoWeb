@@ -23,12 +23,12 @@
                                     <input type="hidden" name="product_rowId" value="{{ $product->rowId }}">
                                     <td class="product-name">
                                         <div class="product-thumbnail">
-                                            <img src="{{ asset('storage/images/products/' . $product->options['path']) }}"
-                                                width="118" height="134" alt="{{ $product->name }}">
+                                            <img src="{{ asset('storage/images/products/' .$product->id) }}"
+                                                width="118" height="134" alt="{{ $product->game}}">
                                         </div>
                                         <div class="product-detail">
-                                            <h3 class="product-title">{{ $product->name }}</h3>
-                                            <p>{{ $product->options['description'] }}</p>
+                                            <h3 class="product-title">{{ $product->game}}</h3>
+                                            <p>{{ $product->game }}</p>
                                         </div>
                                     </td>
                                     <td class="product-price">{{ $product->price }}€</td>

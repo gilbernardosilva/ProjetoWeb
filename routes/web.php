@@ -30,6 +30,7 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
+Route::post('/', [ProductsTable::class,'addToCart']);
 Route::get('/shopping-cart', [ProductsTable::class,'showCart']);
 Route::post('/shopping-cart', [ProductsTable::class,'removeFromCart']);
 Route::post('/checkout', [ProductsTable::class,'checkout'])->name('checkout');
@@ -44,7 +45,7 @@ Route::get('/', [ProductController::class,'index'])->name('mainpage');
 Route::get('/products/create', [ProductController::class,'create']);
 Route::post('/products', [ProductController::class, 'store']);
 
-Route::get('/products/show/{product}',[GameController::class,'show']);
+Route::get('/products/show/{product}',[ProductsTable::class,'show']);
 Route::get('/games/create', [GameController::class, 'create']);
 Route::post('/games', [GameController::class, 'store']);
 

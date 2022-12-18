@@ -47,14 +47,14 @@ class ProductsTable extends Component
     {
         Cart::add(
             $product["id"],
-            $product["name"],
+            $product["game"],
             $this->quantity[$product["id"]],
             $product["price"],
             0,
-            [
-                'path' => $product['path'],
-                'description' => $product['description']
-            ]
+          //  [
+            //    'path' => $product['path'],                      OPTIONS
+            //    'description' => $product['description']
+           // ]
 
         );
         $this->emit('cart_updated');

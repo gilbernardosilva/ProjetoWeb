@@ -18,13 +18,15 @@
                             method="POST">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="product_name"
-                                value="{{ $product->game->name }} - {{ $product->platform->name }}">
+                            <input type="hidden" name="product_game" value="{{ $product->game->name }}">
                             <input type="hidden" name="product_price" value="{{ $product->price }}">
                             <input type="hidden" name="product_quantity" wire:model="quantity.{{ $product->id }}"
                                 value="1">
-
-                            <button type="submit" class="button">Add to cart</button>
+                            @if ($cart->where('id', $product->id)->count())
+                                In cart
+                            @else
+                                <button type="submit" class="button">Add to cart</button>
+                            @endif
                         </form>
                     </div>
 
@@ -55,46 +57,47 @@
                 @endif
                 <div class="product-list">
                     @forelse($games as $game)
-                    {{$cheapest= 10000}}
-                        @foreach ($game->products as $product)
-                         @if ($product->price < $cheapest)
-                         {{$cheapestProduct = $product}}
-                         @endif
-                        @endforeach
-                        <div class="product">
-                            <div class="inner-product">
-                                <div class="figure-image">
-                                    <a href="single.html"><img
-                                            src="{{ asset('storage/images/games/' . $game->id . '/thumbnail') }}"
-                                            alt="{{ $game->name }}"></a>
-                                </div>
-                                <h3 class="product-title"><a href="#">{{ $game->name }}</a></h3>
-                                <small class="price">{{ $cheapestProduct->price }} €</small>
-                                <p>{{ $game->description }}</p>
-                                @if ($cart->where('id', $cheapestProduct->id)->count())
-                                    In cart
-                                @else
-                                    <form wire:submit.prevent="addToCart({{ $product }})"
-                                        action="{{ url('/') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $cheapestProduct->id }}">
-                                        <input type="hidden" name="product_name"
-                                            value="{{ $game->name }}-{{ $cheapestProduct->platform->name }}">
-                                        <input type="hidden" name="product_price"
-                                            value="{{ $cheapestProduct->price }}">
-                                        <input type="hidden" name="product_quantity"
-                                            wire:model="quantity.{{ $cheapestProduct->id }}" value="1">
+                        @php
+                            $cheapest = 10000;
 
-                                        <button type="submit" class="button">Add to cart</button>
-                                    </form>
-                                @endif
-                                <a href="{{ url('/products/show/' . $cheapestProduct->id) }} "
-                                    class="button muted">Read Details</a>
+                            foreach ($game->products as $product) {
+                                if ($product->price < $cheapest) {
+                                    $cheapestProduct = $product;
+                                }
+                            }
+                        @endphp
+                    <div class="product">
+                        <div class="inner-product">
+                            <div class="figure-image">
+                                <a href="single.html"><img
+                                        src="{{ asset('storage/images/games/' . $game->id . '/thumbnail') }}"
+                                        alt="{{ $game->name }}"></a>
                             </div>
-                        </div> <!-- .product -->
+                            <h3 class="product-title"><a href="#">{{ $game->name }}</a></h3>
+                            <small class="price">{{ $cheapestProduct->price }} €</small>
+                            <p>{{ $game->description }}</p>
+                            @if ($cart->where('id', $cheapestProduct->id)->count())
+                                In cart
+                            @else
+                                <form wire:submit.prevent="addToCart({{ $cheapestProduct }})"
+                                    action="{{ url('/') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $cheapestProduct->id }}">
+                                    <input type="hidden" name="product_game"
+                                        value="{{ $game->name }}-{{ $cheapestProduct->platform->name }}">
+                                    <input type="hidden" name="product_price" value="{{ $cheapestProduct->price }}">
+                                    <input type="hidden" name="product_quantity" wire:model="quantity.{{ $cheapestProduct->id }}" value="1">
 
-                    @empty
-                        <h5 class="text-center">No Products Found!</h5>
+                                    <button type="submit" class="button">Add to cart</button>
+                                </form>
+                            @endif
+                            <a href="{{ url('/products/show/' . $cheapestProduct->id) }} " class="button muted">Read
+                                Details</a>
+                        </div>
+                    </div> <!-- .product -->
+
+                @empty
+                    <h5 class="text-center">No Products Found!</h5>
                     @endforelse
                 </div> <!-- .product-list -->
 
@@ -126,7 +129,7 @@
                                         action="{{ url('/') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <input type="hidden" name="product_name" value="{{ $product->game->name }}">
+                                        <input type="hidden" name="product_game" value="{{ $product->game->name }}">
                                         <input type="hidden" name="product_price"
                                             value="{{ $product->price * ($product->discount / 100) }}">
                                         <input type="hidden" name="product_quantity"
