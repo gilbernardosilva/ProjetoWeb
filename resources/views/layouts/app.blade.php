@@ -21,7 +21,7 @@
 <body>
     <div id="app">
         @include('partials.navbar')
-        <main class="container">
+        <main class="container mt-5">
             @yield('content')
             <br>
             @include('partials.sessionerrors')

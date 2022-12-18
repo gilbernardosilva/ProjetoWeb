@@ -36,7 +36,6 @@ class AddressController extends Controller
     public function update(Request $request, User $user)
     {
         $address = $user->address;
-
         $request->validate([
             'street' => 'required|string|max:50',
             'city' => 'required|string|max:20',

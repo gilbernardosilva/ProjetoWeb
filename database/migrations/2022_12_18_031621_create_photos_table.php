@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('path');
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('game_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

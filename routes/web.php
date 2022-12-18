@@ -32,21 +32,44 @@ Route::middleware(['auth','user.access'])->group(function(){
 
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/users','index')->name('users.index');
-    Route::get('/users/show/{user}','show')->name('users.show');
-    Route::get('/users/edit/{user}','edit')->name('users.edit');
-    Route::get('/users/create', 'create')->name('users.create');
-    Route::post('/users/update/{user}', 'update')->name('users.update');
-    Route::post('/users/store/{user}','store')->name('users.store');
-    Route::post('/users/destroy/{user}', 'destroy')->name('users.destroy');
+    Route::get('/user','index')->name('user.index');
+    Route::get('/user/create', 'create')->name('user.create');
+    Route::post('/user/store','store')->name('user.store');
+    Route::get('/user/show/{user}','show')->name('user.show');
+    Route::get('/user/edit/{user}','edit')->name('user.edit');
+    Route::post('/user/update/{user}', 'update')->name('user.update');
+    Route::post('/user/destroy/{user}', 'destroy')->name('user.destroy');
+    Route::get('/admin','admin')->name('admin');
     });
-
 
     Route::controller(AddressController::class)->group(function () {
+        Route::get('/address','index')->name('address.index');
+        Route::get('/address/create', 'create')->name('address.create');
         Route::post('/address/store/{user}','store')->name('address.store');
-        Route::post('/address/update/{user}','update')->name('address.update');
+        Route::get('/address/show/{user}','show')->name('address.show');
+        Route::get('/address/edit/{user}','edit')->name('address.edit');
+        Route::post('/address/update/{user}', 'update')->name('address.update');
+        Route::post('/address/destroy/{user}', 'destroy')->name('address.destroy');
     });
+
+    Route::controller(PhotoController::class)->group(function () {
+        Route::get('/photo','index')->name('photo.index');
+        Route::get('/photo/create', 'create')->name('photo.create');
+        Route::post('/photo/store','store')->name('photo.store');
+        Route::get('/photo/show/{photo}','show')->name('photo.show');
+        Route::get('/photo/edit/{photo}','edit')->name('photo.edit');
+        Route::post('/photo/update/{photo}', 'update')->name('photo.update');
+        Route::post('/photo/destroy/{photo}', 'destroy')->name('photo.destroy');
+    });
+
+
+
 });
+Route::controller(UserController::class)->group(function () {
+Route::get('/profile','profile')->name('users.profile')->middleware('auth');
+});
+
+
 
 
 Route::get('/dashboard', function() {
@@ -57,7 +80,7 @@ Route::get('/dashboard', function() {
 
 Route::controller(ProductController::class)->group(function(){
     Route::get('/products','index')->name('products.index');
-    Route::get('/products/{product}', 'show')->name('products.show');
+    Route::get('/products/show/{product}', 'show')->name('products.show');
 });
 
 Route::controller(GoogleController::class)->group(function(){

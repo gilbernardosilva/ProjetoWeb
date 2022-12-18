@@ -21,12 +21,21 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
+    public function admin()
+    {
+        return view('admin');
+    }
 
     public function create()
     {
         return view('users.create');
     }
 
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('users.edit', compact('user'));
+    }
 
     public function store(Request $request)
     {
@@ -35,12 +44,11 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
-
         $password = $request->input('password');
         $hashedPassword = Hash::make($password);
-        $request->replace(['password'=> $hashedPassword]);
+        $request->merge(['password'=> $hashedPassword]);
         User::create($request->all());
-        return redirect()->route('dashboard')->with('success', 'User inserted successfully');
+        return redirect()->back()->with('success', 'User stored successfully');
     }
 
 
@@ -69,7 +77,7 @@ class UserController extends Controller
         $request->replace(['password'=> $hashedPassword]);
         $user->update($request->all());
 
-        return redirect()->route('dashboard')->with('success', 'User updated successfully');
+        return redirect()->back()->with('success', 'User updated successfully');
     }
 
 
@@ -77,35 +85,8 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('dashboard')->with('success', 'User deleted successfully');
-    }
-
-    public function createPhoto(Request $request)
-    {
-
-        return view('users.photo.create');
+        return redirect()->back()->with('success', 'User deleted successfully');
     }
 
 
-    public function updatePhoto(Request $request,User $user)
-    {
-
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-
-        if($user->photo){
-            $fileName=public_path('images\\' .$user->photo);
-            File::delete($fileName);
-        }
-
-        $user->update([
-            'photo' => $imageName,
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Your photo has been updated!');
-    }
 }
