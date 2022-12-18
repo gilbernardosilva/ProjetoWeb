@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\TwitterController;
 use App\Http\Controllers\Auth\FacebookController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GameController;
 
 /*
@@ -40,9 +41,15 @@ Route::post('/webhook', [ProductsTable::class,'webhook'])->name('checkout.webhoo
 
 
 Route::get('/', [ProductController::class,'index'])->name('mainpage');
+Route::get('/products/create', [ProductController::class,'create']);
+Route::post('/products', [ProductController::class, 'store']);
+
 Route::get('/products/show/{product}',[GameController::class,'show']);
 Route::get('/games/create', [GameController::class, 'create']);
 Route::post('/games', [GameController::class, 'store']);
+
+Route::get('/categories/create', [CategoryController::class, 'create']);
+Route::post('/categories', [CategoryController::class, 'store']);
 
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {

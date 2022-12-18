@@ -3,8 +3,8 @@
 <div class="breadcrumbs">
 	<div class="container">
 		<a href="index.html">Home</a>
-		<a href="products.html">{{ $product->type }}</a>
-		<span>{{ $product->name }}</span>
+		<a href="products.html">{{ $product->game()->category()->category }}</a>
+		<span>{{ $product->game()->name }}</span>
 	</div>
 </div>
 </div> <!-- .container -->
@@ -20,7 +20,7 @@
 						<div class="product-images">
 							<figure class="large-image">
 								<a href="{{ asset('storage/images/products/'.$product->path) }}">
-									<img src="{{ asset('storage/images/products/'.$product->path) }}" alt="{{$product->name}}">
+									<img src="{{ asset('storage/images/products/'.$product->path) }}" alt="{{$product->game()->name}}">
 								</a>
 							</figure>
 							<div class="thumbnails">
@@ -31,21 +31,28 @@
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-8">
-						<h2 class="entry-title">{{ $product->name }}</h2>
-						<small class="price">{{ $product->price }}€ </small>
+						<h2 class="entry-title">{{ $product->game()->name }}</h2>
+						<small class="price">     @if ($product->discount > 0)
+                            {{ ($product->discount / 100) * $product->price }}€
+                        @else
+                            {{ $product->price }}€
+                        @endif </small>
 
-						<p>{{ $product->description }}</p>
+						<p>{{ $product->game()->description }}</p>
 
 						<div class="addtocart-bar">
-							<form action="#">
-								<label for="#">Quantity</label>
-								<select name="#">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-								</select>
-								<input type="submit" value="Add to cart">
-							</form>
+							<form wire:submit.prevent="addToCart({{ $product }})" action="{{ url('/') }}"
+                            method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="product_name"
+                                value="{{ $product->game()->name - $product->game()->platform()->name }}">
+                            <input type="hidden" name="product_price" value="{{ $product->price }}">
+                            <input type="hidden" name="product_quantity" wire:model="quantity.{{ $product->id }}"
+                                value="1">
+
+                            <button type="submit" class="button">Add to cart</button>
+                        </form>
 
 							<div class="social-links square">
 								<strong>Share</strong>

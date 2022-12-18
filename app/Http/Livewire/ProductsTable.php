@@ -2,11 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Order;
+use App\Models\Category;
+use App\Models\Game;
+use App\Models\Platform;
 use App\Models\Product;
+use App\Models\Order;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Livewire\Component;
+use Illuminate\Support\Collection;
 use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -26,7 +30,17 @@ class ProductsTable extends Component
     public function render()
     {
         $cart = Cart::content();
-        return view('livewire.products-table', compact('cart'), ['products' => Product::latest()->paginate(4)]);
+        $games = Game::latest()->paginate(4);
+        $sliderProduct = Product::inRandomOrder()->take(3)->get();
+        $products = Product::orderBy('discount', 'desc')->paginate(4);
+        return view('livewire.products-table', compact('cart'), ['games' =>  $games, 'products' => $products, 'sliderProduct' => $sliderProduct]);
+    }
+
+
+
+    public function show(Product $product)
+    {
+        return view('livewire.products-show', ['product' => $product]);
     }
 
     public function addToCart($product)
@@ -113,7 +127,7 @@ class ProductsTable extends Component
             }
             $customer = $stripe->customers->retrieve($session->customer);
             $order = Order::where('session_id', $session->id)->first();
-            if(!$order){
+            if (!$order) {
                 throw new NotFoundHttpException();
             }
             if ($order && $order->status === 'unpaid') {
@@ -158,9 +172,9 @@ class ProductsTable extends Component
                 $session = $event->data->object;
                 $order = Order::where('session_id', $session->id)->first();
                 if ($order &&  $order->status === 'unpaid') {
-                    $order->status ='paid';
+                    $order->status = 'paid';
                     $order->save();
-                         }
+                }
 
                 // ... handle other event types
             default:

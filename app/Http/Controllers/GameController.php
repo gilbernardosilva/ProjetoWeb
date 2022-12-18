@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Game;
+use App\Models\Platform;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
     public function index(){
         //$cart = Cart::content();
-        //$products = Product::latest()->paginate(4);
-
-        return view('index');
+        $games = Game::latest()->paginate(4);
+        return view('index',['games' => $games]);
     }
 
     /**
@@ -21,7 +21,7 @@ class GameController extends Controller
      */
 
     public function create(){
-        $categories = Category::all()->pluck('name', 'id');
+        $categories = Category::all()->pluck('category', 'id');
 
         return view('games.create', ['categories' => $categories]);
     }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Game;
+use App\Models\Platform;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -25,7 +28,11 @@ class ProductController extends Controller
      */
 
     public function create(){
-        return view('products.create');
+        $games = Game::all()->pluck('name', 'id');
+        $platforms = Platform::all()->pluck('name', 'id');
+        $categories = Category::all()->pluck('category', 'id');
+
+        return view('products.create', ['categories' => $categories, 'platforms' => $platforms, 'games' => $games]);
     }
 
 
