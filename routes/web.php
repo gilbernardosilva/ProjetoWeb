@@ -30,7 +30,7 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
-Route::post('/', [ProductsTable::class,'addToCart']);
+
 Route::get('/shopping-cart', [ProductsTable::class,'showCart']);
 Route::post('/shopping-cart', [ProductsTable::class,'removeFromCart']);
 Route::post('/checkout', [ProductsTable::class,'checkout'])->name('checkout');

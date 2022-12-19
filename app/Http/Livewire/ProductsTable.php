@@ -16,49 +16,38 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductsTable extends Component
 {
-    public array $quantity = [];
+    public $productId;
     public $allProducts;
     public $lastProducts;
+
     public function mount()
     {
         $this->allProducts = Product::all();
 
-        foreach ($this->allProducts as $product) {
-            $this->quantity[$product->id] = 1;
-        }
+
     }
+
     public function render()
     {
         $cart = Cart::content();
-        $games = Game::latest()->paginate(4);
+        $newProducts = Product::latest()->paginate(4);
         $sliderProduct = Product::inRandomOrder()->take(3)->get();
         $products = Product::orderBy('discount', 'desc')->paginate(4);
-        return view('livewire.products-table', compact('cart'), ['games' =>  $games, 'products' => $products, 'sliderProduct' => $sliderProduct]);
+        return view('livewire.products-table', compact('cart'), ['newProducts' =>  $newProducts, 'products' => $products, 'sliderProduct' => $sliderProduct]);
     }
 
 
 
     public function show(Product $product)
     {
-        return view('livewire.products-show', ['product' => $product]);
+        $category = $product->game->categories->category;
+        $categoryName = Category::where($category);
+        $similiarProducts = Product::find(4)->game()->where('category', '=', $categoryName);
+        dd($similiarProducts);
+        return view('livewire.products-show', ['product' => $product, 'similiarProducts' => $similiarProducts]);
     }
 
-    public function addToCart($product)
-    {
-        Cart::add(
-            $product["id"],
-            $product["game"],
-            $this->quantity[$product["id"]],
-            $product["price"],
-            0,
-          //  [
-            //    'path' => $product['path'],                      OPTIONS
-            //    'description' => $product['description']
-           // ]
 
-        );
-        $this->emit('cart_updated');
-    }
 
     public function removeFromCart(Request $request)
     {
@@ -143,6 +132,8 @@ class ProductsTable extends Component
 
     public function cancel()
     {
+
+        return view('/');
     }
 
     public function webhook()

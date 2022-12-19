@@ -9,7 +9,7 @@
                         <tr>
                             <th class="product-name">Product Name</th>
                             <th class="product-price">Price</th>
-                            <th class="product-qty">Quantity</th>
+                            <th class="product-qty">Seller</th>
                             <th class="product-total">Total</th>
                             <th class="action"></th>
                         </tr>
@@ -24,18 +24,18 @@
                                     <td class="product-name">
                                         <div class="product-thumbnail">
                                             <img src="{{ asset('storage/images/products/' .$product->id) }}"
-                                                width="118" height="134" alt="{{ $product->game}}">
+                                                width="118" height="134" alt="{{ $product->name}}">
                                         </div>
                                         <div class="product-detail">
-                                            <h3 class="product-title">{{ $product->game}}</h3>
-                                            <p>{{ $product->game }}</p>
+                                            <h3 class="product-title">{{ $product->name}}</h3>
+                                            <p>{{ $product->name }}</p>
                                         </div>
                                     </td>
-                                    <td class="product-price">{{ $product->price }}€</td>
+                                    <td class="product-price">{{ $product->price /100 }}€</td>
                                     <td class="product-qty">
                                         <input type="number" min="0">
                                     </td>
-                                    <td class="product-total">{{ $product->price * $product->qty }} €</td>
+                                    <td class="product-total">{{ $product->price /100}} €</td>
                                     <td class="action"><button type="submit"><i class="fa fa-times"></i></button></td>
                             </form>
                         @empty
@@ -45,9 +45,9 @@
                 </table> <!-- .cart -->
 
                 <div class="cart-total">
-                    <p><strong>Subtotal:</strong> {{ Cart::initial() }} €</p>
+                    <p><strong>Subtotal:</strong> {{ intval(Cart::initial()) / 100 }} €</p>
                     <p><strong>Discount:</strong> **INSERIR CODIGO DE DESCONTO**</p>
-                    <p class="total"><strong>Total</strong><span class="num">{{ Cart::initial() }}€</span></p>
+                    <p class="total"><strong>Total</strong><span class="num">{{ intval(Cart::initial()) /100 }}€</span></p>
                     <p>
                         <a href="{{ url('/') }}" class="button muted">Continue Shopping</a>
                         @if(!$cart->isEmpty())

@@ -24,7 +24,7 @@ class Game extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function category(){
+    public function categories(){
         return $this->belongsTo(Category::class);
     }
 

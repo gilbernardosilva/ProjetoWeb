@@ -62,14 +62,6 @@ class ProductController extends Controller
         return redirect()->back()->with('Product added sucessfully!');
     }
 
-    /**
-     * Show Product page
-     * @param Product $product
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function show(Product $product){
-        return view('products.show', ['product' => $product]);
-    }
 
     /**
      * Edit Product page

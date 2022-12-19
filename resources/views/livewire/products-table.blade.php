@@ -1,3 +1,4 @@
+@livewireScripts
 <div class="home-slider">
     <ul class="slides">
         @forelse($sliderProduct as $product)
@@ -14,20 +15,8 @@
                         </small>
 
                         <p>{{ $product->game->description }}</p>
-                        <form wire:submit.prevent="addToCart({{ $product }})" action="{{ url('/') }}"
-                            method="POST">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="product_game" value="{{ $product->game->name }}">
-                            <input type="hidden" name="product_price" value="{{ $product->price }}">
-                            <input type="hidden" name="product_quantity" wire:model="quantity.{{ $product->id }}"
-                                value="1">
-                            @if ($cart->where('id', $product->id)->count())
-                                In cart
-                            @else
-                                <button type="submit" class="button">Add to cart</button>
-                            @endif
-                        </form>
+
+                        <livewire:add-cart :product_id="$product->id" />
                     </div>
 
                     <img src={{ asset('storage/images/games/' . $product->game->id . '/thumbnail') }}
@@ -56,48 +45,28 @@
                     </div>
                 @endif
                 <div class="product-list">
-                    @forelse($games as $game)
-                        @php
-                            $cheapest = 10000;
+                    @forelse($newProducts as $product)
+                        <div class="product">
+                            <div class="inner-product">
+                                <div class="figure-image">
+                                    <a href="{{ url('/products/show/' . $product->id) }}"><img
+                                            src="{{ asset('storage/images/games/' . $product->game->id . '/thumbnail') }}"
+                                            alt="{{ $product->game->name }}"></a>
+                                </div>
+                                <h3 class="product-title"><a
+                                        href="{{ url('/products/show/' . $product->id) }}">{{ $product->game->name }}</a>
+                                </h3>
+                                <small class="price">{{ $product->price }} €</small>
+                                <p>{{ $product->game->description }}</p>
 
-                            foreach ($game->products as $product) {
-                                if ($product->price < $cheapest) {
-                                    $cheapestProduct = $product;
-                                }
-                            }
-                        @endphp
-                    <div class="product">
-                        <div class="inner-product">
-                            <div class="figure-image">
-                                <a href="single.html"><img
-                                        src="{{ asset('storage/images/games/' . $game->id . '/thumbnail') }}"
-                                        alt="{{ $game->name }}"></a>
+                                <livewire:add-cart :product_id="$product->id" />
+                                <a href="{{ url('/products/show/' . $product->id) }} " class="button muted">Read
+                                    Details</a>
                             </div>
-                            <h3 class="product-title"><a href="#">{{ $game->name }}</a></h3>
-                            <small class="price">{{ $cheapestProduct->price }} €</small>
-                            <p>{{ $game->description }}</p>
-                            @if ($cart->where('id', $cheapestProduct->id)->count())
-                                In cart
-                            @else
-                                <form wire:submit.prevent="addToCart({{ $cheapestProduct }})"
-                                    action="{{ url('/') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $cheapestProduct->id }}">
-                                    <input type="hidden" name="product_game"
-                                        value="{{ $game->name }}-{{ $cheapestProduct->platform->name }}">
-                                    <input type="hidden" name="product_price" value="{{ $cheapestProduct->price }}">
-                                    <input type="hidden" name="product_quantity" wire:model="quantity.{{ $cheapestProduct->id }}" value="1">
+                        </div> <!-- .product -->
 
-                                    <button type="submit" class="button">Add to cart</button>
-                                </form>
-                            @endif
-                            <a href="{{ url('/products/show/' . $cheapestProduct->id) }} " class="button muted">Read
-                                Details</a>
-                        </div>
-                    </div> <!-- .product -->
-
-                @empty
-                    <h5 class="text-center">No Products Found!</h5>
+                    @empty
+                        <h5 class="text-center">No Products Found!</h5>
                     @endforelse
                 </div> <!-- .product-list -->
 
@@ -114,30 +83,22 @@
                         <div class="product">
                             <div class="inner-product">
                                 <div class="figure-image">
-                                    <a href="single.html"><img
+                                    <a href="{{ url('/products/show/' . $product->id) }}"><img
                                             src="{{ asset('storage/images/games/' . $product->game->id . '/thumbnail') }}"
-                                            alt="{{ $game->name }}"></a>
+                                            alt="{{ $product->game->name }}"></a>
                                 </div>
-                                <h3 class="product-title"><a href="#">{{ $product->game->name }}</a></h3>
+                                <h3 class="product-title"><a
+                                        href="{{ url('/products/show/' . $product->id) }}">{{ $product->game->name }}</a>
+                                </h3>
                                 <small class="price">{{ $product->price * ($product->discount / 100) }} € - DISCOUNT:
                                     {{ $product->discount }}% </small>
                                 <p>{{ $product->game->description }}</p>
                                 @if ($cart->where('id', $product->id)->count())
                                     In cart
                                 @else
-                                    <form wire:submit.prevent="addToCart({{ $product }})"
-                                        action="{{ url('/') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <input type="hidden" name="product_game" value="{{ $product->game->name }}">
-                                        <input type="hidden" name="product_price"
-                                            value="{{ $product->price * ($product->discount / 100) }}">
-                                        <input type="hidden" name="product_quantity"
-                                            wire:model="quantity.{{ $product->id }}" value="1">
-
-                                        <button type="submit" class="button">Add to cart</button>
-                                    </form>
+                                    <livewire:add-cart :product_id="$product->id" />
                                 @endif
+
                                 <a href="{{ url('/products/show/' . $product->id) }} " class="button muted">Read
                                     Details</a>
                             </div>
