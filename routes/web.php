@@ -29,68 +29,68 @@ use App\Http\Controllers\User\UserController;
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function(){
-
+Route::middleware('is_admin')->group(function(){
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/user','index')->name('user.index');
-    Route::get('/user/create', 'create')->name('user.create');
-    Route::post('/user/store','store')->name('user.store');
-    Route::get('/user/show/{user}','show')->name('user.show');
-    Route::get('/user/edit/{user}','edit')->name('user.edit');
-    Route::post('/user/update/{user}', 'update')->name('user.update');
-    Route::post('/user/destroy/{user}', 'destroy')->name('user.destroy');
-    Route::get('/admin','admin')->name('admin');
+    Route::get('/users','index')->name('users.index');
+    Route::get('/users/create', 'create')->name('users.create');
+    Route::post('/users/store','store')->name('users.store');
+    Route::get('/users/show/{user}','show')->name('users.show');
+    Route::get('/users/edit/{user}','edit')->name('users.edit');
+    Route::post('/users/update/{user}', 'update')->name('users.update');
+    Route::post('/users/destroy/{user}', 'destroy')->name('users.destroy');
     });
-
     Route::controller(AddressController::class)->group(function () {
-        Route::get('/address','index')->name('address.index');
-        Route::get('/address/create', 'create')->name('address.create');
-        Route::post('/address/store/{user}','store')->name('address.store');
-        Route::get('/address/show/{user}','show')->name('address.show');
-        Route::get('/address/edit/{user}','edit')->name('address.edit');
-        Route::post('/address/update/{user}', 'update')->name('address.update');
-        Route::post('/address/destroy/{user}', 'destroy')->name('address.destroy');
+        Route::get('/addresses','index')->name('address.index');
+        Route::get('/addresses/create', 'create')->name('addresses.create');
+        Route::post('/addresses/store','store')->name('addresses.store');
+        Route::get('/addresses/show/{address}','show')->name('addresses.show');
+        Route::get('/addresses/edit/{address}','edit')->name('addresses.edit');
+        Route::post('/addresses/update/{address}', 'update')->name('addresses.update');
+        Route::post('/addresses/destroy/{address}', 'destroy')->name('addresses.destroy');
     });
-
     Route::controller(PhotoController::class)->group(function () {
-        Route::get('/photo','index')->name('photo.index');
-        Route::get('/photo/create/{photo}', 'create')->name('photo.create');
-        Route::post('/photo/store','store')->name('photo.store');
-        Route::get('/photo/show/{photo}','show')->name('photo.show');
-        Route::get('/photo/edit/{photo}','edit')->name('photo.edit');
-        Route::post('/photo/update/{photo}', 'update')->name('photo.update');
-        Route::post('/photo/destroy/{photo}', 'destroy')->name('photo.destroy');
+        Route::get('/photos','index')->name('photos.index');
+        Route::get('/photos/create', 'create')->name('photos.create');
+        Route::post('/photos/store','store')->name('photos.store');
+        Route::get('/photos/show/{photo}','show')->name('photos.show');
+        Route::get('/photos/edit/{photo}','edit')->name('photos.edit');
+        Route::post('/photos/update/{photo}', 'update')->name('photos.update');
+        Route::post('/photos/destroy/{photo}', 'destroy')->name('photos.destroy');
     });
-
-
-
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('/products','index')->name('products.index');
+        Route::get('/products/show/{product}', 'show')->name('products.show');
+        Route::get('/products/create','create')->name('products.create');
+        Route::get('/products/edit/{product}', 'edit')->name('products.edit');
+        Route::post('/products/store','store')->name('products.store');
+        Route::post('/products/update/{product}', 'update')->name('products.update');
+        Route::post('/products/destroy/{product}', 'destroy')->name('products.destroy');
+    });
 });
 
 
+
+Route::middleware('auth')->group(function(){
 Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile','show')->name('profile.show');
+    Route::post('/profile/updateAddress','updateAddress')->name('profile.updateAddress');
+    Route::post('/profile/storeAddress','storeAddress')->name('profile.storeAddress');
+    Route::post('/profile/updatePhoto','updatePhoto')->name('profile.updatePhoto');
+    Route::post('/profile/storePhoto','storePhoto')->name('profile.storePhoto');
+});
 });
 
 
+Route::get('/home', function() {
+    return view('home');
+})->name('home');
+
+Route::get('/', function() {
+    return view('welcome');
+})->name('welcome');
 
 
-
-
-
-
-
-
-Route::get('/dashboard', function() {
-    $user=Auth::user()->id;
-    return view('home',compact('user'));
-})->name('dashboard');
-
-
-Route::controller(ProductController::class)->group(function(){
-    Route::get('/products','index')->name('products.index');
-    Route::get('/products/show/{product}', 'show')->name('products.show');
-});
 
 Route::controller(GoogleController::class)->group(function(){
     Route::get('auth/google','redirectToGoogle')->name('auth.google');

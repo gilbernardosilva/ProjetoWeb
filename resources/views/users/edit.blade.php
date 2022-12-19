@@ -5,22 +5,23 @@
             <div class="col-6 offset-3">
                 <h1 class="text-center mb-5 text-primary">Profile</h1>
                 <h3 class="text-secondary">Photo</h3>
-                 @if ($user->photo)
-                    <img src="{{ asset('storage/images/' . $user->photo->path) }}" alt="Profile Photo" class="rounded img-fluid" width="160"height="90">
+                @if ($user->photo)
+                    <img src="{{ asset('storage/images/' . $user->photo->path) }}" alt="Profile Photo"
+                        class="rounded img-fluid" width="160"height="90">
                 @endif
-                <form action="{{ route('photo.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('photos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}" />
                     <div class="form-group">
                         <label for="image">Image</label>
                         <input type="file" name="image" id="image" required class="form-control">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
                 <br>
 
                 <h3 class="text-secondary">User Info</h3>
-                <form method="post" action="{{ route('user.update', compact('user')) }}">
+                <form method="post" action="{{ route('users.update', compact('user')) }}">
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -50,16 +51,14 @@
 
                 @if ($user->address)
                     @php
-                        $a = 'address.update';
-                        $b = 'Update';
+                        $a = "addresses.update,compact('address')";
                     @endphp
                 @else
                     @php
-                        $a = 'address.store';
-                        $b = 'Create';
+                        $a = 'addresses.store';
                     @endphp
                 @endif
-                <form method="post" action="{{ route($a, compact('user')) }}">
+                <form method="post" action="{{ $a }}">
                     @csrf
                     <div class="form-group">
                         <label for="street">Street</label>
@@ -98,7 +97,7 @@
                             @enderror
                         </div>
                         <div class="form-group mt-5">
-                            <button type="submit" class="btn btn-primary">{{ $b }}</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                 </form>
                 @include('partials.errors')

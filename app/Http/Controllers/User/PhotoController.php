@@ -23,37 +23,29 @@ class PhotoController extends Controller
 
     public function create()
     {
-        $users = User::all();
-        $games = Game::all();
-        return view('photos.create', compact(['users', 'games']));
+        return view('photos.create');
     }
 
     public function store(Request $request)
     {
-            $oldPhoto = Photo::where('user_id', $request->user_id)->first();
 
-            if ($oldPhoto) {
-                Storage::delete('public/images/' . $oldPhoto->path);
-                $oldPhoto->delete();
-            }
-
-            $request->validate([
-                'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
-            ]);
-            $request->file('image')->store('public/images');
-
-            $photo = new Photo();
-            $photo->name = $request->file('image')->getClientOriginalName();
-            $photo->path = $request->file('image')->hashName();
-            $user = Auth::user();
-            $photo->user_id = $user->id;
-            $user->photo()->save($photo);
-            $photo->save();
-            return redirect()->back()->with('success', 'Image has been stored successfully');
-        }
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+        ]);
+        $request->file('image')->store('public/images');
+        $photo = new Photo();
+        $photo->name = $request->file('image')->getClientOriginalName();
+        $photo->path = $request->file('image')->hashName();
+        $photo->save();
+        return redirect()->back()->with('success', 'Image has been stored successfully');
+    }
 
 
-    public function storeGame(Request $request){
+
+
+
+    public function storeGame(Request $request)
+    {
         $request->validate([
             'thumbnail' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'image1' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',

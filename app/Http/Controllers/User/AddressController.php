@@ -11,9 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 
 class AddressController extends Controller
 {
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
-        $address = $user->address;
 
         $request->validate([
             'street' => 'required|string|max:50',
@@ -29,7 +28,7 @@ class AddressController extends Controller
             'zip_code' => $request->input('zip_code')
         ]);
 
-        $user->address()->save($address);
+        $address->save();
         return Redirect::back()->with('success', 'Your address has been created!');
     }
 

@@ -33,10 +33,10 @@ class GoogleController extends Controller
 
             if($finduser){
                 Auth::login($finduser);
-                return redirect()->intended('dashboard');
+                return redirect('/home');
 
             }else{
-                $password=Hash::make(Str::random(10));
+                $password=Hash::make(Str::random(5));
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
@@ -51,7 +51,7 @@ class GoogleController extends Controller
                 $photoPath = '/public/images/' . $user->email . '.jpg';
                 Storage::put($photoPath, $photoContents);
                 $photo = new Photo;
-                $photo->name= Hash::make(Str::random(10));
+                $photo->name= Hash::make(Str::random(5));
                 $photo->user_id = $newUser->getKey();
                 $photo->path = $user->email . '.jpg';
                 $newUser->photo()->save($photo);
@@ -59,7 +59,7 @@ class GoogleController extends Controller
 
                 Auth::login($newUser);
 
-                return redirect()->intended('dashboard');
+                return redirect('/home');
             }
         } catch (Exception $e) {
             dd($e);

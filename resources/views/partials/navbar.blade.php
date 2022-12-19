@@ -36,10 +36,8 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('profile.showP')}}">Profile</a>
-                            @if(Auth::user()->role=='admin')
-                            <a class="dropdown-item" href="{{ route('admin')}}">Admin</a>
-                            @endif
+                            <a class="dropdown-item" href="{{ route('profile.show') }}">Profile</a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
@@ -47,12 +45,22 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-
-
                         </div>
-
-
                     </li>
+                    @if (Auth::user()->role == 'admin')
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Admin
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
+                                <a class="dropdown-item" href="{{ route('photos.index') }}">Photos</a>
+                                <a class="dropdown-item" href="{{ route('products.index') }}">Products</a>
+                                <a class="dropdown-item" href="{{ route('users.index') }}">Games</a>
+                                <a class="dropdown-item" href="{{ route('users.index') }}">Categories</a>
+                        </li>
+                    @endif
                 @endguest
             </ul>
         </div>

@@ -2,8 +2,9 @@
 
 @section('content')
     <div class="container">
+        <a class="btn btn-secondary float-right" href="{{ route('users.create') }}">Add</a>
         <h1>Users</h1>
-        <table class="table table-bordered">
+        <table class="table table-bordered striped ">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -25,10 +26,10 @@
                         <td>{{ $user->social_id }}</td>
                         <td>{{ $user->social_type }}</td>
                         <td>
-                            <form action=" {{ route('user.destroy', compact('user')) }} " method="POST">
+                            <form action=" {{ route('users.destroy', compact('user')) }} " method="POST">
                                 @csrf
-                                <a class="btn btn-info" href="{{ route('user.show', compact('user')) }}">Show</a>
-                                <a class="btn btn-primary" href="{{ route('user.edit', compact('user')) }}">Edit</a>
+                                <a class="btn btn-info" href="{{ route('users.show', compact('user')) }}">Show</a>
+                                <a class="btn btn-primary" href="{{ route('users.edit', compact('user')) }}">Edit</a>
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
@@ -36,5 +37,6 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $users->links('pagination::bootstrap-5') }}
     </div>
 @endsection
