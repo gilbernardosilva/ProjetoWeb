@@ -9,6 +9,7 @@ use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\PhotoController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserController;
 
 /*
@@ -28,7 +29,7 @@ use App\Http\Controllers\User\UserController;
 
 Auth::routes();
 
-Route::middleware(['auth','user.access'])->group(function(){
+Route::middleware(['auth'])->group(function(){
 
 
 Route::controller(UserController::class)->group(function () {
@@ -54,7 +55,7 @@ Route::controller(UserController::class)->group(function () {
 
     Route::controller(PhotoController::class)->group(function () {
         Route::get('/photo','index')->name('photo.index');
-        Route::get('/photo/create', 'create')->name('photo.create');
+        Route::get('/photo/create/{photo}', 'create')->name('photo.create');
         Route::post('/photo/store','store')->name('photo.store');
         Route::get('/photo/show/{photo}','show')->name('photo.show');
         Route::get('/photo/edit/{photo}','edit')->name('photo.edit');
@@ -65,9 +66,17 @@ Route::controller(UserController::class)->group(function () {
 
 
 });
-Route::controller(UserController::class)->group(function () {
-Route::get('/profile','profile')->name('users.profile')->middleware('auth');
+
+
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('/profile','show')->name('profile.show');
 });
+
+
+
+
+
+
 
 
 

@@ -4,9 +4,11 @@
         <div class="row mb-5">
             <div class="col-6 offset-3">
                 <h1 class="text-center mb-5 text-primary">Profile</h1>
+
                 <h3 class="text-secondary">Photo</h3>
-                 @if ($user->photo)
-                    <img src="{{ asset('storage/images/' . $user->photo->path) }}" alt="Profile Photo" class="rounded img-fluid" width="160"height="90">
+                @if ($photo)
+                    <img src="{{ asset('storage/images/' . $photo->path) }}" alt="Profile Photo" class="rounded img-fluid"
+                        width="70"height="70">
                 @endif
                 <form action="{{ route('photo.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -14,9 +16,9 @@
                     <div class="form-group">
                         <label for="image">Image</label>
                         <input type="file" name="image" id="image" required class="form-control">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
                 <br>
 
                 <h3 class="text-secondary">User Info</h3>
@@ -46,17 +48,16 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
-                <h3 class="text-secondary">Address Info</h3>
 
-                @if ($user->address)
+
+                <h3 class="text-secondary">Address Info</h3>
+                @if ($address)
                     @php
                         $a = 'address.update';
-                        $b = 'Update';
                     @endphp
                 @else
                     @php
                         $a = 'address.store';
-                        $b = 'Create';
                     @endphp
                 @endif
                 <form method="post" action="{{ route($a, compact('user')) }}">
@@ -64,7 +65,7 @@
                     <div class="form-group">
                         <label for="street">Street</label>
                         <input type="text" class="form-control" id="street" name="street"
-                            value="{{ old('street', optional($user->address)->street) }}" required>
+                            value="{{ old('street', optional($address)->street) }}" required>
                         @error('street')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -73,7 +74,7 @@
                         <div class="form-group">
                             <label for="city">City</label>
                             <input type="text" class="form-control" id="city" name="city"
-                                value="{{ old('city', optional($user->address)->city) }}" required>
+                                value="{{ old('city', optional($address)->city) }}" required>
                             @error('city')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -84,13 +85,13 @@
                         <div class="form-group">
                             <label for="state">State</label>
                             <input type="text" class="form-control" id="state" name="state"
-                                value="{{ old('state', optional($user->address)->state) }}" required>
+                                value="{{ old('state', optional($address)->state) }}" required>
 
                         </div>
                         <div class="form-group">
                             <label for="zip_code">Zip Code</label>
                             <input type="text" class="form-control" id="zip_code" name="zip_code"
-                                value="{{ old('zip_code', optional($user->address)->zip_code) }}" required>
+                                value="{{ old('zip_code', optional($address)->zip_code) }}" required>
                             @error('zip_code')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -98,12 +99,11 @@
                             @enderror
                         </div>
                         <div class="form-group mt-5">
-                            <button type="submit" class="btn btn-primary">{{ $b }}</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                 </form>
                 @include('partials.errors')
             </div>
         </div>
-    </div>
     </div>
 @endsection

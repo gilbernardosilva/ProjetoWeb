@@ -36,7 +36,7 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('users.profile')}}">Profile</a>
+                            <a class="dropdown-item" href="{{ route('profile.showP')}}">Profile</a>
                             @if(Auth::user()->role=='admin')
                             <a class="dropdown-item" href="{{ route('admin')}}">Admin</a>
                             @endif

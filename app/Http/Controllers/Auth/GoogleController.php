@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use Exception;
 use App\Models\User;
+use App\Models\Photo;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
@@ -42,6 +45,17 @@ class GoogleController extends Controller
                     'role' => 'user',
                     'password' => $password,
                 ]);
+
+                $photoUrl = $user->getAvatar();
+                $photoContents = file_get_contents($photoUrl);
+                $photoPath = '/public/images/' . $user->email . '.jpg';
+                Storage::put($photoPath, $photoContents);
+                $photo = new Photo;
+                $photo->name= Hash::make(Str::random(10));
+                $photo->user_id = $newUser->getKey();
+                $photo->path = $user->email . '.jpg';
+                $newUser->photo()->save($photo);
+                $photo->save();
 
                 Auth::login($newUser);
 
