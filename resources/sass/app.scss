@@ -7,34 +7,21 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-
-.form-group {
-    margin-bottom: 1rem;
+  .pagination .page-item a.page-link {
+    color: #030303; /* Set the color of the text */
+    background-color: #ffffff;
   }
 
-.form-control {
-    display: block;
+  .pagination .page-item a.page-link:hover {
+    color: #ffffff; /* Set the color of the text */
+    background-color: #030303; /* Set the background color on hover */
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: #030303; /* Set the background color on hover */
+    border-color: #ffffff; /* Set the border color for the active button */
+  }
+
+  .search-bar {
     width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-.form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #80bdff;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
-.invalid-feedback {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 80%;
-    color: #dc3545;
   }

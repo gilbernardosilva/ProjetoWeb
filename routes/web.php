@@ -115,13 +115,10 @@ Route::controller(ProfileController::class)->group(function () {
 });
 
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home');
+Route::controller(ProductController::class)->group(function(){
+Route::get('/', 'indexShop')->name('index');
+});
 
-Route::get('/', function() {
-    return view('welcome');
-})->name('welcome');
 
 
 
