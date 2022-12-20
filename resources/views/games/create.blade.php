@@ -1,38 +1,35 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Add a new Game</div>
-                    <div class="card-body">
-                        <form action="{{ url('/games') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <label for="gameName">Game Title:</label><br>
-                            <input type="text" id="gameName" name="gameName" value="{{ old('gameName') }}"><br>
-                            <br>
-                            <label for="category">Category:</label><br>
-                            {!! Form::select('category_id', $categories, null, ['class' => 'form-control']) !!}
-                            <br>
-                            <label for="description">Description:</label><br>
-                            <textarea id="description" name="description" rows="5" cols="50" value="{{ old('description') }}"></textarea><br>
-                            <br>
-                            <label for="thumbnail">Thumbnail:</label><br>
-                            <input type="file" id="thumbnail" name="thumbnail"><br>
-                            <br>
-                            <label for="image1">Image 1:</label><br>
-                            <input type="file" id="image1" name="image1"><br>
-                            <br>
-                            <label for="image2">Image 2:</label><br>
-                            <input type="file" id="image2" name="image2"><br>
-                            <br>
-                            <label for="image3">Image 3:</label><br>
-                            <input type="file" id="image3" name="image3"><br>
-                            <br>
-                            <input type="submit" value="Submit">
-                        </form>
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col-6 offset-3">
+                <h1 class="text-center mb-5 text-danger">Game Create</h1>
+                <h2 class="text-secondary text-center">Game Info</h2>
+                <br>
+                <form method="post" action="{{ route('games.store') }}">
+                    @csrf
+                    <div class="form-group">
+                    <label>Category</label>
+                    <select name="category_id" id="category_id" class="form-select">
+                        <option value="">Select a Category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Description</label>
+                        <input type="text" class="form-control" id="description" name="description">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
+                </form>
+                @include('partials.errors')
             </div>
         </div>
     </div>

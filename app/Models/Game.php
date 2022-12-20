@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 class Game extends Model
 {
@@ -18,15 +17,19 @@ class Game extends Model
     protected $fillable = [
         'name',
        'description',
+       'category_id',
     ];
 
     public function products(){
         return $this->hasMany(Product::class);
     }
 
-    public function categories(){
+    public function category(){
         return $this->belongsTo(Category::class);
     }
 
+    public function photos(){
+        return $this->hasMany(Photo::class);
+    }
 
 }

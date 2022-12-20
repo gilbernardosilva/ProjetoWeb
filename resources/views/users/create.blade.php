@@ -1,27 +1,37 @@
 @extends('layouts.app')
 @section('content')
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Peido's Dashboard</div>
-                <div class="card-body">
-                    <form action="{{url('/users')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        User Name: <input type="text" name="name" value="{{old('name')}}">
-                        First Name: <input type="text" name="firstName" value="{{old('firstName')}}">
-                        Last Name: <input type="text" name="lastName" value="{{old('lastName')}}">
-                        Email: <input type="text" name="email" value="{{old('email')}}">
-                        address: <input type="text" name="address" value="{{old('address')}}">
-                        password: <input type="text" name="password" value="{{old('password')}}">
-                        <input type="file" name="image">
-                        <input type="submit" value="Upload">
-                    </form>
-                </div>
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col-6 offset-3">
+                <h1 class="text-center mb-5 text-danger">User Create</h1>
+                <h2 class="text-secondary text-center">User Info</h2>
+                <form method="post" action="{{ route('users.store') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password-confirm">Confirm Password</label>
+                        <input type="password" class="form-control" id="password-confirm" name="password_confirmation"
+                            required>
+                    </div>
+                    <div class="form-group mt-5">
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
-
+    @include('partials.errors')
 @endsection

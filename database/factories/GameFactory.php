@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Game;
+use App\Models\Platform;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -32,7 +34,7 @@ class GameFactory extends Factory
                 'gta','l4d2','csgo','fortnite','minecraft'
             )),
             'description' => Str::random(20),
-            'categories_id' => 1,
+            'category_id'=> Category::all()->random()->id,
         ];
     }
 }
