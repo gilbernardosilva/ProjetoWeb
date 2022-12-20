@@ -43,7 +43,7 @@ class ProfileController extends Controller
             'zip_code' => $request->input('zip_code')
         ]);
 
-        $user->address()->save($address);
+        $user->address->save($address);
         return Redirect::back()->with('success', 'Your address has been stored successfully!');
     }
 
@@ -81,7 +81,7 @@ class ProfileController extends Controller
         $photo->path = $request->file('image')->hashName();
         $user = Auth::user();
         $photo->user_id = $user->id;
-        $user->photo()->save($photo);
+        $user->photo->save($photo);
         $photo->save();
         return redirect()->back()->with('success', 'Image has been stored successfully');
     }
@@ -99,7 +99,7 @@ class ProfileController extends Controller
         $photo = new Photo();
         $photo->name = $request->file('image')->getClientOriginalName();
         $photo->path = $request->file('image')->hashName();
-        $user->photo()->save($photo);
+        $user->photo->save($photo);
         $photo->save();
         return Redirect::back()->with('success', 'Your address has been updated!');
     }

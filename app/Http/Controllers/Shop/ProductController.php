@@ -19,7 +19,8 @@ class ProductController extends Controller
 
     public function indexShop(){
         $products = Product::orderBy('id', 'asc')->paginate(12);
-        return view('index', compact('products'));
+        $productsPromo = Product::orderBy('discount', 'desc')->paginate(12);
+        return view('index', compact('products', 'productsPromo'));
     }
 
     public function show(Product $product)

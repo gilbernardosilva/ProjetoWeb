@@ -14,6 +14,8 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\PlatformController;
+use App\Http\Controllers\SearchController;
+use App\Http\Livewire\ProductsTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,14 @@ use App\Http\Controllers\Shop\PlatformController;
 
 
 
-
+Route::get('/shopping-cart', [ProductsTable::class,'showCart']);
+Route::post('/shopping-cart', [ProductsTable::class,'removeFromCart']);
+Route::post('/checkout', [ProductsTable::class,'checkout'])->name('checkout');
+Route::get('/success', [ProductsTable::class,'success'])->name('checkout.success');
+Route::get('/cancel', [ProductsTable::class,'cancel'])->name('checkout.cancel');
+Route::post('/webhook', [ProductsTable::class,'webhook'])->name('checkout.webhook');
+Route::get('search', [SearchController::class,'searchProducts']);
+Route::get('/products/show/{product}/{user}',[ProductsTable::class,'show']);
 
 Auth::routes();
 
