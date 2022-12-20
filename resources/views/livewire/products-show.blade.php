@@ -47,15 +47,36 @@
 
                             <div class="addtocart-bar">
                                 <livewire:add-cart :product_id="$product->id" />
+                                Seller: <a href="">{{ $product->user->name }}</a>
 
-                                <div class="social-links square">
-                                    <strong>Share</strong>
-                                    <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                    <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a>
-                                </div>
                             </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <h2 class="section-title">Other sellers</h2>
+
+                            @forelse ($sameProduct as $productSeller)
+                                @if ($productSeller->user->id == $product->user->id)
+                                @else
+                                    <div class="addtocart-bar">
+                                        <livewire:add-cart :product_id="$productSeller->id" />
+                                        Seller: <a href="">{{ $productSeller->user->name }}</a>
+                                    <strong>Price</strong>
+                                        @if ($productSeller->discount > 0)
+                                        {{ ($productSeller->discount / 100) * $productSeller->price }}€
+                                    @else
+                                        {{ $productSeller->price }}€
+                                    @endif
+                                </div>
+                                    </div>
+                                @endif
+                            @empty
+                                    <p>No other sellers</p>
+                            @endforelse
+                            {{ $sameProduct->links('pagination::semantic-ui') }}
+
+
                         </div>
                     </div>
                 </div>

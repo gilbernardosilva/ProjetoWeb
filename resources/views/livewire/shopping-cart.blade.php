@@ -9,7 +9,7 @@
                         <tr>
                             <th class="product-name">Product Name</th>
                             <th class="product-price">Price</th>
-                            <th class="product-qty">Seller</th>
+                            <th class="product-qty">Tax Rate</th>
                             <th class="product-total">Total</th>
                             <th class="action"></th>
                         </tr>
@@ -32,9 +32,7 @@
                                         </div>
                                     </td>
                                     <td class="product-price">{{ $product->price /100 }}€</td>
-                                    <td class="product-qty">
-                                        <input type="number" min="0">
-                                    </td>
+                                    <td class="product-price"> {{ $product->taxRate }}</td>
                                     <td class="product-total">{{ $product->price /100}} €</td>
                                     <td class="action"><button type="submit"><i class="fa fa-times"></i></button></td>
                             </form>

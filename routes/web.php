@@ -12,6 +12,8 @@ use App\Http\Controllers\Auth\TwitterController;
 use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\HeaderController;
+use GuzzleHttp\Psr7\Header;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,13 +32,13 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
-
 Route::get('/shopping-cart', [ProductsTable::class,'showCart']);
 Route::post('/shopping-cart', [ProductsTable::class,'removeFromCart']);
 Route::post('/checkout', [ProductsTable::class,'checkout'])->name('checkout');
 Route::get('/success', [ProductsTable::class,'success'])->name('checkout.success');
 Route::get('/cancel', [ProductsTable::class,'cancel'])->name('checkout.cancel');
 Route::post('/webhook', [ProductsTable::class,'webhook'])->name('checkout.webhook');
+Route::get('search', [HeaderController::class,'searchProducts']);
 
 
 
@@ -45,7 +47,7 @@ Route::get('/', [ProductController::class,'index'])->name('mainpage');
 Route::get('/products/create', [ProductController::class,'create']);
 Route::post('/products', [ProductController::class, 'store']);
 
-Route::get('/products/show/{product}',[ProductsTable::class,'show']);
+Route::get('/products/show/{product}/{user}',[ProductsTable::class,'show']);
 Route::get('/games/create', [GameController::class, 'create']);
 Route::post('/games', [GameController::class, 'store']);
 

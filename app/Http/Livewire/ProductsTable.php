@@ -23,8 +23,6 @@ class ProductsTable extends Component
     public function mount()
     {
         $this->allProducts = Product::all();
-
-
     }
 
     public function render()
@@ -40,11 +38,15 @@ class ProductsTable extends Component
 
     public function show(Product $product)
     {
-        $category = $product->game->categories->category;
+        $category = $product->game->categories->id;
         $categoryName = Category::where($category);
-        $similiarProducts = Product::find(4)->game()->where('category', '=', $categoryName);
-        dd($similiarProducts);
-        return view('livewire.products-show', ['product' => $product, 'similiarProducts' => $similiarProducts]);
+        $similiarProducts = Product::join('games', 'products.game_id', '=', 'games.id')
+        ->where('games.categories_id', $category)
+        ->get()->take(4);
+        $cart = Cart::content();
+
+        $sameProduct = Product::where('game_id', $product->game->id)->paginate(4);
+        return view('livewire.products-show', compact('cart'),['product' => $product, 'similiarProducts' => $similiarProducts, 'sameProduct' => $sameProduct]);
     }
 
 
@@ -123,6 +125,11 @@ class ProductsTable extends Component
                 $order->status = 'paid';
                 $order->save();
             }
+            $cartItems = Cart::content();
+            foreach ($cartItems as $product) {
+                Product::destroy($product->id);
+            }
+            Cart::destroy();
 
             return view('checkout.success', compact('customer'));
         } catch (\Throwable $th) {

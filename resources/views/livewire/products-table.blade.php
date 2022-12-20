@@ -49,19 +49,19 @@
                         <div class="product">
                             <div class="inner-product">
                                 <div class="figure-image">
-                                    <a href="{{ url('/products/show/' . $product->id) }}"><img
+                                    <a href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }}"><img
                                             src="{{ asset('storage/images/games/' . $product->game->id . '/thumbnail') }}"
                                             alt="{{ $product->game->name }}"></a>
                                 </div>
                                 <h3 class="product-title"><a
-                                        href="{{ url('/products/show/' . $product->id) }}">{{ $product->game->name }}</a>
+                                        href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }}">{{ $product->game->name }}</a>
                                 </h3>
                                 <small class="price">{{ $product->price }} €</small>
                                 <p>{{ $product->game->description }}</p>
 
                                 <livewire:add-cart :product_id="$product->id" />
-                                <a href="{{ url('/products/show/' . $product->id) }} " class="button muted">Read
-                                    Details</a>
+                                    <a href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }} " class="button muted">Read
+                                        Details</a>
                             </div>
                         </div> <!-- .product -->
 
@@ -83,12 +83,12 @@
                         <div class="product">
                             <div class="inner-product">
                                 <div class="figure-image">
-                                    <a href="{{ url('/products/show/' . $product->id) }}"><img
+                                    <a href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }}"><img
                                             src="{{ asset('storage/images/games/' . $product->game->id . '/thumbnail') }}"
                                             alt="{{ $product->game->name }}"></a>
                                 </div>
                                 <h3 class="product-title"><a
-                                        href="{{ url('/products/show/' . $product->id) }}">{{ $product->game->name }}</a>
+                                        href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }}">{{ $product->game->name }}</a>
                                 </h3>
                                 <small class="price">{{ $product->price * ($product->discount / 100) }} € - DISCOUNT:
                                     {{ $product->discount }}% </small>
@@ -99,7 +99,7 @@
                                     <livewire:add-cart :product_id="$product->id" />
                                 @endif
 
-                                <a href="{{ url('/products/show/' . $product->id) }} " class="button muted">Read
+                                <a href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }} " class="button muted">Read
                                     Details</a>
                             </div>
                         </div> <!-- .product -->
