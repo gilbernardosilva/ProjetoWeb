@@ -3,14 +3,17 @@
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Shop\GameController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\PhotoController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\TwitterController;
 use App\Http\Controllers\Shop\ProductController;
-use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\User\AddressController;
-use App\Http\Controllers\User\PhotoController;
 use App\Http\Controllers\User\ProfileController;
-use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Auth\FacebookController;
+use App\Http\Controllers\Shop\CategoryController;
+use App\Http\Controllers\Shop\PlatformController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +44,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/users/destroy/{user}', 'destroy')->name('users.destroy');
     });
     Route::controller(AddressController::class)->group(function () {
-        Route::get('/addresses','index')->name('address.index');
+        Route::get('/addresses','index')->name('addresses.index');
         Route::get('/addresses/create', 'create')->name('addresses.create');
         Route::post('/addresses/store','store')->name('addresses.store');
         Route::get('/addresses/show/{address}','show')->name('addresses.show');
@@ -67,6 +70,36 @@ Route::controller(UserController::class)->group(function () {
         Route::post('/products/update/{product}', 'update')->name('products.update');
         Route::post('/products/destroy/{product}', 'destroy')->name('products.destroy');
     });
+    Route::controller(GameController::class)->group(function(){
+        Route::get('/games','index')->name('games.index');
+        Route::get('/games/show/{game}', 'show')->name('games.show');
+        Route::get('/games/create','create')->name('games.create');
+        Route::get('/games/edit/{game}', 'edit')->name('games.edit');
+        Route::post('/games/store','store')->name('games.store');
+        Route::post('/games/update/{game}', 'update')->name('games.update');
+        Route::post('/games/destroy/{game}', 'destroy')->name('games.destroy');
+    });
+
+    Route::controller(CategoryController::class)->group(function(){
+        Route::get('/categories','index')->name('categories.index');
+        Route::get('/categories/show/{category}', 'show')->name('categories.show');
+        Route::get('/categories/create','create')->name('categories.create');
+        Route::get('/categories/edit/{category}', 'edit')->name('categories.edit');
+        Route::post('/categories/store','store')->name('categories.store');
+        Route::post('/categories/update/{category}', 'update')->name('categories.update');
+        Route::post('/categories/destroy/{category}', 'destroy')->name('categories.destroy');
+    });
+
+    Route::controller(PlatformController::class)->group(function(){
+        Route::get('/platforms','index')->name('platforms.index');
+        Route::get('/platforms/show/{platform}', 'show')->name('platforms.show');
+        Route::get('/platforms/create','create')->name('platforms.create');
+        Route::get('/platforms/edit/{platform}', 'edit')->name('platforms.edit');
+        Route::post('/platforms/store','store')->name('platforms.store');
+        Route::post('/platforms/update/{platform}', 'update')->name('platforms.update');
+        Route::post('/platforms/destroy/{platform}', 'destroy')->name('platforms.destroy');
+    });
+
 });
 
 

@@ -13,8 +13,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(10);
-
+        $products = Product::orderBy('id', 'asc')->paginate(10);
         return view('products.index', compact('products'));
     }
 
@@ -32,37 +31,32 @@ class ProductController extends Controller
     }
 
 
-    public function destroy(Product $product,)
+    public function destroy(Product $product)
     {
         $product->delete();
-
         return redirect()->back()->with('success', 'Product deleted successfully');
     }
 
     public function store(Request $request)
     {
-
-        dd($request->user_id);
         $request->validate([
-            'user_id' => 'sometimes|integer',
+            'user_id' => 'nullable|integer',
             'platform_id' => 'required|integer',
             'game_id' => 'required|integer',
             'price' => 'required|numeric',
             'discount' => 'required|integer|between:0,100',
         ]);
         $product = new Product();
-
         $product->platform_id = $request->input('platform_id');
         $product->game_id = $request->input('game_id');
         $product->price = $request->input('price');
         $product->discount = $request->input('discount');
         if($request->user_id){
             $user=User::find($request->user_id);
-            $user->product()->save($product);
+            $user->products()->save($product);
         }
+
         $product->save();
-
-
         return redirect()->back()->with('success', 'Product created successfully!');
 
     }
@@ -75,20 +69,19 @@ class ProductController extends Controller
             'platform_id' => 'required|integer',
             'game_id' => 'required|integer',
             'price' => 'required|numeric',
-            'discount' => 'required|numeric|max:',
+            'discount' => 'required|integer|between:0,100',
         ]);
-
         $product->update($request->all());
 
         return redirect()->back()->with('success', 'Product updated successfully!');
     }
 
-    public function edit()
+    public function edit(Product $product)
     {
         $users=User::all();
         $games=Game::all();
         $platforms=Platform::all();
-        return view('products.edit',compact('games','platforms','users'));
+        return view('products.edit',compact('games','platforms','users','product'));
     }
 
 }

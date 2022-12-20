@@ -2,9 +2,10 @@
 
 @section('content')
     <div class="container">
-        <a class="btn btn-secondary float-right" href="{{ route('users.create') }}">Add</a>
-        <h1>Users</h1>
-        <table class="table table-bordered striped ">
+        <h1 class="text-center mb-5 text-danger">Users Index</h1>
+        <a class="btn btn-secondary float-right" href="{{ route('users.create')}}">Add</a>
+        <h2 class="text-secondary">Users</h2>
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>

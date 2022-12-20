@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/dashboard') }}">
+        <a class="navbar-brand" href="{{ url('/home') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -56,9 +56,12 @@
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
                                 <a class="dropdown-item" href="{{ route('photos.index') }}">Photos</a>
+                                <a class="dropdown-item" href="{{ route('addresses.index') }}">Addresses</a>
+                                <a class="dropdown-item" href="{{ route('platforms.index') }}">Platforms</a>
+                                <a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a>
+                                <a class="dropdown-item" href="{{ route('games.index') }}">Games</a>
                                 <a class="dropdown-item" href="{{ route('products.index') }}">Products</a>
-                                <a class="dropdown-item" href="{{ route('users.index') }}">Games</a>
-                                <a class="dropdown-item" href="{{ route('users.index') }}">Categories</a>
+                                <a class="dropdown-item" href="{{ route('products.index') }}">Orders</a>
                         </li>
                     @endif
                 @endguest

@@ -11,6 +11,37 @@ use Illuminate\Support\Facades\Redirect;
 
 class AddressController extends Controller
 {
+
+
+    public function index()
+    {
+        $addresses = Address::orderBy('id', 'asc')->paginate(10);
+
+        return view('addresses.index', compact('addresses'));
+    }
+
+    public function show(Address $address)
+    {
+        return view('addresses.show', compact('address'));
+    }
+
+    public function create()
+    {
+        return view('addresses.create');
+    }
+
+    public function edit(Address $address)
+    {
+        return view('addresses.edit', compact('address'));
+    }
+
+    public function destroy(Address $address)
+    {
+        $address->delete();
+
+        return redirect()->back()->with('success', 'Address deleted successfully');
+    }
+
     public function store(Request $request)
     {
 
@@ -32,9 +63,8 @@ class AddressController extends Controller
         return Redirect::back()->with('success', 'Your address has been created!');
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request,Address $address)
     {
-        $address = $user->address;
         $request->validate([
             'street' => 'required|string|max:50',
             'city' => 'required|string|max:20',
@@ -42,13 +72,7 @@ class AddressController extends Controller
             'zip_code' => 'required|string|max:10',
         ]);
 
-        $address->update([
-            'street' => $request->input('street'),
-            'city' => $request->input('city'),
-            'zip_code' => $request->input('zip_code'),
-            'state' => $request->input('state'),
-        ]);
-
+        $address->update($request->all());
         return Redirect::back()->with('success', 'Your address has been updated!');
     }
 }

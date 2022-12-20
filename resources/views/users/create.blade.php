@@ -3,7 +3,8 @@
     <div class="container mt-5">
         <div class="row mb-5">
             <div class="col-6 offset-3">
-                <h1 class="text-center mb-5 text-primary">User</h1>
+                <h1 class="text-center mb-5 text-danger">User Create</h1>
+                <h2 class="text-secondary text-center">User Info</h2>
                 <form method="post" action="{{ route('users.store') }}">
                     @csrf
                     <div class="form-group">
@@ -26,7 +27,7 @@
                             required>
                     </div>
                     <div class="form-group mt-5">
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="submit" class="btn btn-success">Create</button>
                     </div>
                 </form>
             </div>

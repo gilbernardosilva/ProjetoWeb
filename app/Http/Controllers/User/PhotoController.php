@@ -41,7 +41,19 @@ class PhotoController extends Controller
     }
 
 
+    public function update(Request $request,Photo $photo)
+    {
 
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+        ]);
+        Storage::delete('public/images/' . $photo->path);
+        $request->file('image')->store('public/images');
+        $photo->name = $request->file('image')->getClientOriginalName();
+        $photo->path = $request->file('image')->hashName();
+        $photo->save();
+        return redirect()->back()->with('success', 'Image has been updated successfully');
+    }
 
 
     public function storeGame(Request $request)

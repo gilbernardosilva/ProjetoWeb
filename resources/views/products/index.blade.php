@@ -2,9 +2,10 @@
 
 @section('content')
     <div class="container">
+        <h1 class="text-center mb-5 text-danger">Products Index</h1>
         <a class="btn btn-secondary float-right" href="{{ route('products.create')}}">Add</a>
-        <h1>Products</h1>
-        <table class="table table-bordered">
+        <h2 class="text-secondary">Products</h2>
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -13,6 +14,7 @@
                     <th>Platform</th>
                     <th>Price</th>
                     <th>Discount</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,7 +22,11 @@
                     <tr>
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->game->name }}</td>
+                        @if($product->user)
                         <td>{{ $product->user->id }}</td>
+                        @else
+                        <td></td>
+                        @endif
                         <td>{{ $product->platform->name }}</td>
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->discount }}</td>
@@ -37,7 +43,6 @@
             </tbody>
         </table>
         {{ $products->links('pagination::bootstrap-5') }}
-
     </div>
 @endsection
 

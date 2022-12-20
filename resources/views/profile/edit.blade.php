@@ -3,8 +3,8 @@
     <div class="container mt-5">
         <div class="row mb-5">
             <div class="col-6 offset-3">
-                <h1 class="text-center mb-5 text-primary">Profile</h1>
-                <h3 class="text-secondary">Photo</h3>
+                <h1 class="text-center mb-5 text-danger">Profile</h1>
+                <h2 class="text-secondary text-center">User Photo</h2>
                 @if ($photo)
                     <img src="{{ asset('storage/images/' . $photo->path) }}" alt="Profile Photo" class="rounded img-fluid"
                         width="70"height="70">
@@ -27,7 +27,7 @@
                 </form>
                 <br>
 
-                <h3 class="text-secondary">User Info</h3>
+                <h2 class="text-secondary text-center">User Info</h2>
                 <form method="post" action="{{ route('users.update', compact('user')) }}">
                     @csrf
                     <div class="form-group">
@@ -54,7 +54,7 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
-                <h3 class="text-secondary">Address Info</h3>
+                <h2 class="text-secondary text-center">Address Info</h2>
                 @if ($address)
                     @php
                         $addressroute = "profile.updateAddress";
@@ -86,7 +86,7 @@
                                 value="{{ old('zip_code', optional($address)->zip_code) }}" required>
                         </div>
                         <div class="form-group mt-5">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
                         </div>
                 </form>
                 @include('partials.errors')

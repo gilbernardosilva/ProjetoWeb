@@ -34,7 +34,6 @@ class GameFactory extends Factory
                 'gta','l4d2','csgo','fortnite','minecraft'
             )),
             'description' => Str::random(20),
-            'platform_id' => Platform::all()->random()->id,
             'category_id'=> Category::all()->random()->id,
         ];
     }

@@ -2,9 +2,10 @@
 
 @section('content')
     <div class="container">
+        <h1 class="text-center mb-5 text-danger">Photos Index</h1>
         <a class="btn btn-secondary float-right" href="{{ route('photos.create')}}">Add</a>
-        <h1>Photos</h1>
-        <table class="table table-bordered">
+        <h2 class="text-secondary">Photos</h2>
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
