@@ -30,7 +30,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ $product->game->name }}</h5>
+                                    <h5 class="fw-bolder">{{ $product->game->name }} - [{{$product->platform->name}}]</h5>
 
                                     @if ($sale)
                                         <!-- Product price-->
@@ -81,7 +81,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ $product->game->name }}</h5>
+                                    <h5 class="fw-bolder">{{ $product->game->name }} - [{{$product->platform->name}}]</h5>
 
                                     @if ($sale)
                                         <!-- Product price-->

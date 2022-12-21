@@ -1,5 +1,9 @@
 @extends('layouts.app')
 @section('content')
+    @php
+        $total = 0;
+
+    @endphp
     <section class="pt-5 pb-5">
         <div class="container">
             <div class="row w-100">
@@ -9,18 +13,22 @@
                         <i class="text-info font-weight-bold">{{ Cart::count() }} </i>
                         items in your cart
                     </h3>
-                        <br>
+                    <br>
                     <table id="shoppingCart" class="table table-condensed table-responsive">
                         <thead>
                             <tr>
                                 <th style="width:40%">Product</th>
                                 <th style="width:12%">Price</th>
+                                <th style="width:10%">Discounted Price</th>
                                 <th style="width:10%">Discount</th>
                                 <th style="width:16%"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($cart as $product)
+                                @php
+                                    $total += intval($product->discount);
+                                @endphp
                                 <form wire:submit.prevent="removeFromCart({{ $product->id }})"
                                     action="{{ url('/shopping-cart') }}" method="POST">
                                     @csrf
@@ -36,14 +44,16 @@
                                                 </div>
                                                 <div class="col-md-9 text-left mt-sm-2">
                                                     <h4>{{ $product->name }}</h4>
-                                                    <p class="font-weight-light">Brand &amp; Name</p>
+                                                    <a href=""
+                                                        class="font-weight-light">{{ $product->options->sellerName }}</a>
                                                 </div>
                                             </div>
                                         </td>
                                         <td data-th="Price">{{ $product->price / 100 }}€</td>
-                                        <td data-th="Quantity" class="text-center"> {{ number_format($product->discount,2,'.') /10 }} %
-                                            <input type="number" class="form-control form-control-lg text-center"
-                                                value="1">
+                                        <td data-th="Quantity" class="text-center"> {{ intval($product->discount) / 100 }} €
+                                        <td data-th="Quantity" class="text-center">
+                                            {{ number_format((intval($product->discount) / $product->price) * 100, 3) }} %
+
                                         </td>
                                         <td class="actions" data-th="">
                                             <div class="text-right">
@@ -62,7 +72,7 @@
                     </table>
                     <div class="float-right text-right">
                         <h4>Subtotal:</h4>
-                        <h1>{{ Cart::subTotal() }}€</h1>
+                        <h1>{{ $total /100}}€</h1>
                     </div>
                 </div>
             </div>
@@ -74,7 +84,7 @@
                             <button class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</button>
                         </form>
                     @else
-                   <button class = "btn btn-primary mb-4 disabled btn-lg pl-5 pr-5">Checkout</button>
+                        <button class="btn btn-primary mb-4 disabled btn-lg pl-5 pr-5">Checkout</button>
                     @endif
                 </div>
                 <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left dark">
@@ -87,4 +97,3 @@
     </section>
     @include('partials.footer')
 @endsection
-

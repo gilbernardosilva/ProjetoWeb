@@ -23,7 +23,7 @@
  @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body style="display:flex;">
-@if(Auth::user()->role == 'admin')
+@if(Auth::user() == 'admin')
 @include('partials.navbaradmin')
 @else
 @include('partials.navbar')

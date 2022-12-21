@@ -86,7 +86,7 @@ class ProductsTable extends Component
                         'name' => $item->name,
                         //'images' => [$item->image], DO NOT USE ON STRIPE BECAUSE LOCALHOST
                     ],
-                    'unit_amount' => $item->price,
+                    'unit_amount' => $item->discount,
                 ],
                 'quantity' => $item->qty,
             ];

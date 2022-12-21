@@ -26,6 +26,10 @@ class AddCart extends Component
             1,
             $product->price * 100,
             0,
+            [
+                'sellerId' => $product->user->id,
+                'sellerName' => $product->user->name
+            ]
         );
         Cart::setDiscount($cart->rowId, $product->discount);
         $this->emit('cart_updated');
