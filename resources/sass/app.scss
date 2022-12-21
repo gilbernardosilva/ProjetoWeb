@@ -7,7 +7,8 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-  .pagination .page-item a.page-link {
+
+.pagination .page-item a.page-link {
     color: #030303; /* Set the color of the text */
     background-color: #ffffff;
   }
@@ -33,6 +34,3 @@ body {
     display: flex;
     flex-direction: column;
 }
-
-
-
