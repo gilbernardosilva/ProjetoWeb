@@ -26,6 +26,9 @@
                         </thead>
                         <tbody>
                             @forelse($cart as $product)
+                            @php
+                                    $total += intval($product->price - ($product->price * ($product->options->discount/100))) /100;
+                                @endphp
                                 <form wire:submit.prevent="removeFromCart({{ $product->id }})"
                                     action="{{ url('/shopping-cart') }}" method="POST">
                                     @csrf
@@ -71,7 +74,7 @@
                     </table>
                     <div class="float-right text-right">
                         <h4>Subtotal:</h4>
-                        <h1>{{ $total /100}}€</h1>
+                        <h1>{{ $total}}€</h1>
                     </div>
                 </div>
             </div>

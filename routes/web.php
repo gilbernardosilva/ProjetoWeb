@@ -16,6 +16,8 @@ use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\PlatformController;
 use App\Http\Controllers\SearchController;
 use App\Http\Livewire\ProductsTable;
+use App\Mail\OrderMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------

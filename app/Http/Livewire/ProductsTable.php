@@ -2,17 +2,20 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\OrderMail;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Platform;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
+use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -86,7 +89,7 @@ class ProductsTable extends Component
                         'name' => $item->name,
                         //'images' => [$item->image], DO NOT USE ON STRIPE BECAUSE LOCALHOST
                     ],
-                    'unit_amount' => $item->discount,
+                    'unit_amount' => intval($item->price - ($item->price * ($item->options->discount/100))),
                 ],
                 'quantity' => $item->qty,
             ];
@@ -111,15 +114,15 @@ class ProductsTable extends Component
     public function success(Request $request)
     {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-
         $sessionId = $request->get('session_id');
+        $cartItems = Cart::content();
 
         try {
             $session = $stripe->checkout->sessions->retrieve($sessionId);
             if (!$session) {
                 throw new NotFoundHttpException;
             }
-            $customer = $stripe->customers->retrieve($session->customer);
+
             $order = Order::where('session_id', $session->id)->first();
             if (!$order) {
                 throw new NotFoundHttpException();
@@ -128,16 +131,17 @@ class ProductsTable extends Component
                 $order->status = 'paid';
                 $order->save();
             }
-            $cartItems = Cart::content();
             foreach ($cartItems as $product) {
                 Product::destroy($product->id);
             }
             Cart::destroy();
+            Mail::to(Auth::user()->email)->send(new OrderMail($cartItems));
 
-            return view('checkout.success', compact('customer'));
-        } catch (\Throwable $th) {
+            return view('checkout.success');
+        } catch (\Exception $e) {
             throw new NotFoundHttpException();
         }
+
     }
 
     public function cancel()
