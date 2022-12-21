@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
     @php
-        $total = 0;
 
+        $total = 0;
     @endphp
     <section class="pt-5 pb-5">
         <div class="container">
@@ -19,16 +19,13 @@
                             <tr>
                                 <th style="width:40%">Product</th>
                                 <th style="width:12%">Price</th>
+                                <th style="width:12%">Discount</th>
                                 <th style="width:10%">Discounted Price</th>
-                                <th style="width:10%">Discount</th>
                                 <th style="width:16%"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($cart as $product)
-                                @php
-                                    $total += intval($product->discount);
-                                @endphp
                                 <form wire:submit.prevent="removeFromCart({{ $product->id }})"
                                     action="{{ url('/shopping-cart') }}" method="POST">
                                     @csrf
@@ -50,9 +47,11 @@
                                             </div>
                                         </td>
                                         <td data-th="Price">{{ $product->price / 100 }}€</td>
-                                        <td data-th="Quantity" class="text-center"> {{ intval($product->discount) / 100 }} €
+                                        <td data-th="Quantity">
+                                            {{ $product->options->discount }} %
+                                        </td>
                                         <td data-th="Quantity" class="text-center">
-                                            {{ number_format((intval($product->discount) / $product->price) * 100, 3) }} %
+                                            {{intval($product->price - ($product->price * ($product->options->discount/100))) /100}} €
 
                                         </td>
                                         <td class="actions" data-th="">
@@ -78,13 +77,13 @@
             </div>
             <div class="row mt-4 d-flex align-items-center">
                 <div class="col-sm-6 order-md-2 text-right">
-                    @if (!$cart->isEmpty() && Auth::id() != null)
+                    @if (!$cart->isEmpty() && Auth::user() != null)
                         <form action="{{ route('checkout') }}" method="POST">
                             @csrf
                             <button class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</button>
                         </form>
                     @else
-                        <button class="btn btn-primary mb-4 disabled btn-lg pl-5 pr-5">Checkout</button>
+                        <a class="btn btn-secondary mb-4 btn-lg pl-5 pr-5" href="/login">Checkout</a>
                     @endif
                 </div>
                 <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left dark">

@@ -22,12 +22,18 @@
 
  @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body style="display:flex;">
-@if(Auth::user() == 'admin')
-@include('partials.navbaradmin')
+<body>
+
+@if(Auth::user())
+    @if(Auth::user()->role == 'admin')
+        @include('partials.navbaradmin')
+    @else
+        @include('partials.navbar')
+    @endif
 @else
-@include('partials.navbar')
+    @include('partials.navbar')
 @endif
+
 @livewireScripts
     <div id="app">
             @yield('content')

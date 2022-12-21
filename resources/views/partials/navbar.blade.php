@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" style="font-size:1.7rem" href="{{ url('/') }}">
-            GlQuadrics
+            GLQuadrics
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">

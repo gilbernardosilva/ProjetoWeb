@@ -128,9 +128,6 @@ Route::controller(ProductController::class)->group(function(){
 Route::get('/', 'indexShop')->name('index');
 });
 
-
-
-
 Route::controller(GoogleController::class)->group(function(){
     Route::get('auth/google','redirectToGoogle')->name('auth.google');
     Route::get('auth/google/callback', 'handleCallback');

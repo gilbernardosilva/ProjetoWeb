@@ -19,7 +19,7 @@
                             <!-- Sale badge-->
                             @if ($sale)
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                                    Sale</div>
+                                    {{ $product->discount }} % OFF</div>
                             @endif
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }}">
@@ -30,12 +30,12 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ $product->game->name }} - [{{$product->platform->name}}]</h5>
-
+                                    <h4 class="fw-bolder">{{ $product->game->name }} </h4>
+                                    <h6 class="fw-bolder">{{$product->platform->name}}</h6>
                                     @if ($sale)
                                         <!-- Product price-->
                                         <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        {{ number_format($product->price * ($product->discount / 100), 2, '.') }}€
+                                        {{intval($product->price*100 - ($product->price*100 * ($product->discount/100)))/100 }} €
                                     @else
                                         {{ $product->price }}
                                     @endif
@@ -71,7 +71,7 @@
                             <!-- Sale badge-->
                             @if ($sale)
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                                    Sale</div>
+                                    {{ $product->discount }} % OFF</div>
                             @endif
                             <!-- Product image-->
                             <img class="card-img-top" style="border-top-radius:1.6rem"
@@ -81,12 +81,12 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ $product->game->name }} - [{{$product->platform->name}}]</h5>
-
+                                    <h4 class="fw-bolder">{{ $product->game->name }} </h4>
+                                    <h6 class="fw-bolder">{{$product->platform->name}}</h6>
                                     @if ($sale)
                                         <!-- Product price-->
                                         <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        {{ number_format($product->price * ($product->discount / 100), 2, '.') }}€
+                                        {{ number_format($product->price - ( $product->price *($product->discount / 100)), 2) }}€
                                     @else
                                         {{ $product->price }}
                                     @endif

@@ -17,21 +17,23 @@ class AddCart extends Component
 
         $this->product_id = $product_id;
     }
+
     public function addToCart($product_id)
     {
         $product = Product::find($product_id);
-      $cart = Cart::add(
+        $cart = Cart::add(
             $product->id,
             $product->game->name,
             1,
-            $product->price * 100,
+            $product->price *100,
             0,
             [
                 'sellerId' => $product->user->id,
-                'sellerName' => $product->user->name
+                'sellerName' => $product->user->name,
+                'discount' => $product->discount,
             ]
         );
-        Cart::setDiscount($cart->rowId, $product->discount);
+        //Cart::setDiscount($cart->rowId, $product->discount);
         $this->emit('cart_updated');
     }
 
