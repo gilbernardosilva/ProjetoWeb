@@ -1,8 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    @include('partials.navbartest')
-    @include('partials.header')
-    @livewireScripts
     <!-- Product section-->
     @php
         if ($product->discount > 0) {
@@ -38,9 +35,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
-        <div class="card align-items-center" style="width: 18rem display: flex; align-items: center; justify-content: center; width: 300px; height: 300px; background-color: lightblue;">
+        <div class="card align-items-center"
+            style="width: 18rem display: flex; align-items: center; justify-content: center; width: 300px; height: 300px; background-color: lightblue;">
             <div class="card-header">
                 Other Sellers
             </div>
@@ -67,8 +64,6 @@
             @endforelse
             {{ $sameProduct->links('pagination::semantic-ui') }}
         </div>
-        </div>
-
     </section>
     <!-- Related items section-->
     <section class="py-5 bg-light">
@@ -115,5 +110,6 @@
             </div>
         </div>
     </section>
+@include('partials.footer')
+@endsection
 
-    </html>

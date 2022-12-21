@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    @include('partials.navbartest')
+@livewireScripts()
     @include('partials.header')
-    @livewireScripts
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <h1>New Products</h1>
@@ -16,7 +15,7 @@
                         }
                     @endphp
                     <div class="col mb-5">
-                        <div class="card h-100">
+                        <div class="card h-100" style="border-top-radius:1.6rem">
                             <!-- Sale badge-->
                             @if ($sale)
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
@@ -24,7 +23,7 @@
                             @endif
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }}">
-                            <img class="card-img-top" style="border-top-radius:1.6rem"
+                            <img class="card-img-top" style="border-top-radius:1.7rem"
                                 src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></a>
 
                             <!-- Product details-->

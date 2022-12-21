@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" >
+    <div class="container">
+        <a class="navbar-brand" style="font-size:1.7rem" href="{{ url('/') }}">
+            Admin Dashboard
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Left Side Of Navbar -->
+            <ul class="navbar-nav me-auto">
+            </ul>
+            <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav ms-auto">
+                    </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="font-size: 1.2rem">
+                            {{ Auth::user()->name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
+                                <a class="dropdown-item" href="{{ route('photos.index') }}">Photos</a>
+                                <a class="dropdown-item" href="{{ route('addresses.index') }}">Addresses</a>
+                                <a class="dropdown-item" href="{{ route('platforms.index') }}">Platforms</a>
+                                <a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a>
+                                <a class="dropdown-item" href="{{ route('games.index') }}">Games</a>
+                                <a class="dropdown-item" href="{{ route('products.index') }}">Products</a>
+                                <a class="dropdown-item" href="{{ route('products.index') }}">Orders</a>
+                                <a class="dropdown-item" href="{{ route('profile.show') }}">Profile</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</nav>
