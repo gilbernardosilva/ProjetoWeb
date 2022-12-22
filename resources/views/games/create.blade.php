@@ -6,17 +6,21 @@
                 <h1 class="text-center mb-5 text-danger">Game Create</h1>
                 <h2 class="text-secondary text-center">Game Info</h2>
                 <br>
-                <form method="post" action="{{ route('games.store') }}">
+                <form method="post" action="{{ route('games.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                    <label>Category</label>
-                    <select name="category_id" id="category_id" class="form-select">
-                        <option value="">Select a Category</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
+                        <label>Category</label>
+                        <select name="category_id" id="category_id" class="form-select" >
+                            <option value="">Select a Category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                        <div class="form-group">
+                            <label for="image">Image:</label>
+                            <input type="file" name="image" id="image" required class="form-control">
+                        </div>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name">

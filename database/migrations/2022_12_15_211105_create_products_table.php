@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->float('price')->unsigned();
+            $table->string('key');
             $table->Integer('discount')->unsigned();
             $table->foreignId('game_id')->constrained();
             $table->foreignId('platform_id')->constrained();

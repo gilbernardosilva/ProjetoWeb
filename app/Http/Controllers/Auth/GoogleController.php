@@ -56,9 +56,7 @@ class GoogleController extends Controller
                 $photo->path = $user->email . '.jpg';
                 $newUser->photo()->save($photo);
                 $photo->save();
-
                 Auth::login($newUser);
-
                 return redirect('/');
             }
         } catch (Exception $e) {

@@ -36,6 +36,14 @@ class ProductController extends Controller
         return view('products.create',compact('games','platforms','users'));
     }
 
+    public function createProduct()
+    {
+        $games=Game::all();
+        $platforms=Platform::all();
+        return view('products.createProduct',compact('games','platforms'));
+    }
+
+
 
     public function destroy(Product $product)
     {

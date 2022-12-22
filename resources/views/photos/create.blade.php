@@ -3,8 +3,7 @@
     <div class="container mt-5">
         <div class="row mb-5">
             <div class="col-6 offset-3">
-                <h1 class="text-center mb-5 text-danger">Platform Create</h1>
-                <h2 class="text-secondary text-center">Platform Info</h2>
+                <h1 class="text-center mb-5 text-danger">Photo Create</h1>
                 <form method="POST" action="{{ route('photos.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">

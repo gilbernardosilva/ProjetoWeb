@@ -119,16 +119,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/profile/updatePhoto', 'updatePhoto')->name('profile.updatePhoto');
         Route::post('/profile/storePhoto', 'storePhoto')->name('profile.storePhoto');
     });
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/seller', 'createSeller')->name('user.seller');
-        Route::post('/seller/store', 'storeSeller')->name('user.storeSeller');
+    Route::middleware('is_user')->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/seller', 'createSeller')->name('user.seller');
+            Route::post('/seller/store', 'storeSeller')->name('user.storeSeller');
+        });
     });
-
-
 });
 
 Route::controller(ProductController::class)->group(function () {
     Route::get('/', 'indexShop')->name('index');
+    Route::get('/product/add/','createProduct')->name('products.createProduct')->middleware('is_seller');
+    Route::post('/product/store/','store')->name('products.storeProduct')->middleware('is_seller');
 });
 
 Route::controller(GoogleController::class)->group(function () {

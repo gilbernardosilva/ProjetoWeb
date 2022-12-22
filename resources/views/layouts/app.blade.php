@@ -36,7 +36,7 @@
 @livewireScripts
     <div id="app">
             @yield('content')
-            @include('partials.toasts')
+            @include('partials.sessionerrors')
     </div>
 </body>
 </html>

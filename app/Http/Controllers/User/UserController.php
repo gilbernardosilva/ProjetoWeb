@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-
-
     public function index()
     {
         $users = User::orderBy('id', 'asc')->paginate(10);
@@ -72,7 +70,6 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
         ]);
-
         $password = $request->input('password');
         $hashedPassword = Hash::make($password);
         $request->replace(['password'=> $hashedPassword]);
@@ -91,7 +88,6 @@ class UserController extends Controller
 
         $user=Auth::user();
         if(!$user->address){
-
             $request->validate([
                 'street' => 'required|string|max:50',
                 'city' => 'required|string|max:20',
@@ -122,5 +118,10 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User deleted successfully');
     }
 
+    public function showProducts()
+    {
+        $user=Auth::user();
+        return view('profile.seller','products');
+    }
 
 }
