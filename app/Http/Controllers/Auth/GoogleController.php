@@ -33,7 +33,7 @@ class GoogleController extends Controller
 
             if($finduser){
                 Auth::login($finduser);
-                return redirect('/home');
+                return redirect('/');
 
             }else{
                 $password=Hash::make(Str::random(5));
@@ -59,7 +59,7 @@ class GoogleController extends Controller
 
                 Auth::login($newUser);
 
-                return redirect('/home');
+                return redirect('/');
             }
         } catch (Exception $e) {
             dd($e);

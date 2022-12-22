@@ -43,7 +43,7 @@ class ProfileController extends Controller
             'zip_code' => $request->input('zip_code')
         ]);
 
-        $user->address->save($address);
+        $user->address()->save($address);
         return Redirect::back()->with('success', 'Your address has been stored successfully!');
     }
 

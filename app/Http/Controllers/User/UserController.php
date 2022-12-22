@@ -104,16 +104,16 @@ class UserController extends Controller
                 'state' => $request->input('state'),
                 'zip_code' => $request->input('zip_code')
             ]);
-            $user->address->save($address);
+            $user->address()->save($address);
         }
 
         $request->validate([
-            'nif' => 'required|integer|max:10',
+            'nif' => 'required|string|max:10',
         ]);
         $user->role='seller';
         $user->nif=$request->input('nif');
         $user->save();
-        return redirect()->back()->with('success', 'You have become a seller successfully');
+        return redirect('/')->with('success', 'You have become a seller successfully');
     }
     public function destroy(User $user)
     {

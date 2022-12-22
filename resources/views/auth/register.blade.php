@@ -5,6 +5,7 @@
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    @include('partials.errors')
                     <div class="card bg-dark text-white" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center "style="height:785px;">
                             <form method="POST" action="{{ route('register') }}">
@@ -38,9 +39,7 @@
                                         <label class="form-label" for="password-confirm">Password Confirmation</label>
                                     </div>
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
-                                    @include('partials.errors')
                             </form>
-
                             <div class="d-flex justify-content-center text-center mt-4 pt-1">
                                 <a href="{{ route('auth.facebook') }}" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
                                 <a href="{{ route('auth.twitter') }}" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>

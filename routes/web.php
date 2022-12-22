@@ -121,7 +121,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(UserController::class)->group(function () {
         Route::get('/seller', 'createSeller')->name('user.seller');
-        Route::get('/seller/store', 'storeSeller')->name('user.storeSeller');
+        Route::post('/seller/store', 'storeSeller')->name('user.storeSeller');
     });
 
 

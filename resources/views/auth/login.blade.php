@@ -1,15 +1,17 @@
 @extends('layouts.app')
-
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<script src="{{ asset('js/app.js') }}"></script>
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
+
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    @include('partials.errors')
                     <div class="card bg-dark text-white" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center "style="height:670px;">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
-                                @include('partials.toasts')
                                 <div class="mb-md-5 mt-md-4 pb-5">
                                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                                     <p class="text-white-50 mb-5">Please enter your email and password</p>
@@ -33,8 +35,6 @@
                                             href="{{ route('password.request') }}">Forgot password?</a></p>
                                     </div>
                                     <button class="btn btn-outline-light btn-lg mb-4 px-5" data-toggle="toast" type="submit">Login</button>
-
-
                             </form>
                             <div class="d-flex justify-content-center text-center pt-1">
                                 <a href="{{ route('auth.facebook') }}" class="text-white"><i
@@ -51,6 +51,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         </div>

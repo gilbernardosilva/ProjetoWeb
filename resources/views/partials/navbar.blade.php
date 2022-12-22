@@ -50,7 +50,7 @@
                     <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
                 @else
-                @if(Auth::user()->role==null)
+                @if(Auth::user()->role!='seller')
                     <li class="nav-item"><a class="nav-link" href="/seller">Become a Seller</a></li>
                 @endif
                     <li class="nav-item dropdown">
