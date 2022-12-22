@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\User;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +82,39 @@ class UserController extends Controller
     }
 
 
+    public function createSeller()
+    {
+        return view('users.becomeseller');
+    }
+
+    public function storeSeller(Request $request){
+
+        $user=Auth::user();
+        if(!$user->address){
+
+            $request->validate([
+                'street' => 'required|string|max:50',
+                'city' => 'required|string|max:20',
+                'state' => 'required|string|max:20',
+                'zip_code' => 'required|string|max:10',
+            ]);
+            $address = new Address([
+                'street' => $request->input('street'),
+                'city' => $request->input('city'),
+                'state' => $request->input('state'),
+                'zip_code' => $request->input('zip_code')
+            ]);
+            $user->address->save($address);
+        }
+
+        $request->validate([
+            'nif' => 'required|integer|max:10',
+        ]);
+        $user->role='seller';
+        $user->nif=$request->input('nif');
+        $user->save();
+        return redirect()->back()->with('success', 'You have become a seller successfully');
+    }
     public function destroy(User $user)
     {
         $user->delete();

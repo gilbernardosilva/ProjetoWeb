@@ -9,6 +9,7 @@
                         <div class="card-body p-5 text-center "style="height:670px;">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
+                                @include('partials.toasts')
                                 <div class="mb-md-5 mt-md-4 pb-5">
                                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                                     <p class="text-white-50 mb-5">Please enter your email and password</p>
@@ -31,9 +32,9 @@
                                         <p class="small ml-5 pb-lg-2"><a class="text-white-50"
                                             href="{{ route('password.request') }}">Forgot password?</a></p>
                                     </div>
-                                    <button class="btn btn-outline-light btn-lg mb-4 px-5" type="submit">Login</button>
+                                    <button class="btn btn-outline-light btn-lg mb-4 px-5" data-toggle="toast" type="submit">Login</button>
 
-                                    @include('partials.errors')
+
                             </form>
                             <div class="d-flex justify-content-center text-center pt-1">
                                 <a href="{{ route('auth.facebook') }}" class="text-white"><i
