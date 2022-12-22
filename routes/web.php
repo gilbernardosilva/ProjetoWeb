@@ -97,6 +97,7 @@ Route::controller(UserController::class)->group(function () {
         Route::post('/categories/store','store')->name('categories.store');
         Route::post('/categories/update/{category}', 'update')->name('categories.update');
         Route::post('/categories/destroy/{category}', 'destroy')->name('categories.destroy');
+        Route::post('/categories/{category}', 'categories')->name('categories.categoriesPage');
     });
 
     Route::controller(PlatformController::class)->group(function(){
@@ -107,6 +108,7 @@ Route::controller(UserController::class)->group(function () {
         Route::post('/platforms/store','store')->name('platforms.store');
         Route::post('/platforms/update/{platform}', 'update')->name('platforms.update');
         Route::post('/platforms/destroy/{platform}', 'destroy')->name('platforms.destroy');
+        Route::post('/platforms/{platform}', 'platforms')->name('platforms.platformsPage');
     });
 
 });

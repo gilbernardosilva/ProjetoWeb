@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -55,5 +56,10 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         return view('categories.edit',compact('category'));
+    }
+
+    public function categories(Category $category){
+        $products = Product::where('category_id', $category)->Storage::get();
+        return view('platforms.categoriesPage', compact('products', 'category'));
     }
 }
