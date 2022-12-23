@@ -14,8 +14,9 @@
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        @foreach($platforms as $platform)
+                        <li><a class="dropdown-item" href="/platforms/{$platform}">{{$platform}}</a></li>
+                        @endforeach
                     </ul>
                 </li>
 
@@ -27,8 +28,9 @@
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        @foreach($categories as $category)
+                        <li><a class="dropdown-item" href="/categories/{$category}">{{$category}}</a></li>
+                        @endforeach
                     </ul>
                 </li>
             </ul>
