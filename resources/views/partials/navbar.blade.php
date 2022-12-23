@@ -15,7 +15,7 @@
                             <hr class="dropdown-divider" />
                         </li>
                         @foreach($platforms as $platform)
-                        <li><a class="dropdown-item" href="/platforms/{$platform}">{{$platform}}</a></li>
+                        <li><a class="dropdown-item" href="/platforms/{$platform}">{{$platform->name}}</a></li>
                         @endforeach
                     </ul>
                 </li>
@@ -29,7 +29,7 @@
                             <hr class="dropdown-divider" />
                         </li>
                         @foreach($categories as $category)
-                        <li><a class="dropdown-item" href="/categories/{$category}">{{$category}}</a></li>
+                        <li><a class="dropdown-item" href="/categories/{$category}">{{$category->name}}</a></li>
                         @endforeach
                     </ul>
                 </li>

@@ -116,10 +116,15 @@ Route::middleware('is_admin')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'show')->name('profile.show');
+        Route::get('/profile/edit/{user}', 'edit')->name('profile.edit');
         Route::post('/profile/updateAddress', 'updateAddress')->name('profile.updateAddress');
         Route::post('/profile/storeAddress', 'storeAddress')->name('profile.storeAddress');
         Route::post('/profile/updatePhoto', 'updatePhoto')->name('profile.updatePhoto');
         Route::post('/profile/storePhoto', 'storePhoto')->name('profile.storePhoto');
+    });
+    Route::controller(ReviewController::class)->group(function () {
+        Route::get('/profile/review/create', 'create')->name('reviews.create');
+        Route::post('/profile/review/store', 'store')->name('reviews.store');
     });
     Route::middleware('is_user')->group(function () {
         Route::controller(UserController::class)->group(function () {

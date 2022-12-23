@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Models\User;
 use App\Models\Photo;
+use App\Models\Product;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,15 +15,23 @@ use Illuminate\Support\Facades\Redirect;
 class ProfileController extends Controller
 {
 
-    public function show()
+    public function edit($user, $address, $photo)
     {
-        $user = auth()->user();
-        $address = $user->address;
-        $photo = $user->photo;
-
         return view('profile.edit', compact('user', 'address', 'photo'));
     }
 
+    public function show()
+    {
+        $user = auth()->user();
+        $role = Auth::user()->role;
+        $address = $user->address;
+        $photo = $user->photo;
+        $reviews = $user->reviews->paginate(4);
+        $userReviews = User::where('user_id', $reviews->reviewer_id)->Storage::get();
+        $products = Product::where('user_id', $user)->Storage::get()->paginate(8);
+
+        return view('profile.show', compact('user', 'address', 'photo', 'products', 'role', 'reviews', 'userReviews'));
+    }
 
     public function storeAddress(Request $request)
     {
