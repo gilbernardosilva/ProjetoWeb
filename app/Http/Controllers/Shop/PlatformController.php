@@ -58,7 +58,12 @@ class PlatformController extends Controller
     }
 
     public function platforms(Platform $platform){
-        $products = Product::where('platform_id', $platform)->Storage::get();
-        return view('platforms.platformPage', compact('products', 'platform'));
+        $searchProducts = Product::where('platform_id', $platform->id)->get();
+        return view('livewire.products-list', compact('searchProducts'));
+    }
+
+    public function allPlatforms(){
+        $searchProducts = Product::paginate(20);
+        return view('livewire.products-list', compact('searchProducts'));
     }
 }

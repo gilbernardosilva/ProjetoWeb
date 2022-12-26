@@ -27,7 +27,7 @@ class ProfileController extends Controller
         $address = $user->address;
         $photo = $user->photo;
         $reviews = $user->reviews->paginate(4);
-        $userReviews = User::where('user_id', $reviews->reviewer_id)->Storage::get();
+        $userReviews = User::where('id', $reviews->reviewer_id)->Storage::get();
         $products = Product::where('user_id', $user)->Storage::get()->paginate(8);
 
         return view('profile.show', compact('user', 'address', 'photo', 'products', 'role', 'reviews', 'userReviews'));

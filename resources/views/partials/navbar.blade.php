@@ -10,12 +10,12 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false" v-pre>Platforms</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
+                        <li><a class="dropdown-item" href="/platforms/products">All Products</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
                         @foreach($platforms as $platform)
-                        <li><a class="dropdown-item" href="/platforms/{$platform}">{{$platform->name}}</a></li>
+                        <li><a class="dropdown-item" href="{{ url('platforms/'.$platform->id)}}">{{$platform->name}}</a></li>
                         @endforeach
                     </ul>
                 </li>
@@ -24,12 +24,12 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false" v-pre>Categories</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
+                        <li><a class="dropdown-item" href="/categories/products">All Products</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
                         @foreach($categories as $category)
-                        <li><a class="dropdown-item" href="/categories/{$category}">{{$category->name}}</a></li>
+                        <li><a class="dropdown-item" href="{{ url('categories/'.$category->id)}}">{{$category->name}}</a></li>
                         @endforeach
                     </ul>
                 </li>

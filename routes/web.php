@@ -98,7 +98,6 @@ Route::middleware('is_admin')->group(function () {
         Route::post('/categories/store', 'store')->name('categories.store');
         Route::post('/categories/update/{category}', 'update')->name('categories.update');
         Route::post('/categories/destroy/{category}', 'destroy')->name('categories.destroy');
-        Route::post('/categories/{category}', 'categories')->name('categories.categoriesPage');
     });
 
     Route::controller(PlatformController::class)->group(function () {
@@ -109,7 +108,6 @@ Route::middleware('is_admin')->group(function () {
         Route::post('/platforms/store', 'store')->name('platforms.store');
         Route::post('/platforms/update/{platform}', 'update')->name('platforms.update');
         Route::post('/platforms/destroy/{platform}', 'destroy')->name('platforms.destroy');
-        Route::post('/platforms/{platform}', 'platforms')->name('platforms.platformsPage');
     });
 });
 
@@ -122,14 +120,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/profile/updatePhoto', 'updatePhoto')->name('profile.updatePhoto');
         Route::post('/profile/storePhoto', 'storePhoto')->name('profile.storePhoto');
     });
-    Route::controller(ReviewController::class)->group(function () {
-        Route::get('/profile/review/create', 'create')->name('reviews.create');
-        Route::post('/profile/review/store', 'store')->name('reviews.store');
-    });
+    
     Route::middleware('is_user')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('/seller', 'createSeller')->name('user.seller');
             Route::post('/seller/store', 'storeSeller')->name('user.storeSeller');
+        });
+        Route::controller(ReviewController::class)->group(function () {
+            Route::get('/profile/review/create', 'create')->name('reviews.create');
+            Route::post('/profile/review/store', 'store')->name('reviews.store');
         });
     });
 });
@@ -138,6 +137,16 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/', 'indexShop')->name('index');
     Route::get('/product/add/','createProduct')->name('products.createProduct')->middleware('is_seller');
     Route::post('/product/store/','store')->name('products.storeProduct')->middleware('is_seller');
+});
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/categories/products', 'allCategories')->name('livewire.products-list');
+    Route::get('/categories/{category}', 'categories')->name('livewire.products-list');
+});
+
+Route::controller(PlatformController::class)->group(function () {
+    Route::get('/platforms/products', 'allPlatforms')->name('livewire.products-list');
+    Route::get('/platforms/{platform}', 'platforms')->name('livewire.products-list');
 });
 
 Route::controller(GoogleController::class)->group(function () {
