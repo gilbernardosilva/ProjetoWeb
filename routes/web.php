@@ -14,6 +14,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\PlatformController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Livewire\ProductsTable;
 use App\Mail\OrderMail;
@@ -121,15 +122,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/profile/storePhoto', 'storePhoto')->name('profile.storePhoto');
     });
     
+    Route::controller(ReviewController::class)->group(function () {
+            Route::get('/profile/review/create', 'create')->name('reviews.create');
+            Route::post('/profile/review/store', 'store')->name('reviews.store');
+    });
+
     Route::middleware('is_user')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('/seller', 'createSeller')->name('user.seller');
             Route::post('/seller/store', 'storeSeller')->name('user.storeSeller');
         });
-        Route::controller(ReviewController::class)->group(function () {
-            Route::get('/profile/review/create', 'create')->name('reviews.create');
-            Route::post('/profile/review/store', 'store')->name('reviews.store');
-        });
+        
     });
 });
 

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Photo;
 use App\Models\Product;
 use App\Models\Address;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 class ProfileController extends Controller
 {
 
-    public function edit($user, $address, $photo)
+    public function edit(User $user, Address $address, Photo $photo)
     {
         return view('profile.edit', compact('user', 'address', 'photo'));
     }
@@ -23,20 +24,21 @@ class ProfileController extends Controller
     public function show()
     {
         $user = auth()->user();
-        $role = Auth::user()->role;
+        $hideWriteOwnReview = auth()->user();
+        $role = $user->role;
         $address = $user->address;
         $photo = $user->photo;
-        $reviews = $user->reviews->paginate(4);
-        $userReviews = User::where('id', $reviews->reviewer_id)->Storage::get();
-        $products = Product::where('user_id', $user)->Storage::get()->paginate(8);
+        $reviews = Review::where('user_id', $user->id)->paginate(4);
+        //$reviewer = User::where('id', $reviews->reviewer_id)->Storage::paginate(4);
+        $products = Product::where('user_id', $user->id)->paginate(8);
 
-        return view('profile.show', compact('user', 'address', 'photo', 'products', 'role', 'reviews', 'userReviews'));
+        return view('profile.show', compact('hideWriteOwnReview', 'user', 'address', 'photo', 'products', 'role', 'reviews'));
     }
 
     public function storeAddress(Request $request)
     {
 
-        $user= auth()->user();
+        $user = auth()->user();
 
         $request->validate([
             'street' => 'required|string|max:50',

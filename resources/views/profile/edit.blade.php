@@ -28,7 +28,7 @@
                 <br>
 
                 <h2 class="text-secondary text-center">User Info</h2>
-                <form method="post" action="{{ route('users.update', compact('user')) }}">
+                <form method="post" action="{{ route('users.update', compact('$user')) }}">
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>

@@ -38,7 +38,9 @@
         </div>
         <div class="rela-block profile-card-buttons">
             <!-- botao para mensagens-->
-            <a class="btn btn-primary" href="{{ route('reviews.create', compact('user', 'photo')) }}">Write a Review</a>
+            @if($hideWriteOwnReview != $user)
+            <a class="btn btn-primary" href="{{ route('reviews.create') }}">Write a Review</a>
+            @endif
             <a class="btn btn-primary" href="{{ route('profile.edit', compact('user', 'address', 'photo')) }}">Edit</a>
         </div>
     </div>
@@ -94,22 +96,19 @@
             </div>
             {{ $products->links('pagination::bootstrap-5') }}
         </div>
+        
     @endif
-    @foreach($reviews as $review)
-        <div class="rela-block content">
-            <div class="rela-inline product">
-                <h1>Reviews</h1>
-                <!-- Reviewer image-->
-                <img src="{{ asset('storage/images/' . $userReviews->photo->path) }}" alt="Reviewer Profile Photo" class="rounded img-fluid" width="70"height="70">
-                <!-- Reviewer name -->
-                <div class="reviewer name">{{$userReviews->name}}</div>
+    <div class="rela-block content">
+        <div class="rela-inline product">
+            <h1>Reviews</h1>
+            @foreach($reviews as $review)
                 <!-- Rating -->
                 <div class="rating">{{$review->rating}}</div>
                 <!-- Description -->
                 <div class="description">{{$review->description}}</div>
-            </div>
+            @endforeach
         </div>
-    @endforeach
+    </div>
     {{ $reviews->links('pagination::bootstrap-5') }}
 </div>
 @endsection

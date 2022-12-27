@@ -3,13 +3,13 @@
     <div class="container mt-5">
         <div class="row mb-5">
             <div class="col-6 offset-3">
-                <h1 class="text-center mb-5 text-danger">Adding review for {{$user->name}}</h1>
-                <div class="profile-pic" id="profile_pic">
-                    <img src="{{ asset('storage/images/' . $photo->path) }}" alt="Profile Photo" class="rounded img-fluid" width="70"height="70">
-                </div>
+                <h1 class="text-center mb-5 text-danger">Creating a review for {{$user->name}}</h1>
                 <form method="post" action="{{ route('reviews.store') }}">
                     @csrf
                     <div class="form-group">
+                        <select name="user_id" id="user_id" class="form-select">
+                            <option value="{{ $user->id }}">Creating a review for {{ $user->name }}</option>
+                        </select>
                         <span>Your rating</span>
                         <p class="stars">
                             <label for="rated-1"></label>
@@ -30,8 +30,8 @@
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
-                @include('partials.errors')
             </div>
         </div>
     </div>
+    @include('partials.errors')
 @endsection
