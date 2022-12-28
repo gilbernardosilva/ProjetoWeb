@@ -33,14 +33,14 @@ class ProfileController extends Controller
         $reviews = Review::where('user_id', $user->id)->paginate(4);
         //$reviewer = User::where('id', $reviews->reviewer_id)->Storage::paginate(4);
         $sellingProducts = Product::where('user_id', $user->id)->paginate(8);
-        $order = Order::where('user_id', $user->id)->get();
-        if($order->status == 'paid'){
-            $orderItems = OrderItem::where('order_id', $order->id);
-            $productsBought = Product::where('id', $orderItems->product_id)->paginate(8);
-        }else{
-            $productsBought = Product::class;
+        $orders = Order::where('user_id', $user->id)->get();
+        $productsBought = 0;
+        foreach ($orders as $order) {
+            if ($order->status == 'paid') {
+                $orderItems = OrderItem::where('order_id', $order->id);
+                $productsBought = Product::where('id', $orderItems->product_id)->paginate(8);
+            }
         }
-        
 
         return view('profile.show', compact('hideWriteOwnReview', 'user', 'address', 'photo', 'sellingProducts', 'role', 'reviews', 'productsBought'));
     }
