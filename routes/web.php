@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\PlatformController;
 use App\Http\Controllers\User\ReviewController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Livewire\ProductsTable;
 use App\Mail\OrderMail;
@@ -125,6 +126,21 @@ Route::middleware('auth')->group(function () {
     Route::controller(ReviewController::class)->group(function () {
             Route::get('/profile/review/create', 'create')->name('reviews.create');
             Route::post('/profile/review/store', 'store')->name('reviews.store');
+    });
+
+    Route::controller(MessagesController::class)->group(function () {
+        Route::get('/dashboard', 'index')->name('messages.index');
+        Route::get('/dashboard/create', 'create')->name('messages.create');
+        Route::get('/dashboard/show/{id}', 'show')->name('messages.show');
+        Route::post('/dashboard/store', 'store')->name('messages.store');
+        Route::put('/dashboard/update/{id}', 'update')->name('messages.update');
+
+
+        /*Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
+        Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
+        Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
+        Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
+        Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);*/
     });
 
     Route::middleware('is_user')->group(function () {

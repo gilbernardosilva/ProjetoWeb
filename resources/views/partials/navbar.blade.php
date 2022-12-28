@@ -67,6 +67,7 @@
                             @if(Auth::user()->role=='seller')
                             <a class="dropdown-item" href="{{ route('profile.show') }}">Products</a>
                             @endif
+                            <a class="dropdown-item" href="{{ route('messages.index') }}">Messages</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
