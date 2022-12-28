@@ -134,13 +134,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard/{id}', 'show')->name('messages.show');
         Route::post('/dashboard', 'store')->name('messages.store');
         Route::post('/dashboard/{id}', 'update')->name('messages.update');
-
-
-        /*Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
-        Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
-        Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
-        Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
-        Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);*/
     });
 
     Route::middleware('is_user')->group(function () {

@@ -7,6 +7,8 @@ use App\Models\Photo;
 use App\Models\Product;
 use App\Models\Address;
 use App\Models\Review;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +32,17 @@ class ProfileController extends Controller
         $photo = $user->photo;
         $reviews = Review::where('user_id', $user->id)->paginate(4);
         //$reviewer = User::where('id', $reviews->reviewer_id)->Storage::paginate(4);
-        $products = Product::where('user_id', $user->id)->paginate(8);
+        $sellingProducts = Product::where('user_id', $user->id)->paginate(8);
+        $order = Order::where('user_id', $user->id)->get();
+        if($order->status == 'paid'){
+            $orderItems = OrderItem::where('order_id', $order->id);
+            $productsBought = Product::where('id', $orderItems->product_id)->paginate(8);
+        }else{
+            $productsBought = Product::class;
+        }
+        
 
-        return view('profile.show', compact('hideWriteOwnReview', 'user', 'address', 'photo', 'products', 'role', 'reviews'));
+        return view('profile.show', compact('hideWriteOwnReview', 'user', 'address', 'photo', 'sellingProducts', 'role', 'reviews', 'productsBought'));
     }
 
     public function storeAddress(Request $request)
