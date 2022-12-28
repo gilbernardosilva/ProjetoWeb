@@ -8,8 +8,7 @@
             <!-- Subject Form Input -->
             <div class="form-group">
                 <label class="control-label">Subject</label>
-                <input type="text" class="form-control" name="subject" placeholder="Subject"
-                       value="{{ old('subject') }}">
+                <input type="text" class="form-control" name="subject" placeholder="Subject" value="{{ old('subject') }}">
             </div>
 
             <!-- Message Form Input -->
@@ -20,9 +19,9 @@
 
             @if($users->count() > 0)
                 <div class="checkbox">
-                    <select title="select user">
+                    <select name="user_id" id="user_id" class="form-select">
                         @foreach($users as $user)
-                            <option type="checkbox" name="recipients[]" value="{{ $user->id }}">{!!$user->name!!}</option>
+                            <option type="checkbox" name="recipients[]" value="{{ $user->id }}">{{$user->name}}</option>
                         @endforeach
                     </select>
                 </div>

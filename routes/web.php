@@ -131,9 +131,9 @@ Route::middleware('auth')->group(function () {
     Route::controller(MessagesController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('messages.index');
         Route::get('/dashboard/create', 'create')->name('messages.create');
-        Route::get('/dashboard/show/{id}', 'show')->name('messages.show');
-        Route::post('/dashboard/store', 'store')->name('messages.store');
-        Route::put('/dashboard/update/{id}', 'update')->name('messages.update');
+        Route::get('/dashboard/{id}', 'show')->name('messages.show');
+        Route::post('/dashboard', 'store')->name('messages.store');
+        Route::post('/dashboard/{id}', 'update')->name('messages.update');
 
 
         /*Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);

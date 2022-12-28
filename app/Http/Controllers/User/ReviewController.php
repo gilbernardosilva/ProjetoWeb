@@ -29,7 +29,8 @@ class ReviewController extends Controller
         if($request->user_id){
             $user=User::find($request->user_id);
             $user->products()->save($review);
-        }        $review->save();
+        }
+        $review->save();
         return redirect()->back()->with('success', 'Review created successfully!');
     }
 }

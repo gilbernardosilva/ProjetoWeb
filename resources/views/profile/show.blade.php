@@ -37,9 +37,9 @@
             <!--<div class="rela-block user-desc" id="user_address">{{$address}}</div>-->
         </div>
         <div class="rela-block profile-card-buttons">
-            <!-- botao para mensagens-->
             @if($hideWriteOwnReview != $user)
-            <a class="btn btn-primary" href="{{ route('reviews.create') }}">Write a Review</a>
+                <a class="btn btn-primary" href="{{ route('messages.create') }}">Create New Message</a>
+                <a class="btn btn-primary" href="{{ route('reviews.create') }}">Write a Review</a>
             @endif
             <a class="btn btn-primary" href="{{ route('profile.edit', compact('user', 'address', 'photo')) }}">Edit</a>
         </div>

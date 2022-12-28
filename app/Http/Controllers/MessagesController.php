@@ -21,16 +21,20 @@ class MessagesController extends Controller
      */
     public function index()
     {
+        $currentUserId = Auth::user()->id;
+
         // All threads, ignore deleted/archived participants
         //$threads = Thread::getAllLatest()->get();
 
         // All threads that user is participating in
-        $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
+        //$threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
+        $threads = Thread::forUser($currentUserId)->latest('updated_at')->get();
 
         // All threads that user is participating in, with new messages
-        // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
+        //$threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
+        //$threads = Thread::forUserWithNewMessages($currentUserId)->latest('updated_at')->get();        
 
-        return view('messages.index', compact('threads'));
+        return view('messages.index', compact('threads', 'currentUserId'));
     }
 
     /**
@@ -53,10 +57,16 @@ class MessagesController extends Controller
         // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
 
         // don't show the current user in list
-        $userId = Auth::id();
-        $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        $userId = Auth::user()->id;
+        //$users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        
+        //$participant = Participant::where('thread_id', $id)->get();
+        //dd($participant);
+        //$user = User::where('id', '!=', $participant->user)->get();
 
-        $thread->markAsRead($userId);
+        $users = User::all()->except($userId);
+        
+        //$thread->markAsRead($userId);
 
         return view('messages.show', compact('thread', 'users'));
     }
@@ -68,7 +78,7 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = User::all()->except(Auth::user()->id);
 
         return view('messages.create', compact('users'));
     }
@@ -82,6 +92,12 @@ class MessagesController extends Controller
     {
         $input = Request::all();
 
+        if($input['user_id']){
+            $user=User::find($input['user_id']);
+        }else{
+            $user = Auth::user()->id;
+        }
+
         $thread = Thread::create([
             'subject' => $input['subject'],
         ]);
@@ -89,14 +105,14 @@ class MessagesController extends Controller
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'body' => $input['message'],
         ]);
 
         // Sender
         Participant::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'last_read' => new Carbon(),
         ]);
 
@@ -126,17 +142,25 @@ class MessagesController extends Controller
 
         $thread->activateAllParticipants();
 
+        $input = Request::all();
+
+        if($input['user_id']){
+            $user=User::find($input['user_id']);
+        }else{
+            $user = Auth::user()->id;
+        }
+
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'body' => Request::input('message'),
         ]);
 
         // Add replier as a participant
         $participant = Participant::firstOrCreate([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
         ]);
         $participant->last_read = new Carbon();
         $participant->save();
