@@ -18,6 +18,7 @@ class Product extends Model
         'game_id',
         'user_id',
         'platform_id',
+        'key',
         'price',
         'discount',
     ];

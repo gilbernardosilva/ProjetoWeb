@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@livewireScripts()
+    @livewireScripts()
     @include('partials.header')
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
@@ -22,20 +22,21 @@
                                     {{ $product->discount }} % OFF</div>
                             @endif
                             <!-- Product image-->
-                            <a href="{{ url('/products/show/' . $product->id .'/'. $product->user->id) }}">
-                            <img class="card-img-top" style="border-top-radius:1.7rem"
-                                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></a>
+                            <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
+                                <img class="card-img-top" style="border-top-radius:1.7rem"
+                                    src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
+                                    alt="..." /></a>
 
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h4 class="fw-bolder">{{ $product->game->name }} </h4>
-                                    <h6 class="fw-bolder">{{$product->platform->name}}</h6>
+                                    <h6 class="fw-bolder">{{ $product->platform->name }}</h6>
                                     @if ($sale)
                                         <!-- Product price-->
                                         <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        {{intval($product->price*100 - ($product->price*100 * ($product->discount/100)))/100 }} €
+                                        {{ intval($product->price * 100 - $product->price * 100 * ($product->discount / 100)) / 100 }}€
                                     @else
                                         {{ $product->price }}
                                     @endif
@@ -75,18 +76,17 @@
                             @endif
                             <!-- Product image-->
                             <img class="card-img-top" style="border-top-radius:1.6rem"
-                                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-
+                                src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h4 class="fw-bolder">{{ $product->game->name }} </h4>
-                                    <h6 class="fw-bolder">{{$product->platform->name}}</h6>
+                                    <h6 class="fw-bolder">{{ $product->platform->name }}</h6>
                                     @if ($sale)
                                         <!-- Product price-->
                                         <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        {{ number_format($product->price - ( $product->price *($product->discount / 100)), 2) }}€
+                                        {{ number_format($product->price - $product->price * ($product->discount / 100), 2) }}€
                                     @else
                                         {{ $product->price }}
                                     @endif

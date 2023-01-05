@@ -32,6 +32,11 @@
                     </select>
                     </div>
                     <div class="form-group">
+                        <label for="text">Product Key</label>
+                        <input type="text" class="form-control" id="key" name="key" value="{{ old('Product Key') }}"
+                            required>
+                    </div>
+                    <div class="form-group">
                         <label for="text">Price</label>
                         <input type="text" class="form-control" id="price" name="price" value="{{ old('Price') }}"
                             required>

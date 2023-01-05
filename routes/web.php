@@ -32,16 +32,6 @@ use Illuminate\Support\Facades\Mail;
 
 Auth::routes();
 
-Route::controller(ProductsTable::class)->group(function () {
-    Route::get('/shopping-cart', 'showCart');
-    Route::post('/shopping-cart', 'removeFromCart');
-    Route::post('/checkout', 'checkout')->name('checkout');
-    Route::get('/success', 'success')->name('checkout.success');
-    Route::get('/cancel', 'cancel')->name('checkout.cancel');
-    Route::post('/webhook', 'webhook')->name('checkout.webhook');
-    Route::get('search', 'searchProducts');
-    Route::get('/products/show/{product}/{user}', 'show');
-});
 
 Route::middleware('is_admin')->group(function () {
     Route::controller(UserController::class)->group(function () {
@@ -127,10 +117,25 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::controller(ProductsTable::class)->group(function () {
+    Route::get('/products', 'index')->name('product.sort');
+    Route::get('/shopping-cart', 'showCart');
+    Route::post('/shopping-cart', 'removeFromCart');
+    Route::post('/checkout', 'checkout')->name('checkout');
+    Route::get('/success', 'success')->name('checkout.success');
+    Route::get('/cancel', 'cancel')->name('checkout.cancel');
+    Route::post('/webhook', 'webhook')->name('checkout.webhook');
+    Route::get('/products/show/{product}/{user}', 'show');
+});
+
+Route::controller(SearchController::class)->group(function () {
+    Route::get('search', 'searchProducts');
+});
+
 Route::controller(ProductController::class)->group(function () {
     Route::get('/', 'indexShop')->name('index');
-    Route::get('/product/add/','createProduct')->name('products.createProduct')->middleware('is_seller');
-    Route::post('/product/store/','store')->name('products.storeProduct')->middleware('is_seller');
+    Route::get('/product/add/', 'createProduct')->name('products.createProduct')->middleware('is_seller');
+    Route::post('/product/store/', 'store')->name('products.storeProduct')->middleware('is_seller');
 });
 
 Route::controller(GoogleController::class)->group(function () {

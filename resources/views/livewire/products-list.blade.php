@@ -1,22 +1,30 @@
 @extends('layouts.app')
 @section('content')
-    @include('partials.header')
     @livewireScripts
 
 
-
-    <section class="py-4">
-        <div class="container px-0 px-lg-0 mt-0">
-            <label>Price:</label>
-            <div class="card-body">
-                <input type="radio" name="priceSort" wire:model="priceInput" value="high-to-low" /> High to Low
-            </div>
-            <div class="card-body">
-                <input type="radio" name="priceSort" wire:model="priceInput" value="low-to-high" /> Low to High
-            </div>
+    <div class="container px-0 px-lg-0 mt-5">
+        <div class="card-header bg-dark">
+        <div class="d-flex justify-content-center">
+            <section class="py-4">
+                <form action="{{ route('product.sort') }}" method="GET">
+                    <label for="sort" class="text-white">Sort by:</label>
+                    <select name="sort" id="sort">
+                        <option value="price-asc">Price (Low to High)</option>
+                        <option value="price-desc">Price (High to Low)</option>
+                        <option value="date-asc">Date (Old to New)</option>
+                        <option value="date-desc">Date (New to Old)</option>
+                    </select>
+                    <label for="paginate" class="text-white">Items per page:</label>
+                    <input type="text" name="paginate" id="paginate" value="10">
+                    <button type="submit">Filter</button>
+                </form>
+            </section>
         </div>
+    </div>
+</div>
 
-    </section>
+
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
 
@@ -40,7 +48,8 @@
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
                                 <img class="card-img-top" style="border-top-radius:1.7rem"
-                                    src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></a>
+                                    src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
+                                    alt="..." /></a>
 
                             <!-- Product details-->
                             <div class="card-body p-4">
@@ -51,7 +60,7 @@
                                     @if ($sale)
                                         <!-- Product price-->
                                         <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        {{ number_format($product->price * ($product->discount / 100), 2, '.') }}€
+                                        {{ intval($product->price * 100 - $product->price * 100 * ($product->discount / 100)) / 100 }}€
                                     @else
                                         {{ $product->price }}
                                     @endif

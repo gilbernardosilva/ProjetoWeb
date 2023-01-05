@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Platform;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -58,15 +59,18 @@ class ProductController extends Controller
             'platform_id' => 'required|integer',
             'game_id' => 'required|integer',
             'price' => 'required|numeric',
+            'key' => 'required',
             'discount' => 'required|integer|between:0,100',
         ]);
         $product = new Product();
         $product->platform_id = $request->input('platform_id');
         $product->game_id = $request->input('game_id');
+        $product->key = $request->input('key');
         $product->price = $request->input('price');
         $product->discount = $request->input('discount');
-        if($request->user_id){
-            $user=User::find($request->user_id);
+        $product->user_id = Auth::id();
+        if(Auth::id()){
+            $user=User::find(Auth::id());
             $user->products()->save($product);
         }
 
@@ -83,6 +87,7 @@ class ProductController extends Controller
             'platform_id' => 'required|integer',
             'game_id' => 'required|integer',
             'price' => 'required|numeric',
+            'key' => 'required',
             'discount' => 'required|integer|between:0,100',
         ]);
         $product->update($request->all());
