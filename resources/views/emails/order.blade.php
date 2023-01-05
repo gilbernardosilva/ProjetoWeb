@@ -6,7 +6,7 @@ You have purchased the following items:
     | Product       | Key           | Price    |
     | ------------- |:-------------:| --------:|
     @foreach ( $cart as $product)
-    | {{$product->name}}      | Centered      |{{intval($product->price - ($product->price * ($product->options->discount/100))) /100}} €|
+    | {{$product->name}}      | {{$product->key}}      |{{intval($product->price - ($product->price * ($product->options->discount/100))) /100}} €|
     @endforeach
 
 </x-mail::table>
