@@ -37,16 +37,16 @@
             </div>
         </div>
         <div class="container px-4 px-lg-5 my-5">
-            <div class="card align-items-left"
-                style="width: 18rem display: flex; align-items: left; justify-content: left; width: 1300px; height: 300px; background: rgb(199, 199, 199);">
-                <div class="card-header" style="background: rgb(199, 199, 199)">
+            <div class="card align-items-left bg-dark"
+                style="width: 18rem display: flex; align-items: left; justify-content: left; width: 1300px; height: 300px;">
+                <div class="card-header bg-dark text-white">
                     Other Sellers
                 </div>
                 @forelse ($sameProduct as $productSeller)
                     @if ($productSeller->user->id == $product->user->id)
                     @else
                         <ul class="list-group list-group-flush" >
-                            <li class="list-group-item" style="background: rgb(233, 233, 233)">
+                            <li class="list-group-item" style="background: rgb(204, 203, 203)">
                                 <div class="mb-1" >
                                     <div class="col-md-0 float-right">
                                         <livewire:add-cart :product_id="$productSeller->id" />
@@ -59,7 +59,7 @@
                                 <div class="col-md-0 float-right">
                                 <strong>Price</strong>
                                 @if ($productSeller->discount > 0)
-                                    {{ ($productSeller->discount / 100) * $productSeller->price }}€
+                                {{ intval($productSeller->price * 100 - $productSeller->price * 100 * ($productSeller->discount / 100)) / 100 }}€
                                 @else
                                     {{ $productSeller->price }}€
                                 @endif

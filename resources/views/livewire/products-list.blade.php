@@ -43,7 +43,7 @@
                             <!-- Sale badge-->
                             @if ($sale)
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                                    Sale</div>
+                                    {{ $product->discount }} % OFF</div>
                             @endif
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
