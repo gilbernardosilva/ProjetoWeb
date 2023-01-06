@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\Game;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -55,5 +57,19 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         return view('categories.edit',compact('category'));
+    }
+
+    public function categories($category){
+        $gameCategory = Game::where('category_id', $category)->get();
+        $searchProducts = [];
+        foreach ($gameCategory as $categories) {
+            $searchProducts = Product::where('game_id', $categories->id)->get();
+        }
+        return view('livewire.products-list', compact('searchProducts'));
+    }
+
+    public function allCategories(){
+        $searchProducts = Product::paginate(20);
+        return view('livewire.products-list', compact('searchProducts'));
     }
 }

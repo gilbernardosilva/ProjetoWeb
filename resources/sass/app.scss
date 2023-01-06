@@ -6,31 +6,3 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
-
-
-.pagination .page-item a.page-link {
-    color: #030303; /* Set the color of the text */
-    background-color: #ffffff;
-  }
-
-  .pagination .page-item a.page-link:hover {
-    color: #ffffff; /* Set the color of the text */
-    background-color: #030303; /* Set the background color on hover */
-  }
-
-  .pagination .page-item.active .page-link {
-    background-color: #030303; /* Set the background color on hover */
-    border-color: #ffffff; /* Set the border color for the active button */
-  }
-
-  .search-bar {
-    width: 100%;
-  }
-
-html{
-    height:100%;
-  }
-body {
-    display: flex;
-    flex-direction: column;
-}

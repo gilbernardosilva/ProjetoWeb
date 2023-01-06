@@ -182,10 +182,11 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
-
+        
         /*
          * Package Service Providers...
          */
+        Cmgmyr\Messenger\MessengerServiceProvider::class,
 
         /*
          * Application Service Providers...

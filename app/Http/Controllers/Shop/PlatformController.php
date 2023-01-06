@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Models\Platform;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -51,8 +52,18 @@ class PlatformController extends Controller
         return redirect()->back()->with('success', 'Platform updated successfully!');
     }
 
-    public function edit(platform $platform)
+    public function edit(Platform $platform)
     {
         return view('platforms.edit',compact('platform'));
+    }
+
+    public function platforms(Platform $platform){
+        $searchProducts = Product::where('platform_id', $platform->id)->get();
+        return view('livewire.products-list', compact('searchProducts'));
+    }
+
+    public function allPlatforms(){
+        $searchProducts = Product::paginate(20);
+        return view('livewire.products-list', compact('searchProducts'));
     }
 }

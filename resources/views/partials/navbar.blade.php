@@ -10,12 +10,13 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false" v-pre>Platforms</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
+                        <li><a class="dropdown-item" href="/platforms/products">All Products</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        @foreach($platforms as $platform)
+                        <li><a class="dropdown-item" href="{{ url('platforms/'.$platform->id)}}">{{$platform->name}}</a></li>
+                        @endforeach
                     </ul>
                 </li>
 
@@ -23,12 +24,13 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false" v-pre>Categories</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
+                        <li><a class="dropdown-item" href="/categories/products">All Products</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        @foreach($categories as $category)
+                        <li><a class="dropdown-item" href="{{ url('categories/'.$category->id)}}">{{$category->name}}</a></li>
+                        @endforeach
                     </ul>
                 </li>
             </ul>
@@ -65,6 +67,7 @@
                             @if(Auth::user()->role=='seller')
                             <a class="dropdown-item" href="{{ route('profile.show') }}">Products</a>
                             @endif
+                            <a class="dropdown-item" href="{{ route('messages.index') }}">Messages</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

@@ -4,7 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Models\User;
 use App\Models\Photo;
+use App\Models\Product;
 use App\Models\Address;
+use App\Models\Review;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,20 +18,37 @@ use Illuminate\Support\Facades\Redirect;
 class ProfileController extends Controller
 {
 
-    public function show()
+    public function edit(User $user, Address $address, Photo $photo)
     {
-        $user = auth()->user();
-        $address = $user->address;
-        $photo = $user->photo;
-
         return view('profile.edit', compact('user', 'address', 'photo'));
     }
 
+    public function show()
+    {
+        $user = auth()->user();
+        $hideWriteOwnReview = auth()->user();
+        $role = $user->role;
+        $address = $user->address;
+        $photo = $user->photo;
+        $reviews = Review::where('user_id', $user->id)->paginate(4);
+        //$reviewer = User::where('id', $reviews->reviewer_id)->Storage::paginate(4);
+        $sellingProducts = Product::where('user_id', $user->id)->paginate(8);
+        $orders = Order::where('user_id', $user->id)->get();
+        $productsBought = 0;
+        foreach ($orders as $order) {
+            if ($order->status == 'paid') {
+                $orderItems = OrderItem::where('order_id', $order->id);
+                $productsBought = Product::where('id', $orderItems->product_id)->paginate(8);
+            }
+        }
+
+        return view('profile.show', compact('hideWriteOwnReview', 'user', 'address', 'photo', 'sellingProducts', 'role', 'reviews', 'productsBought'));
+    }
 
     public function storeAddress(Request $request)
     {
 
-        $user= auth()->user();
+        $user = auth()->user();
 
         $request->validate([
             'street' => 'required|string|max:50',
