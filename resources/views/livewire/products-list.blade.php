@@ -48,7 +48,7 @@
                             @endif
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
-                                <img class="card-img-top" style="border-top-radius:1.7rem"
+                                <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
                                     src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
                                     alt="..." /></a>
 

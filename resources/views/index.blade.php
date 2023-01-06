@@ -15,7 +15,7 @@
                         }
                     @endphp
                     <div class="col mb-5">
-                        <div class="card h-100" style="border-top-radius:1.6rem">
+                        <div class="card h-100" style="border-top-radius:1.6rem;">
                             <!-- Sale badge-->
                             @if ($sale)
                                 <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
@@ -23,7 +23,7 @@
                             @endif
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
-                                <img class="card-img-top" style="border-top-radius:1.7rem"
+                                <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
                                     src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
                                     alt="..." /></a>
 
@@ -75,7 +75,7 @@
                                     {{ $product->discount }} % OFF</div>
                             @endif
                             <!-- Product image-->
-                            <img class="card-img-top" style="border-top-radius:1.6rem"
+                            <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
                                 src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">

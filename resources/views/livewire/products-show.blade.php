@@ -11,10 +11,9 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
-                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" width="700" height="600"
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" width="650" height="550"
                         src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}" alt="..." /></div>
                 <div class="col-md-6">
-                    <div class="small mb-1">SKU: {{ $product->id }}</div>
                     <h1 class="display-5 fw-bolder">{{ $product->game->name }}</h1>
                     <div class="fs-5 mb-5">
                         @if ($sale)
@@ -24,9 +23,10 @@
                             <span>{{ $product->price }}€</span>
                         @endif
                         <div class="small mb-1">
+                        <br>
                             Seller:<a class="small mb-1"> {{ $product->user->name }}</a>
                         </div>
-                    </div>
+
 
 
                     <p class="lead">{{ $product->game->description }}</p>
@@ -34,6 +34,7 @@
                         <livewire:add-cart :product_id="$product->id" />
                     </div>
                 </div>
+            </div>
             </div>
         </div>
         <div class="container px-4 px-lg-5 my-5">
@@ -91,7 +92,7 @@
                         <div class="card h-100">
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
-                                <img class="card-img-top"
+                                <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
                                     src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
                                     alt="..." /></a>
                             <!-- Product details-->
@@ -121,5 +122,8 @@
             </div>
         </div>
     </section>
+    <br>
+    <br>
+    <br>
     @include('partials.footer')
 @endsection
