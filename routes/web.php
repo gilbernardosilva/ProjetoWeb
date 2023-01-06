@@ -101,19 +101,36 @@ Route::middleware('is_admin')->group(function () {
     });
 });
 
+
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'show')->name('profile.show');
+        Route::get('/profile/edit/{user}', 'edit')->name('profile.edit');
         Route::post('/profile/updateAddress', 'updateAddress')->name('profile.updateAddress');
         Route::post('/profile/storeAddress', 'storeAddress')->name('profile.storeAddress');
         Route::post('/profile/updatePhoto', 'updatePhoto')->name('profile.updatePhoto');
         Route::post('/profile/storePhoto', 'storePhoto')->name('profile.storePhoto');
     });
+
+    Route::controller(ReviewController::class)->group(function () {
+            Route::get('/profile/review/create', 'create')->name('reviews.create');
+            Route::post('/profile/review/store', 'store')->name('reviews.store');
+    });
+
+    Route::controller(MessagesController::class)->group(function () {
+        Route::get('/dashboard', 'index')->name('messages.index');
+        Route::get('/dashboard/create', 'create')->name('messages.create');
+        Route::get('/dashboard/{id}', 'show')->name('messages.show');
+        Route::post('/dashboard', 'store')->name('messages.store');
+        Route::post('/dashboard/{id}', 'update')->name('messages.update');
+    });
+
     Route::middleware('is_user')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('/seller', 'createSeller')->name('user.seller');
             Route::post('/seller/store', 'storeSeller')->name('user.storeSeller');
         });
+
     });
 });
 
