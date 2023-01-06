@@ -1,6 +1,5 @@
 <?php
 
-use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Shop\GameController;
@@ -15,11 +14,9 @@ use App\Http\Controllers\Auth\FacebookController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\PlatformController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\User\ReviewController;
 use App\Http\Livewire\ProductsTable;
-use App\Mail\OrderMail;
-use Illuminate\Support\Facades\Mail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -151,7 +148,7 @@ Route::controller(ProductsTable::class)->group(function () {
 
 
 Route::controller(ProductController::class)->group(function () {
-    Route::get('/', 'indexShop')->name('index');
+    Route::get('/', 'indexShop')->name('shop.index');
     Route::get('/product/add/', 'createProduct')->name('products.createProduct')->middleware('is_seller');
     Route::post('/product/store/', 'store')->name('products.storeProduct')->middleware('is_seller');
 });
