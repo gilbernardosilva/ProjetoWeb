@@ -33,9 +33,8 @@
                                     </div>
 
                                     <div class="form-outline form-white mb-4">
-                                        <input type="password" id="password-confirm"
-                                            name="password-confirm" class="form-control form-control-lg" required
-                                            autocomplete="new-password" >
+                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" class="form-control form-control-lg"
+                                        required autocomplete="new-password">
                                         <label class="form-label" for="password-confirm">Password Confirmation</label>
                                     </div>
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
