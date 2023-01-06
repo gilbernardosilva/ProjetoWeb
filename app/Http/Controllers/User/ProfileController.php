@@ -37,7 +37,7 @@ class ProfileController extends Controller
         $productsBought = 0;
         foreach ($orders as $order) {
             if ($order->status == 'paid') {
-                $orderItems = OrderItem::where('order_id', $order->id);
+                $orderItems = OrderItem::where('order_id', $order->id->first());
                 $productsBought = Product::where('id', $orderItems->product_id)->paginate(8);
             }
         }

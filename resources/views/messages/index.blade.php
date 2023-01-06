@@ -35,6 +35,6 @@
         </div>
         
     @else<br />
-        <p>Sorry, no threads.</p>
+        <p>Sorry, no messages.</p>
     @endif
 @stop

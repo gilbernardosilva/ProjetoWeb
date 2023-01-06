@@ -46,7 +46,7 @@
     </div>
     @if($role === 'seller' || $role === 'admin')
         <div class="rela-block content">
-            <div class="rela-inline product">
+            <div class="rela-inline selling products">
                 <h1>Selling products</h1>
                 @foreach($sellingProducts as $product)
                 @php
@@ -77,7 +77,7 @@
                                     @if ($sale)
                                         <!-- Product price-->
                                         <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        {{ number_format($product->price * ($product->discount / 100), 2, '.') }}€
+                                        <span>{{ intval($product->price * 100 - $product->price * 100 * ($product->discount / 100)) / 100 }}€</span>
                                     @else
                                         {{ $product->price }}
                                     @endif
@@ -95,6 +95,32 @@
                 @endforeach
             </div>
             {{ $sellingProducts->links('pagination::bootstrap-5') }}
+            <div class="rela-inline products bought">
+                <h1>Products Bought</h1>
+                    @if($productsBought > 0)
+                        @foreach($productsBought as $product)
+                            <div class="col mb-5">
+                                <div class="card h-100" style="border-top-radius:1.6rem">
+                                    <!-- Product image-->
+                                    <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
+                                        <img class="card-img-top" style="border-top-radius:1.7rem"
+                                            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></a>
+
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">{{ $product->game->name }} - [{{ $product->platform->name }}]</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        @endforeach
+                        {{ $productsBought->links('pagination::bootstrap-5') }}
+                    @else
+                        <h3>No products bought</h3>
+                    @endif
+            </div>
         </div>
     @elseif($role === 'user')
     <div class="rela-block content">

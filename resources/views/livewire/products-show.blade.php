@@ -24,7 +24,7 @@
                         @endif
                         <div class="small mb-1">
                         <br>
-                            Seller:<a class="small mb-1"> {{ $product->user->name }}</a>
+                            Seller:<a class="small mb-1" href="{{ route('profile.show') }}"> {{ $product->user->name }}</a>
                         </div>
 
 
