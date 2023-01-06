@@ -190,7 +190,7 @@ class ProductsTable extends Component
     {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
         $sessionId = $request->get('session_id');
-        $cartItems = Cart::content();
+        $cart = Cart::content();
         try {
             $session = $stripe->checkout->sessions->retrieve($sessionId);
             if (!$session) {
@@ -204,7 +204,7 @@ class ProductsTable extends Component
             if ($order && $order->status === 'unpaid') {
                 $order->status = 'paid';
             }
-            foreach ($cartItems as $product) {
+            foreach ($cart as $product) {
                 $orderItem = new OrderItem();
                 $orderItem->order_id = $order->id;
                 $orderItem->game_id = $product->options->game_id;
@@ -215,7 +215,7 @@ class ProductsTable extends Component
             }
             $order->save();
             Cart::destroy();
-            Mail::to(Auth::user()->email)->send(new OrderMail($cartItems));
+            Mail::to(Auth::user()->email)->send(new OrderMail($cart));
 
             return view('checkout.success');
         } catch (\Exception $e) {
