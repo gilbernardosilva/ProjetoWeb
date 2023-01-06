@@ -147,6 +147,16 @@ Route::controller(ProductsTable::class)->group(function () {
 });
 
 
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/categories/products', 'allCategories')->name('livewire.products-list');
+    Route::get('/categories/{category}', 'categories')->name('livewire.products-list');
+});
+
+Route::controller(PlatformController::class)->group(function () {
+    Route::get('/platforms/products', 'allPlatforms')->name('livewire.products-list');
+    Route::get('/platforms/{platform}', 'platforms')->name('livewire.products-list');
+});
+
 Route::controller(ProductController::class)->group(function () {
     Route::get('/', 'indexShop')->name('shop.index');
     Route::get('/product/add/', 'createProduct')->name('products.createProduct')->middleware('is_seller');

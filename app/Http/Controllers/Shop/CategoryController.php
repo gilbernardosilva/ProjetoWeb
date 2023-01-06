@@ -63,7 +63,7 @@ class CategoryController extends Controller
         $gameCategory = Game::where('category_id', $category)->get();
         $searchProducts = [];
         foreach ($gameCategory as $categories) {
-            $searchProducts = Product::where('game_id', $categories->id)->get();
+            $searchProducts = Product::where('game_id', $categories->id)->paginate(12);
         }
         return view('livewire.products-list', compact('searchProducts'));
     }
