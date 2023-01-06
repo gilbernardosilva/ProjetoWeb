@@ -27,7 +27,7 @@
                                 <a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a>
                                 <a class="dropdown-item" href="{{ route('games.index') }}">Games</a>
                                 <a class="dropdown-item" href="{{ route('products.index') }}">Products</a>
-                                <a class="dropdown-item" href="{{ route('products.index') }}">Orders</a>
+                                <a class="dropdown-item" href="{{ route('shop.index') }}">Orders</a>
                                 <a class="dropdown-item" href="{{ route('profile.show') }}">Profile</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();  document.getElementById('logout-form').submit();">

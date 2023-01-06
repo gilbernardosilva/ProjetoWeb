@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/profile/updatePhoto', 'updatePhoto')->name('profile.updatePhoto');
         Route::post('/profile/storePhoto', 'storePhoto')->name('profile.storePhoto');
     });
-    
+
     Route::controller(ReviewController::class)->group(function () {
             Route::get('/profile/review/create', 'create')->name('reviews.create');
             Route::post('/profile/review/store', 'store')->name('reviews.store');
@@ -131,12 +131,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/seller', 'createSeller')->name('user.seller');
             Route::post('/seller/store', 'storeSeller')->name('user.storeSeller');
         });
-        
     });
 });
 
 Route::controller(ProductsTable::class)->group(function () {
-    Route::get('/products', 'index')->name('product.sort');
+    Route::get('/products/sort', 'index')->name('product.sort');
     Route::get('/shopping-cart', 'showCart');
     Route::post('/shopping-cart', 'removeFromCart');
     Route::post('/checkout', 'checkout')->name('checkout');
@@ -151,9 +150,7 @@ Route::controller(SearchController::class)->group(function () {
 });
 
 Route::controller(ProductController::class)->group(function () {
-    Route::get('/', 'indexShop')->name('index');
-    Route::get('/product/add/', 'createProduct')->name('products.createProduct')->middleware('is_seller');
-    Route::post('/product/store/', 'store')->name('products.storeProduct')->middleware('is_seller');
+    Route::get('/', 'indexShop')->name('shop.index');
 });
 
 Route::controller(CategoryController::class)->group(function () {
