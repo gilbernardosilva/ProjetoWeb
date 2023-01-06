@@ -13,6 +13,7 @@ use App\Models\OrderItem;
 use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Livewire\Component;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -43,33 +44,66 @@ class ProductsTable extends Component
 
 
 
-    public function index(Request $request)
-    {
+        public function index(Request $request)
+        {
+            $sort = $request->input('sort');
+            $search_term = request('search');
+            $game = Game::where('name', 'ilike', '%' . $search_term . '%')->first();
+            $paginate = $request->input('paginate');
+            $products = Product::query();
+            if ((request('category_id'))!=null) {
+                $category_id = $request->input('category_id');
+                $category_id= json_decode($category_id);
+                $game = Game::where('category_id','=', $category_id)->first();
+                if ($sort == 'price-asc') {
+                    $searchProducts = $products->where('game_id', '=', $game->id)->orderBy('price', 'asc')->paginate($paginate);
+                } elseif ($sort == 'price-desc') {
+                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('price', 'desc')->paginate($paginate);
+                } elseif ($sort == 'date-asc') {
+                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('created_at', 'asc')->paginate($paginate);
+                } elseif ($sort == 'date-desc') {
+                    $searchProducts =  $products->where('game_id', '=', $game->id)->latest()->paginate($paginate);
+                }
+            } elseif (request('platform_id')!=null) {
+                $platform_id = $request->input('platform_id');
+                $platform_id= json_decode($platform_id);
+                if ($sort == 'price-asc') {
+                    $searchProducts = $products->where('platform_id', '=', $platform_id->id)->orderBy('price', 'asc')->paginate($paginate);
+                } elseif ($sort == 'price-desc') {
+                    $searchProducts =  $products->where('platform_id', '=', $platform_id->id)->orderBy('price', 'desc')->paginate($paginate);
+                } elseif ($sort == 'date-asc') {
+                    $searchProducts =  $products->where('platform_id', '=', $platform_id->id)->orderBy('created_at', 'asc')->paginate($paginate);
+                } elseif ($sort == 'date-desc') {
+                    $searchProducts =  $products->where('platform_id', '=', $platform_id->id)->latest()->paginate($paginate);
+                }
+            } elseif($search_term!=null) {
+                if ($sort == 'price-asc') {
+                    $searchProducts = $products->where('game_id', '=', $game->id)->orderBy('price', 'asc')->paginate($paginate);
+                } elseif ($sort == 'price-desc') {
+                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('price', 'desc')->paginate($paginate);
+                } elseif ($sort == 'date-asc') {
+                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('created_at', 'asc')->paginate($paginate);
+                } elseif ($sort == 'date-desc') {
+                    $searchProducts =  $products->where('game_id', '=', $game->id)->latest()->paginate($paginate);
+                }
+            }else{
+                if ($sort == 'price-asc') {
+                    $searchProducts = $products->orderBy('price', 'asc')->paginate($paginate);
+                } elseif ($sort == 'price-desc') {
+                    $searchProducts =  $products->orderBy('price', 'desc')->paginate($paginate);
+                } elseif ($sort == 'date-asc') {
+                    $searchProducts =  $products->orderBy('created_at', 'asc')->paginate($paginate);
+                } elseif ($sort == 'date-desc') {
+                    $searchProducts =  $products->latest()->paginate($paginate);
+                }
+            }
 
-        $sort = $request->input('sort');
 
+            $searchProducts->appends(['search' => $search_term, 'sort' => $sort]);
 
-        $search_term = request('search');
-
-        $game = Game::where('name', 'ilike', '%' . $search_term . '%')->first();
-
-        $paginate = $request->input('paginate');
-        $products = Product::query();
-
-        if ($sort == 'price-asc') {
-            $searchProducts = $products->where('game_id', '=', $game->id)->orderBy('price', 'asc')->paginate($paginate);
-        } elseif ($sort == 'price-desc') {
-            $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('price', 'desc')->paginate($paginate);
-        } elseif ($sort == 'date-asc') {
-            $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('created_at', 'asc')->paginate($paginate);
-        } elseif ($sort == 'date-desc') {
-            $searchProducts =  $products->where('game_id', '=', $game->id)->latest()->paginate($paginate);
+            return view('livewire.products-list', compact('searchProducts'));
         }
 
-        $searchProducts->appends(['search' =>$search_term, 'sort' => $sort]);
-
-        return view('livewire.products-list', compact('searchProducts'));
-    }
     public function show(Product $product)
     {
         $category = $product->game->category->id;

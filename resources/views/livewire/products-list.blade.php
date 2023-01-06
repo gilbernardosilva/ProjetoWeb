@@ -5,25 +5,27 @@
 
     <div class="container px-0 px-lg-0 mt-5">
         <div class="card-header bg-dark">
-        <div class="d-flex justify-content-center">
-            <section class="py-4">
-                <form action="{{ route('product.sort') }}" method="GET">
-                    <input type="hidden" name="search" value="{{ request('search') }}">
-                    <label for="sort" class="text-white">Sort by:</label>
-                    <select name="sort" id="sort">
-                        <option value="price-asc">Price (Low to High)</option>
-                        <option value="price-desc">Price (High to Low)</option>
-                        <option value="date-asc">Date (Old to New)</option>
-                        <option value="date-desc">Date (New to Old)</option>
-                    </select>
-                    <label for="paginate" class="text-white">Items per page:</label>
-                    <input type="text" name="paginate" id="paginate" value="10">
-                    <button type="submit">Filter</button>
-                </form>
-            </section>
+            <div class="d-flex justify-content-center">
+                <section class="py-4">
+                    <form action="{{ route('product.sort') }}" method="GET">
+                        <input type="hidden" name="category_id" value="{{ request('category') }}">
+                        <input type="hidden" name="platform_id" value="{{ request('platform') }}">
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                        <label for="sort" class="text-white">Sort by:</label>
+                        <select name="sort" id="sort">
+                            <option value="price-asc">Price (Low to High)</option>
+                            <option value="price-desc">Price (High to Low)</option>
+                            <option value="date-asc">Date (Old to New)</option>
+                            <option value="date-desc">Date (New to Old)</option>
+                        </select>
+                        <label for="paginate" class="text-white">Items per page:</label>
+                        <input type="text" name="paginate" id="paginate" value="10">
+                        <button type="submit">Filter</button>
+                    </form>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 
 
     <section class="py-5">
@@ -48,7 +50,8 @@
                             @endif
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
-                                <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
+                                <img class="card-img-top"
+                                    style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
                                     src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
                                     alt="..." /></a>
 
@@ -83,7 +86,7 @@
                 @endforelse
 
             </div> <!-- .product-list -->
-            {{ $searchProducts->appends(request()->input())->links("pagination::bootstrap-5") }}
+            {{ $searchProducts->appends(request()->input())->links('pagination::bootstrap-5') }}
         </div>
     </section>
     <br>
