@@ -9,12 +9,14 @@ use App\Models\Platform;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -41,17 +43,39 @@ class ProductsTable extends Component
 
 
 
+    public function index(Request $request)
+    {
+        $sort = $request->input('sort');
+
+        $paginate = $request->input('paginate');
+
+        $products = Product::query();
+
+        if ($sort == 'price-asc') {
+            $searchProducts = $products->orderBy('price', 'asc')->paginate($paginate);
+        } elseif ($sort == 'price-desc') {
+            $searchProducts =  $products->orderBy('price', 'desc')->paginate($paginate);
+        } elseif ($sort == 'date-asc') {
+            $searchProducts =  $products->orderBy('created_at', 'asc')->paginate($paginate);
+        } elseif ($sort == 'date-desc') {
+            $searchProducts =  $products->latest()->paginate($paginate);
+        }
+
+        $searchProducts->appends(['sort' => $sort]);
+
+        return view('livewire.products-list', compact('searchProducts'));
+    }
     public function show(Product $product)
     {
         $category = $product->game->category->id;
         $categoryName = Category::where($category);
         $similiarProducts = Product::join('games', 'products.game_id', '=', 'games.id')
-        ->where('games.category_id', $category)
-        ->get()->take(4);
+            ->where('games.category_id', $category)
+            ->get()->take(4);
         $cart = Cart::content();
 
         $sameProduct = Product::where('game_id', $product->game->id)->paginate(4);
-        return view('livewire.products-show', compact('cart'),['product' => $product, 'similiarProducts' => $similiarProducts, 'sameProduct' => $sameProduct]);
+        return view('livewire.products-show', compact('cart'), ['product' => $product, 'similiarProducts' => $similiarProducts, 'sameProduct' => $sameProduct]);
     }
 
 
@@ -71,6 +95,18 @@ class ProductsTable extends Component
         return view('livewire.shopping-cart', compact('cart'));
     }
 
+    public function searchProducts(Request $request)
+    {
+
+        if ($request->search) {
+            $game = Game::where('name', 'ilike', '%' . $request->search . '%')->first();
+            $searchProducts = Product::where('game_id', '=', $game->id)->paginate(12);
+            return view('livewire.products-list', compact('searchProducts'));
+        } else {
+
+            return redirect()->back()->with('message', 'Empty Search');
+        }
+    }
 
     public function checkout()
     {
@@ -89,7 +125,7 @@ class ProductsTable extends Component
                         'name' => $item->name,
                         //'images' => [$item->image], DO NOT USE ON STRIPE BECAUSE LOCALHOST
                     ],
-                    'unit_amount' => intval($item->price - ($item->price * ($item->options->discount/100))),
+                    'unit_amount' => intval($item->price - ($item->price * ($item->options->discount / 100))),
                 ],
                 'quantity' => $item->qty,
             ];
@@ -116,7 +152,6 @@ class ProductsTable extends Component
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
         $sessionId = $request->get('session_id');
         $cartItems = Cart::content();
-
         try {
             $session = $stripe->checkout->sessions->retrieve($sessionId);
             if (!$session) {
@@ -129,11 +164,17 @@ class ProductsTable extends Component
             }
             if ($order && $order->status === 'unpaid') {
                 $order->status = 'paid';
-                $order->save();
             }
             foreach ($cartItems as $product) {
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $order->id;
+                $orderItem->game_id = $product->options->game_id;
+                $orderItem->initial_price = $product->price;
+                $orderItem->final_price = intval($product->price - ($product->price * ($product->options->discount / 100)));
+                $orderItem->save();
                 Product::destroy($product->id);
             }
+            $order->save();
             Cart::destroy();
             Mail::to(Auth::user()->email)->send(new OrderMail($cartItems));
 
@@ -141,7 +182,6 @@ class ProductsTable extends Component
         } catch (\Exception $e) {
             throw new NotFoundHttpException();
         }
-
     }
 
     public function cancel()

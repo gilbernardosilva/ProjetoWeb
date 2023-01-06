@@ -74,6 +74,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                 @empty
@@ -81,7 +82,12 @@
                 @endforelse
 
             </div> <!-- .product-list -->
+            {{ $searchProducts->appends(request()->input())->links("pagination::bootstrap-5") }}
         </div>
     </section>
+    <br>
+    <br>
+    <br>
+    <br>
     @include('partials.footer')
 @endsection
