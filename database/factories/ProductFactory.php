@@ -28,6 +28,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
+            'key' => fake() -> text(20),
             'game_id' => Game::all()->random()->id,
             'user_id' => User::all()->random()->id,
             'platform_id' => Platform::all()->random()->id,

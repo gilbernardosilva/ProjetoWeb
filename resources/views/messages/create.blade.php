@@ -24,7 +24,6 @@
                                 <select name="user_id" id="user_id" class="form-select">
                                     @foreach ($users as $user)
                                     @if($user->role == "seller")
-
                                         <option type="checkbox" name="recipients[]" value="{{ $user->id }}">
                                             {{ $user->name }}</option>
                                             @endif()

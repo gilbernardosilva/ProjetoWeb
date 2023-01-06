@@ -41,33 +41,6 @@ class ProductsTable extends Component
 
 
 
-    public function index(Request $request){
-        $sort = $request->input('sort');
-
-        $paginate = $request->input('paginate');
-
-        $products = Product::query();
-
-        if ($sort == 'price-asc') {
-            $products->orderBy('price', 'asc');
-        } elseif ($sort == 'price-desc') {
-            $products->orderBy('price', 'desc');
-        } elseif ($sort == 'date-asc') {
-            $products->orderBy('created_at', 'asc');
-        } elseif ($sort == 'date-desc') {
-            $products->latest();
-        }
-
-        if ($paginate) {
-            $products->paginate($paginate);
-        } else {
-            $products->get();
-        }
-
-        $searchProducts = $products->get();
-
-        return view('livewire.products-list', compact('searchProducts'));
-    }
     public function show(Product $product)
     {
         $category = $product->game->category->id;
