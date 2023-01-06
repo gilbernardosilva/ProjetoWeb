@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained();
-            $table->foreignId('product_id')->unique()->constrained();
+            $table->foreignId('game_id')->constrained();
             $table->float('initial_price')->unsigned();
             $table->float('final_price')->unsigned();
             $table->timestamps();

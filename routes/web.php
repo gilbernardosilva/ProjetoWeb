@@ -118,7 +118,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(ProductsTable::class)->group(function () {
-    Route::get('/products', 'index')->name('product.sort');
+    Route::get('/sort', 'index')->name('product.sort');
     Route::get('/shopping-cart', 'showCart');
     Route::post('/shopping-cart', 'removeFromCart');
     Route::post('/checkout', 'checkout')->name('checkout');
@@ -126,11 +126,10 @@ Route::controller(ProductsTable::class)->group(function () {
     Route::get('/cancel', 'cancel')->name('checkout.cancel');
     Route::post('/webhook', 'webhook')->name('checkout.webhook');
     Route::get('/products/show/{product}/{user}', 'show');
+    Route::get('search', 'searchProducts');
+
 });
 
-Route::controller(SearchController::class)->group(function () {
-    Route::get('search', 'searchProducts');
-});
 
 Route::controller(ProductController::class)->group(function () {
     Route::get('/', 'indexShop')->name('index');
