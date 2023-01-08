@@ -34,7 +34,7 @@ class PlatformController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:8',
+            'name' => 'required|string|max:20',
         ]);
         $platform = new platform();
         $platform->name = $request->input('name');
