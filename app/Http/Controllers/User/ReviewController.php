@@ -23,10 +23,9 @@ class ReviewController extends Controller
             'user_id' => 'required|nullable|integer',
             'rating' => 'required',
             'description' => 'required|string|max:350',
-            'reviewed_id' => 'required|exists:users,id',
         ]);
         $review = new Review();
-        $review->rating = $request->input('rating'); 
+        $review->rating = $request->input('rating');
         $review->description = $request->input('description');
         $review->reviewed_id = $request->input('user_id');
         $review->reviewer_id = Auth::id();

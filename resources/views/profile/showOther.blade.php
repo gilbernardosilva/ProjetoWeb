@@ -23,11 +23,11 @@
             @forelse($reviews as $review)
             <div class="commented-section mt-2">
                 <div class="d-flex flex-row align-items-center commented-user">
-                    <h5 class="mr-3">{{ $review->reviewer->name }}</h5>
-                    <span class="ml-2">{{ $review->description }}</span>
-                    <span class="mb-1 ml-2">{{ $review->updated_at }}</span>
-                    <span class="float-right">{{ $review->rating }}</span>
+                    <h3 class="mr-2">{{ $review->reviewer->name }}</h5>
+                    <span class= "ml-2">{{ $review->description }}</span>
+                    <span class="ml-4">{{ $review->rating }}</span>
                     <i class="fa fa-star" aria-hidden="true"></i>
+                    <span class=" ml-5 float-right">{{ $review->updated_at }}</span>
                 </div>
             </div>
             @empty

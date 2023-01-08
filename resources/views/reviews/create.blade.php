@@ -4,7 +4,7 @@
         <div class="row mb-5">
             <div class="col-6 offset-3">
                 <h1 class="text-center mb-5 text-danger">Creating a review for {{$user->name}}</h1>
-                <form method="post" action="{{ route('reviews.store')) }}">
+                <form method="post" action="{{ route('reviews.store') }}">
                     @csrf
                     <div class="form-group">
                         <select name="user_id" id="user_id" class="form-select">
@@ -30,8 +30,9 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
+                @include('partials.errors')
             </div>
         </div>
     </div>
-    @include('partials.errors')
+
 @endsection
