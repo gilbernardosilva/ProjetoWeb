@@ -58,12 +58,24 @@ class PlatformController extends Controller
     }
 
     public function platforms(Platform $platform){
+        $category_id =  null;
+        $platform_id = $platform;
         $searchProducts = Product::where('platform_id', $platform->id)->paginate(12);
-        return view('livewire.products-list', compact('searchProducts'));
+        if (!empty($searchProducts)) {
+            return view('livewire.products-list', compact('searchProducts','category_id','platform_id'));
+        } else {
+            return view('livewire.products-list-empty');
+        }
     }
 
     public function allPlatforms(){
+        $category_id =  null;
+        $platform_id = null;
         $searchProducts = Product::paginate(20);
-        return view('livewire.products-list', compact('searchProducts'));
+        if (!empty($searchProducts)) {
+            return view('livewire.products-list', compact('searchProducts','category_id','platform_id'));
+        } else {
+            return view('livewire.products-list-empty');
+        }
     }
 }

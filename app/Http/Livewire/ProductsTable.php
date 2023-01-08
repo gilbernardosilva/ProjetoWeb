@@ -44,65 +44,42 @@ class ProductsTable extends Component
 
 
 
-        public function index(Request $request)
-        {
-            $sort = $request->input('sort');
-            $search_term = request('search');
-            $game = Game::where('name', 'ilike', '%' . $search_term . '%')->first();
-            $paginate = $request->input('paginate');
-            $products = Product::query();
-            if ((request('category_id'))!=null) {
-                $category_id = $request->input('category_id');
-                $category_id= json_decode($category_id);
-                $game = Game::where('category_id','=', $category_id)->first();
-                if ($sort == 'price-asc') {
-                    $searchProducts = $products->where('game_id', '=', $game->id)->orderBy('price', 'asc')->paginate($paginate);
-                } elseif ($sort == 'price-desc') {
-                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('price', 'desc')->paginate($paginate);
-                } elseif ($sort == 'date-asc') {
-                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('created_at', 'asc')->paginate($paginate);
-                } elseif ($sort == 'date-desc') {
-                    $searchProducts =  $products->where('game_id', '=', $game->id)->latest()->paginate($paginate);
-                }
-            } elseif (request('platform_id')!=null) {
-                $platform_id = $request->input('platform_id');
-                $platform_id= json_decode($platform_id);
-                if ($sort == 'price-asc') {
-                    $searchProducts = $products->where('platform_id', '=', $platform_id->id)->orderBy('price', 'asc')->paginate($paginate);
-                } elseif ($sort == 'price-desc') {
-                    $searchProducts =  $products->where('platform_id', '=', $platform_id->id)->orderBy('price', 'desc')->paginate($paginate);
-                } elseif ($sort == 'date-asc') {
-                    $searchProducts =  $products->where('platform_id', '=', $platform_id->id)->orderBy('created_at', 'asc')->paginate($paginate);
-                } elseif ($sort == 'date-desc') {
-                    $searchProducts =  $products->where('platform_id', '=', $platform_id->id)->latest()->paginate($paginate);
-                }
-            } elseif($search_term!=null) {
-                if ($sort == 'price-asc') {
-                    $searchProducts = $products->where('game_id', '=', $game->id)->orderBy('price', 'asc')->paginate($paginate);
-                } elseif ($sort == 'price-desc') {
-                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('price', 'desc')->paginate($paginate);
-                } elseif ($sort == 'date-asc') {
-                    $searchProducts =  $products->where('game_id', '=', $game->id)->orderBy('created_at', 'asc')->paginate($paginate);
-                } elseif ($sort == 'date-desc') {
-                    $searchProducts =  $products->where('game_id', '=', $game->id)->latest()->paginate($paginate);
-                }
-            }else{
-                if ($sort == 'price-asc') {
-                    $searchProducts = $products->orderBy('price', 'asc')->paginate($paginate);
-                } elseif ($sort == 'price-desc') {
-                    $searchProducts =  $products->orderBy('price', 'desc')->paginate($paginate);
-                } elseif ($sort == 'date-asc') {
-                    $searchProducts =  $products->orderBy('created_at', 'asc')->paginate($paginate);
-                } elseif ($sort == 'date-desc') {
-                    $searchProducts =  $products->latest()->paginate($paginate);
-                }
-            }
-
-
-            $searchProducts->appends(['search' => $search_term, 'sort' => $sort]);
-
-            return view('livewire.products-list', compact('searchProducts'));
+    public function index(Request $request)
+    {
+        $sort = $request->input('sort');
+        $search_term = request('search');
+        $game = Game::where('name', 'ilike', '%' . $search_term . '%')->first();
+        $paginate = $request->input('paginate');
+        $products = Product::query();
+        $category_id = $request->input('category_id');
+        $platform_id = $request->input('platform_id');
+        if (request('category_id') != null) {
+            $category_id = json_decode($category_id);
+            $game = Game::where('category_id', '=', $category_id)->first();
+            $products = $products->where('game_id', '=', $game->id);
+        } elseif (request('platform_id') != null) {
+            $platform_id = json_decode($platform_id);
+            $products = $products->where('platform_id', '=', $platform_id);
+        } elseif ($search_term != null) {
+            $products = $products->where('game_id', '=', $game->id);
         }
+
+        // Apply sorting based on request input
+        if ($sort == 'price-asc') {
+            $searchProducts = $products->orderBy('price', 'asc')->paginate($paginate);
+        } elseif ($sort == 'price-desc') {
+            $searchProducts =  $products->orderBy('price', 'desc')->paginate($paginate);
+        } elseif ($sort == 'date-asc') {
+            $searchProducts =  $products->orderBy('created_at', 'asc')->paginate($paginate);
+        } elseif ($sort == 'date-desc') {
+            $searchProducts =  $products->latest()->paginate($paginate);
+        }
+
+
+        $searchProducts->appends(['search' => $search_term, 'sort' => $sort, ]);
+
+        return view('livewire.products-list', compact('searchProducts', 'category_id', 'platform_id'));
+    }
 
     public function show(Product $product)
     {
@@ -136,13 +113,17 @@ class ProductsTable extends Component
 
     public function searchProducts(Request $request)
     {
-
+        $category_id = null;
+        $platform_id = null;
         if ($request->search) {
             $game = Game::where('name', 'ilike', '%' . $request->search . '%')->first();
-            $searchProducts = Product::where('game_id', '=', $game->id)->paginate(12);
-            return view('livewire.products-list', compact('searchProducts'));
+            if (!empty($game)) {
+                $searchProducts = Product::where('game_id', '=', $game->id)->paginate(12);
+                return view('livewire.products-list', compact('searchProducts','platform_id','category_id'));
+            } else {
+                return view('livewire.products-list-empty');
+            }
         } else {
-
             return redirect()->back()->with('message', 'Empty Search');
         }
     }

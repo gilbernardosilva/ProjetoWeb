@@ -61,13 +61,15 @@ class CategoryController extends Controller
 
     public function categories($category)
     {
+        $category_id =  $category;
+        $platform_id = null;
         $gameCategory = Game::where('category_id', $category)->get();
         $searchProducts = array();
         foreach ($gameCategory as $categories) {
             $searchProducts = Product::where('game_id', $categories->id)->paginate(12);
         }
         if (!empty($searchProducts)) {
-            return view('livewire.products-list', compact('searchProducts'));
+            return view('livewire.products-list', compact('searchProducts','category_id','platform_id'));
         } else {
             return view('livewire.products-list-empty');
         }
@@ -75,7 +77,13 @@ class CategoryController extends Controller
 
     public function allCategories()
     {
+        $category_id =  null;
+        $platform_id = null;
         $searchProducts = Product::paginate(20);
-        return view('livewire.products-list', compact('searchProducts'));
+        if (!empty($searchProducts)) {
+            return view('livewire.products-list', compact('searchProducts','category_id','platform_id'));
+        } else {
+            return view('livewire.products-list-empty');
+        }
     }
 }
