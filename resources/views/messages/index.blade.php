@@ -1,19 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Session::has('error_message'))
-        <div class="alert alert-danger" role="alert">
-            {{ Session::get('error_message') }}
-        </div>
-    @endif
-    <div class="container">
+<div class="text-center">
+    <h1 class = "mb-4"> Messages Hub </h1>
         <ul class="messages">
-            <li><a href="/dashboard/create">Create New Message</a></li>
+            <a href="{{ route('messages.create') }}">Create New Message</a>
         </ul>
-    </div>
     @if($threads->count() > 0)
         <div class="timeline-centered">
-            
             @foreach($threads as $thread)
                 <?php $class = $thread->isUnread($currentUserId) ? 'alert-info' : ''; ?>
                 <article class="timeline-entry">
@@ -33,8 +27,9 @@
                 </article>
             @endforeach
         </div>
-        
+
     @else<br />
         <p>Sorry, no messages.</p>
     @endif
-@stop
+    @include('partials.errors')
+@endsection
