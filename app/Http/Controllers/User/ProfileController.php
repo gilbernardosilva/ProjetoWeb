@@ -23,7 +23,7 @@ class ProfileController extends Controller
     {
         $photo = $user->photo;
         $userAuth = Auth::user();
-        $reviews = Review::where('user_id', $user->id)->paginate(4);
+        $reviews = Review::where('reviewed_id', $user->id)->paginate(4);
         $average = round($reviews->average('rating'));
         $sellingProducts = Product::where('user_id', $user->id)->paginate(8);
         return view('profile.show',compact('user','photo','reviews','sellingProducts','userAuth','average'));
