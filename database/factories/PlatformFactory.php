@@ -28,7 +28,7 @@ class PlatformFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> Arr::random(array('steam','blizzard','xbox')),
+            'name'=> Arr::random(array('Steam','Blizzard','Xbox','Nintendo Switch','BattleNet','PlayStation5')),
         ];
     }
 }

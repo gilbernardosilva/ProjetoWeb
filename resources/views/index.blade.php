@@ -24,7 +24,7 @@
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
                                 <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
-                                    src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
+                                    src="{{ asset('storage/images/' . $product->game->photos->path) }}"
                                     alt="..." /></a>
 
                             <!-- Product details-->
@@ -76,7 +76,7 @@
                             @endif
                             <!-- Product image-->
                             <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
-                                src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}" alt="..." />
+                                src="{{ asset('storage/images/' . $product->game->photos->path) }}" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">

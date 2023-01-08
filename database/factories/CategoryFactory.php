@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-                'name' => Arr::random(array('shooter','moba','RPG','mmo')),
+                'name' => Arr::random(array('Shooter','Moba','RTS','FPS','Sandbox','MMORPG')),
         ];
     }
 }

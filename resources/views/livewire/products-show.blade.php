@@ -8,11 +8,12 @@
             $sale = false;
         }
     @endphp
+
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" width="650" height="550"
-                        src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}" alt="..." /></div>
+                        src="{{ asset('storage/images/' . $product->game->photos->path) }}" alt="..." /></div>
                 <div class="col-md-6">
                     <h1 class="display-5 fw-bolder">{{ $product->game->name }}</h1>
                     <div class="fs-5 mb-5">
@@ -26,8 +27,6 @@
                         <br>
                             Seller:<a class="small mb-1" href="{{ route('profile.show', ['user'=>$product->user]) }}"> {{ $product->user->name }}</a>
                         </div>
-
-
 
                     <p class="lead">{{ $product->game->description }}</p>
                     <div class="d-flex">
@@ -93,7 +92,7 @@
                             <!-- Product image-->
                             <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
                                 <img class="card-img-top" style="border-top-radius:1.7rem; height: 210px; display: block; margin: 0 auto; object-fit: cover;"
-                                    src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
+                                    src="{{ asset('storage/images/' . $product->game->photos->path) }}"
                                     alt="..." /></a>
                             <!-- Product details-->
                             <div class="card-body p-4">

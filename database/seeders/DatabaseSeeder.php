@@ -19,22 +19,16 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
-    User::factory(10)->create();
+    /*
+  User::factory(10)->create();
     Category::factory(10)->create();
     Platform::factory(10)->create();
+    */
+
+    /*
     Game::factory(10)->create();
+
+    */
     Product::factory(10)->create();
-
-
-    // \App\Models\User::factory()->create([
-    //     'name' => 'Test User',
-    //     'email' => 'test@example.com',
-    // ]);
-
-
-
-    /*  $this->call([
-            RolePermissionSeeder::class,
-        ]); */
   }
 }

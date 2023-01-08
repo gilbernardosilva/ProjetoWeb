@@ -31,7 +31,7 @@ class AddCart extends Component
                 'sellerId' => $product->user->id,
                 'sellerName' => $product->user->name,
                 'discount' => $product->discount,
-                'path' => $product->game->photos[0]->path,
+                'path' => $product->game->photos->path,
                 'game_id' => $product->game->id,
                 'key' => $product->key,
             ]
