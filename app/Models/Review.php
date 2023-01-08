@@ -20,20 +20,13 @@ class Review extends Model
         'rating',
         'description',
     ];
-
-    /*
     public function reviewer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 
     public function reviewed()
     {
-        return $this->belongsTo(User::class);
-    }*/
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'reviewed_id');
     }
 }
