@@ -44,8 +44,8 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category created successfully!');
     }
 
-    public function update(Request $request,Category $category)
-{
+    public function update(Request $request, Category $category)
+    {
         $request->validate([
             'name' => 'required|string|max:8',
         ]);
@@ -56,19 +56,25 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('categories.edit',compact('category'));
+        return view('categories.edit', compact('category'));
     }
 
-    public function categories($category){
+    public function categories($category)
+    {
         $gameCategory = Game::where('category_id', $category)->get();
-        $searchProducts = [];
+        $searchProducts = array();
         foreach ($gameCategory as $categories) {
             $searchProducts = Product::where('game_id', $categories->id)->paginate(12);
         }
-        return view('livewire.products-list', compact('searchProducts'));
+        if (!empty($searchProducts)) {
+            return view('livewire.products-list', compact('searchProducts'));
+        } else {
+            return view('livewire.products-list-empty');
+        }
     }
 
-    public function allCategories(){
+    public function allCategories()
+    {
         $searchProducts = Product::paginate(20);
         return view('livewire.products-list', compact('searchProducts'));
     }
