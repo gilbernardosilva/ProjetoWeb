@@ -31,7 +31,13 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
 
-            <h1></h1>
+            <h1>
+                @if ($category_name != null)
+                    {{ $category_name }}
+                @elseif ($platform_name != null)
+                    {{ $platform_name }}
+                @endif
+            </h1>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 @forelse($searchProducts as $product)
                     @php
@@ -59,7 +65,8 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ $product->game->name }} - [{{ $product->platform->name }}]</h5>
+                                    <h5 class="fw-bolder">{{ $product->game->name }} - [{{ $product->platform->name }}]
+                                    </h5>
 
                                     @if ($sale)
                                         <!-- Product price-->
