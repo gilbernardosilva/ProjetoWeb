@@ -68,6 +68,7 @@ class CategoryController extends Controller
         foreach ($gameCategory as $categories) {
             $searchProducts = Product::where('game_id', $categories->id)->paginate(12);
         }
+
         if (!empty($searchProducts)) {
             return view('livewire.products-list', compact('searchProducts','category_id','platform_id'));
         } else {
