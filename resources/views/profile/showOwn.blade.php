@@ -19,11 +19,11 @@
             @forelse($reviews as $review)
                 <div class="commented-section mt-2">
                     <div class="d-flex flex-row align-items-center commented-user">
-                        <h5 class="mr-2">{{ $review->user->name }}</h5>
-                        <span>{{ $review->description }}</span>
-                        <span class="mb-1 ml-2">{{ $review->updated_at }}</span>
-                        <span class="float-right">{{ $review->rating }}</span>
+                        <h3 class="mr-2">{{ $review->user->name }}</h5>
+                        <span class= "ml-2">{{ $review->description }}</span>
+                        <span class="ml-4">{{ $review->rating }}</span>
                         <i class="fa fa-star" aria-hidden="true"></i>
+                        <span class=" ml-5 float-right">{{ $review->updated_at }}</span>
                     </div>
                 </div>
             @empty
@@ -33,6 +33,7 @@
             @endforelse
         </form>
         @if(count($sellingProducts)>0)
+        <h1 class="text-center mb-6 mt-6">Own Products</h1>
         <table id="shoppingCart" class="table table-condensed table-responsive mt-4">
             <thead>
                 <tr>
@@ -61,7 +62,7 @@
                         <td data-th="Price">{{ $product->price }}€</td>
                         <td data-th="Discount">{{ $product->discount }}%</td>
                         <td data-th="Discounted Price" class="text-center">
-                            {{ $product->price - $product->price * ($product->discount / 100) }} </td>
+                            {{ $product->price - $product->price * ($product->discount / 100) }} € </td>
                         <td>
                             <form action=" {{ route('products.destroy', compact('product')) }} " method="POST">
                                 @csrf
