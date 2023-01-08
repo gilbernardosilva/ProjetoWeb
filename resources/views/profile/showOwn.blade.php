@@ -53,7 +53,7 @@
                         <td data-th="Product">
                             <div class="row">
                                 <div class="col-md-3 text-left">
-                                    <img src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
+                                    <img src="{{ asset('storage/images/' . $product->game->photos->path) }}"
                                         alt="" class=" d-none  d-md-block rounded mb-2 shadow " width="75"
                                         height="60">
                                 </div>
