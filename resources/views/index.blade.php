@@ -36,7 +36,7 @@
                                     @if ($sale)
                                         <!-- Product price-->
                                         <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        {{ intval($product->price * 100 - $product->price * 100 * ($product->discount / 100)) / 100 }}€
+                                        {{ number_format($product->price - $product->price * ($product->discount / 100), 2) }}€
                                     @else
                                         {{ $product->price }} €
                                     @endif
