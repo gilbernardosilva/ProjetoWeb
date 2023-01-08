@@ -121,11 +121,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchases/{order}', 'show')->name('orders.show');
 });
     Route::controller(MessagesController::class)->group(function () {
-        Route::get('/dashboard', 'index')->name('messages.index');
-        Route::get('/dashboard/create', 'create')->name('messages.create');
-        Route::get('/dashboard/{id}', 'show')->name('messages.show');
-        Route::post('/dashboard', 'store')->name('messages.store');
-        Route::post('/dashboard/{id}', 'update')->name('messages.update');
+        Route::get('/messages', 'index')->name('messages.index');
+        Route::get('/messages/create', 'create')->name('messages.create');
+        Route::get('/messages/{id}', 'show')->name('messages.show');
+        Route::post('/messages', 'store')->name('messages.store');
+        Route::post('/messages/{id}', 'update')->name('messages.update');
     });
 
     Route::middleware('is_user')->group(function () {
