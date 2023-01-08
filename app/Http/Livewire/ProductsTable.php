@@ -53,13 +53,17 @@ class ProductsTable extends Component
         $products = Product::query();
         $category_id = $request->input('category_id');
         $platform_id = $request->input('platform_id');
+        $category_name = null;
+        $platform_name = null;
         if (request('category_id') != null) {
             $category_id = json_decode($category_id);
             $game = Game::where('category_id', '=', $category_id)->first();
             $products = $products->where('game_id', '=', $game->id);
+            $category_name = Category::find($category_id);
         } elseif (request('platform_id') != null) {
             $platform_id = json_decode($platform_id);
             $products = $products->where('platform_id', '=', $platform_id);
+            $platform_name = Platform::find($platform_id);
         } elseif ($search_term != null) {
             $products = $products->where('game_id', '=', $game->id);
         }
@@ -75,10 +79,9 @@ class ProductsTable extends Component
             $searchProducts =  $products->latest()->paginate($paginate);
         }
 
+        $searchProducts->appends(['search' => $search_term, 'sort' => $sort,]);
 
-        $searchProducts->appends(['search' => $search_term, 'sort' => $sort, ]);
-
-        return view('livewire.products-list', compact('searchProducts', 'category_id', 'platform_id'));
+        return view('livewire.products-list', compact('searchProducts', 'category_id', 'platform_id', 'category_name', 'platform_name'));
     }
 
     public function show(Product $product)
@@ -119,7 +122,7 @@ class ProductsTable extends Component
             $game = Game::where('name', 'ilike', '%' . $request->search . '%')->first();
             if (!empty($game)) {
                 $searchProducts = Product::where('game_id', '=', $game->id)->paginate(12);
-                return view('livewire.products-list', compact('searchProducts','platform_id','category_id'));
+                return view('livewire.products-list', compact('searchProducts', 'platform_id', 'category_id'));
             } else {
                 return view('livewire.products-list-empty');
             }
