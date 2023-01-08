@@ -59,7 +59,7 @@ class ProductsTable extends Component
             $products = $products->where('game_id', '=', $game->id);
         } elseif (request('platform_id') != null) {
             $platform_id = json_decode($platform_id);
-            $products = $products->where('platform_id', '=', $platform_id->id);
+            $products = $products->where('platform_id', '=', $platform_id);
         } elseif ($search_term != null) {
             $products = $products->where('game_id', '=', $game->id);
         }
