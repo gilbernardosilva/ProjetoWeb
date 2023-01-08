@@ -9,7 +9,7 @@
                 <section class="py-4">
                     <form action="{{ route('product.sort') }}" method="GET">
                         <input type="hidden" name="category_id" value="{{ $category_id }}">
-                        <input type="hidden" name="platform_id" value="{{ $platform_id }}">
+                        <input type="hidden" name="platform_id" value="{{ $platform_id->id }}">
                         <input type="hidden" name="search" value="{{ request('search') }}">
                         <label for="sort" class="text-white">Sort by:</label>
                         <select name="sort" id="sort">
