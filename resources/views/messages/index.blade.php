@@ -18,9 +18,9 @@
                         </div>
                         <div class="timeline-label">
                             <h4 class="media-heading">
-                                <a href="{{ route('messages.show', $thread->id) }}">{{ $thread->subject }}</a>
+                                Title: <a href="{{ route('messages.show', $thread->id) }}">{{ $thread->subject }}</a>
                             </h4>
-                            <p>{{ $thread->latestMessage->body }}</p>
+                            <p>Last message: {{ $thread->latestMessage->body }}</p>
                             <p><small><strong>Participants:</strong> {{ $thread->participantsString(Auth::id()) }}</small></p>
                         </div>
                     </div>

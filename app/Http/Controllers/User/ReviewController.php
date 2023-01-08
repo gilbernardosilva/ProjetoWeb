@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Review;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -22,14 +23,14 @@ class ReviewController extends Controller
             'user_id' => 'required|nullable|integer',
             'rating' => 'required',
             'description' => 'required|string|max:350',
+            'reviewed_id' => 'required|exists:users,id',
         ]);
         $review = new Review();
         $review->rating = $request->input('rating'); 
         $review->description = $request->input('description');
-        if($request->user_id){
-            $user=User::find($request->user_id);
-            $user->products()->save($review);
-        }
+        $review->reviewed_id = $request->input('user_id');
+        $review->reviewer_id = Auth::id();
+
         $review->save();
         return redirect()->back()->with('success', 'Review created successfully!');
     }

@@ -22,7 +22,7 @@
             @forelse($reviews as $review)
                 <div class="commented-section mt-2">
                     <div class="d-flex flex-row align-items-center commented-user">
-                        <h3 class="mr-2">{{ $review->user->name }}</h5>
+                        <h3 class="mr-2">{{ $review->reviewer->name }}</h5>
                         <span class= "ml-2">{{ $review->description }}</span>
                         <span class="ml-4">{{ $review->rating }}</span>
                         <i class="fa fa-star" aria-hidden="true"></i>
