@@ -19,7 +19,7 @@ class ProductController extends Controller
     }
 
     public function indexShop(){
-        $products = Product::orderBy('id', 'asc')->paginate(12);
+        $products = Product::orderBy('id', 'asc')->latest()->paginate(12);
         $productsPromo = Product::orderBy('discount', 'desc')->where('discount','>',0)->paginate(12);
         return view('index', compact('products', 'productsPromo'));
     }

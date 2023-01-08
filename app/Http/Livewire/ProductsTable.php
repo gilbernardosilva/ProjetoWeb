@@ -58,8 +58,14 @@ class ProductsTable extends Component
             $game = Game::where('category_id', '=', $category_id)->first();
             $products = $products->where('game_id', '=', $game->id);
         } elseif (request('platform_id') != null) {
-            $platform_id = json_decode($platform_id);
-            $products = $products->where('platform_id', '=', $platform_id);
+            if(!is_int(json_decode(request('platform_id')))){
+                $platform_id = json_decode($platform_id);
+                $platform_id = $platform_id->id;
+                $products = $products->where('platform_id', '=', (int) $platform_id);
+            }else{
+                $platform_id = request('platform_id');
+                $products = $products->where('platform_id', '=', (int) $platform_id);
+            }
         } elseif ($search_term != null) {
             $products = $products->where('game_id', '=', $game->id);
         }
@@ -75,7 +81,7 @@ class ProductsTable extends Component
             $searchProducts =  $products->latest()->paginate($paginate);
         }
 
-        $searchProducts->appends(['search' => $search_term, 'sort' => $sort, ]);
+        $searchProducts->appends(['search' => $search_term, 'sort' => $sort,]);
 
         return view('livewire.products-list', compact('searchProducts', 'category_id', 'platform_id'));
     }
@@ -118,7 +124,7 @@ class ProductsTable extends Component
             $game = Game::where('name', 'ilike', '%' . $request->search . '%')->first();
             if (!empty($game)) {
                 $searchProducts = Product::where('game_id', '=', $game->id)->paginate(12);
-                return view('livewire.products-list', compact('searchProducts','platform_id','category_id'));
+                return view('livewire.products-list', compact('searchProducts', 'platform_id', 'category_id'));
             } else {
                 return view('livewire.products-list-empty');
             }
@@ -136,7 +142,7 @@ class ProductsTable extends Component
         $totalprice = 0;
 
         foreach ($cartItems as $item) {
-            $totalprice += $item->price;
+            $totalprice += $item->price - ($item->price * ($item->options->discount / 100));
             $line_items[] = [
                 'price_data' => [
                     'currency' => 'eur',
