@@ -19,12 +19,13 @@ class isAdmin
     public function handle(Request $request, Closure $next)
     {
         $user = auth()->user();
-        if ($request->route('product')) {
-            if ($user->id == $request->route('product')->user_id) {
-                return $next($request);
-            }
+
             if ($user->role == 'admin') {
                 return $next($request);
+            }
+            if ($request->route('product')) {
+                if ($user->id == $request->route('product')->user_id) {
+                    return $next($request);
             }
             return redirect('/home')->with('error', 'You dont have access to this page');
         }
