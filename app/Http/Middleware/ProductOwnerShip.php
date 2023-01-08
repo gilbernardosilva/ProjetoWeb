@@ -3,11 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class isAdmin
+class ProductOwnerShip
 {
     /**
      * Handle an incoming request.
@@ -18,15 +17,9 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = auth()->user();
-        if ($request->route('product')) {
-            if ($user->id == $request->route('product')->user_id) {
-                return $next($request);
-            }
-            if ($user->role == 'admin') {
-                return $next($request);
-            }
-            return redirect('/home')->with('error', 'You dont have access to this page');
-        }
+       $user = auth()->user();
+       dd($request->product);
+
+        return $next($request);
     }
 }

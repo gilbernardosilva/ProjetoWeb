@@ -87,7 +87,6 @@ class ProductController extends Controller
             'platform_id' => 'required|integer',
             'game_id' => 'required|integer',
             'price' => 'required|numeric',
-            'key' => 'required',
             'discount' => 'required|integer|between:0,100',
         ]);
         $product->update($request->all());

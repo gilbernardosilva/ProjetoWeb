@@ -59,13 +59,20 @@ class CategoryController extends Controller
         return view('categories.edit',compact('category'));
     }
 
-    public function categories($category){
+    public function categories($category)
+    {
         $gameCategory = Game::where('category_id', $category)->get();
-        $searchProducts = [];
+        $searchProducts = array();
         foreach ($gameCategory as $categories) {
             $searchProducts = Product::where('game_id', $categories->id)->paginate(12);
         }
-        return view('livewire.products-list', compact('searchProducts'));
+        if (!empty($searchProducts)) {
+            return view('livewire.products-list', compact('searchProducts'));
+        } else {
+
+            $searchProducts = [null => null];
+            return view('livewire.products-list', compact('searchProducts'));
+        }
     }
 
     public function allCategories(){

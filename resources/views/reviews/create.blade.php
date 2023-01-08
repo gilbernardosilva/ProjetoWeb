@@ -13,21 +13,21 @@
                         <span>Your rating</span>
                         <p class="stars">
                             <label for="rated-1"></label>
-                            <input type="radio" id="rated-1" name="rating" value="1">
+                            <input type="radio" id="rated-1" name="rating" value="1"> 1 <i class="fa fa-star" aria-hidden="true"></i>
                             <label for="rated-2"></label>
-                            <input type="radio" id="rated-2" name="rating" value="2">
+                            <input type="radio" id="rated-2" name="rating" value="2"> 2 <i class="fa fa-star" aria-hidden="true"></i>
                             <label for="rated-3"></label>
-                            <input type="radio" id="rated-3" name="rating" value="3">
+                            <input type="radio" id="rated-3" name="rating" value="3"> 3 <i class="fa fa-star" aria-hidden="true"></i>
                             <label for="rated-4"></label>
-                            <input type="radio" id="rated-4" name="rating" value="4">
+                            <input type="radio" id="rated-4" name="rating" value="4"> 4 <i class="fa fa-star" aria-hidden="true"></i>
                             <label for="rated-5"></label>
-                            <input type="radio" id="rated-5" name="rating" value="5">
+                            <input type="radio" id="rated-5" name="rating" value="5"> 5 <i class="fa fa-star" aria-hidden="true"></i>
                         </p>
                         <label for="description">Description</label>
                         <input type="text" class="form-control" id="description" name="description">
                     </div>
                     <div class="form-group mt-5">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
