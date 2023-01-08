@@ -71,10 +71,7 @@
                                         {{ $product->price - $product->price * ($product->discount / 100) }} </td>
                                     <td class="actions" data-th="">
                                         <div class="text-right">
-                                            <button class="btn btn-white border-secondary bg-white btn-md mb-2"
-                                                type="submit">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <livewire:add-cart :product_id="$product->id" />
                                         </div>
                                     </td>
                                 </tr>
