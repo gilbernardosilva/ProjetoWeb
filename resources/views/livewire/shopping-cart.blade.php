@@ -44,8 +44,7 @@
                                                 </div>
                                                 <div class="col-md-9 text-left mt-sm-2">
                                                     <h4>{{ $product->name }}</h4>
-                                                    <a href=""
-                                                        class="font-weight-light">{{ $product->options->sellerName }}</a>
+                                                    <h6>Seller: {{ $product->options->sellerName }}</h6>
                                                 </div>
                                             </div>
                                         </td>
@@ -97,5 +96,5 @@
         </div>
 
     </section>
-    @include('partials.footer')
+    <!--@include('partials.footer')-->
 @endsection

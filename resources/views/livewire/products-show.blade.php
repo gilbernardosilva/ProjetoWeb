@@ -24,7 +24,7 @@
                         @endif
                         <div class="small mb-1">
                         <br>
-                            Seller:<a class="small mb-1" href="{{ route('profile.show') }}"> {{ $product->user->name }}</a>
+                            Seller:<a class="small mb-1" href="{{ route('profile.show', ['user'=>$product->user]) }}"> {{ $product->user->name }}</a>
                         </div>
 
 
@@ -55,7 +55,7 @@
                                     <img width="50" height="50"
                                         src="{{ asset('storage/images/' . $productSeller->user->photo->path) }}"
                                         alt="..." />
-                                    Seller: <a class="small mb-1">{{ $productSeller->user->name }}</a>
+                                    Seller: <h7 class="small mb-1">{{ $productSeller->user->name }}</h7>
                                 </div>
                                 <div class="col-md-0 float-right">
                                 <strong>Price</strong>

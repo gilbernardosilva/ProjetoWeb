@@ -37,9 +37,9 @@
             <!--<div class="rela-block user-desc" id="user_address">{{$address}}</div>-->
         </div>
         <div class="rela-block profile-card-buttons">
-            @if($hideWriteOwnReview != $user)
+            @if($hideWriteOwnReview != $userID)
                 <a class="btn btn-primary" href="{{ route('messages.create') }}">Create New Message</a>
-                <a class="btn btn-primary" href="{{ route('reviews.create') }}">Write a Review</a>
+                <a class="btn btn-primary" href="{{ route('reviews.create', ['user'=>$user]) }}">Write a Review</a>
             @endif
             <a class="btn btn-primary" href="{{ route('profile.edit', compact('user', 'address', 'photo')) }}">Edit</a>
         </div>
@@ -97,26 +97,28 @@
             {{ $sellingProducts->links('pagination::bootstrap-5') }}
             <div class="rela-inline products bought">
                 <h1>Products Bought</h1>
-                    @if($productsBought > 0)
-                        @foreach($productsBought as $product)
-                            <div class="col mb-5">
-                                <div class="card h-100" style="border-top-radius:1.6rem">
-                                    <!-- Product image-->
-                                    <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
-                                        <img class="card-img-top" style="border-top-radius:1.7rem"
-                                            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></a>
+                    @if(!empty($orderedItems))              
+                        @for($m = 0; $m < $i; $m++)                       
+                            @for($n = 0; $n < $j; $n++)           
+                                @if($orderedItems[$m][0]->game_id == $games[$n][0]->id)               
+                                    <div class="col mb-5">
+                                        <div class="card h-100" style="border-top-radius:1.6rem">
+                                            <!-- Product image -->
+                                            <div class="card-body p-4"><img class="card-img-top mb-5 mb-md-0" width="650" height="550"
+                                                src="{{ asset('storage/images/' . $games[$n][0]->photos[0]->path) }}" alt="..." /></div>
 
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">{{ $product->game->name }} - [{{ $product->platform->name }}]</h5>
+                                            <!-- Product details -->
+                                            <div class="card-body p-4">
+                                                <div class="text-center">
+                                                    <!-- Product name and price -->
+                                                    <span class="fw-bolder">{{ $games[$n][0]->name }} - [{{ intval($orderedItems[$m][0]->final_price)/100 }}]€</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
-                        @endforeach
-                        {{ $productsBought->links('pagination::bootstrap-5') }}
+                                @endif    
+                            @endfor
+                        @endfor
                     @else
                         <h3>No products bought</h3>
                     @endif
@@ -126,27 +128,31 @@
     <div class="rela-block content">
             <div class="rela-inline product">
                 <h1>Products Bought</h1>
-                @if($productsBought > 0)
-                    @foreach($productsBought as $product)
-                        <div class="col mb-5">
-                            <div class="card h-100" style="border-top-radius:1.6rem">
-                                <!-- Product image-->
-                                <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
-                                    <img class="card-img-top" style="border-top-radius:1.7rem"
-                                        src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></a>
+                    @if(!empty($orderedItems))
+                        @for($n = 0; $n < $j; $n++)        
+                            @for($m = 0; $m < $i; $m++)
+                                @if($orderedItems[$m][0]->game_id == $games[$n][0]->id)
+                                    <div class="col mb-5">
+                                        <div class="card h-100" style="border-top-radius:1.6rem">
+                                            <!-- Product image -->
+                                            <div class="card-body p-4"><img class="card-img-top mb-5 mb-md-0" width="650" height="550"
+                                                src="{{ asset('storage/images/' . $games[$n][0]->photos[0]->path) }}" alt="..." /></div>
 
-                                <!-- Product details-->
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-                                        <h5 class="fw-bolder">{{ $product->game->name }} - [{{ $product->platform->name }}]</h5>
+                                            <!-- Product details -->
+                                            <div class="card-body p-4">
+                                                <div class="text-center">
+                                                    <!-- Product name and price -->
+                                                    <span class="fw-bolder">{{ $games[$n][0]->name }} - [{{ intval($orderedItems[$m][0]->final_price)/100 }}]€</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div> 
-                    @endforeach
-                    {{ $productsBought->links('pagination::bootstrap-5') }}
-                @endif
+                                @endif
+                            @endfor                        
+                        @endfor
+                    @else
+                        <h3>No products bought</h3>
+                    @endif
             </div>
         </div>
     @endif

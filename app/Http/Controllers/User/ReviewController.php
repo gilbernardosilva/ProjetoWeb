@@ -9,9 +9,9 @@ use App\Models\User;
 
 class ReviewController extends Controller
 {
-    public function create(){
+    public function create(User $user){
         $users = User::all();
-        $user = auth()->user();
+        //$user = auth()->user();
         $hideWriteOwnReview = auth()->user();
         return view('reviews.create', compact('users', 'user', 'hideWriteOwnReview'));
     }
