@@ -105,6 +105,7 @@ Route::middleware('is_admin')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile/{user}', 'show')->name('profile.show');
+        Route::get('/profile', 'edit')->name('profile.edit');
         Route::post('/profile/updateAddress', 'updateAddress')->name('profile.updateAddress');
         Route::post('/profile/storeAddress', 'storeAddress')->name('profile.storeAddress');
         Route::post('/profile/updatePhoto', 'updatePhoto')->name('profile.updatePhoto');

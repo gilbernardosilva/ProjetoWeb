@@ -1,7 +1,10 @@
 <section class="pt-5 pb-5">
     <div class="container">
-        <h1 class="text-center mb-6"> Profile</h1>
-        <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-4">
+        <div class="text-center mb-6">
+        <h1 class="text-center mb-6">Profile</h1>
+        <a class="btn btn-primary" href="{{ route('profile.edit') }}">Edit Profile info</a>
+        </div>
+        <div class="d-flex flex-row align-items-center text-left mt-4 comment-top p-2 bg-white border-bottom px-4">
             <div class="d-flex flex-column-reverse flex-grow-0 align-items-center votings ml-1">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <h4>{{ $average }}</h4>
