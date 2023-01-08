@@ -19,50 +19,23 @@ use Illuminate\Support\Facades\Redirect;
 class ProfileController extends Controller
 {
 
-    public function edit(User $user, Address $address, Photo $photo)
-    {
-        return view('profile.edit', compact('user', 'address', 'photo'));
-    }
-
     public function show(User $user)
     {
-        $userID = $user->id;
-        $hideWriteOwnReview = Auth::user()->id;
-        $role = $user->role;
+        $photo = $user->photo;
+        $userAuth = Auth::user();
+        $reviews = Review::where('user_id', $user->id)->paginate(4);
+        $average = round($reviews->average('rating'));
+        $sellingProducts = Product::where('user_id', $user->id)->paginate(8);
+        return view('profile.show',compact('user','photo','reviews','sellingProducts','userAuth','average'));
+    }
+
+    public function edit()
+    {
+        $user = auth()->user();
         $address = $user->address;
         $photo = $user->photo;
-        $reviews = Review::where('user_id', $user->id)->paginate(4);
-        //$reviewer = User::where('id', $reviews->reviewer_id)->Storage::paginate(4);
-        $sellingProducts = Product::where('user_id', $user->id)->paginate(8);
-        $orders = Order::where('user_id', $user->id)->get();
-        $orderItems = new OrderItem;
-        $game = new Game;             
-        $orderedItems = $orderItems->toArray();
-        $games = $game->toArray();
-        $i = 0;
-        $j = 0;      
-        foreach ($orders as $order) {
-            if ($order->status == 'paid') {
-                $orderedItems[$i] = OrderItem::where('order_id', $order->id)->get();
-                $o = $i;
-                foreach($orderedItems[$o] as $orderItem){
-                    $games[$j] = Game::where('id', $orderItem->game_id)->get();
-                    $o++;
-                    $j++;
-                }
-            }
-            $i++;
-        }
-        //$i--;
-        //$j--;
-        //dd($j);
-        dd($games);
-        //dd($orderedItems);
-        //if(is_object($orderedItems[0])){
-            return view('profile.show', compact('hideWriteOwnReview', 'userID', 'user', 'address', 'photo', 'sellingProducts', 'role', 'reviews', 'orderedItems', 'games', 'i', 'j'));
-        /*}else{
-            return view('profile.show', compact('hideWriteOwnReview', 'userID', 'user', 'address', 'photo', 'sellingProducts', 'role', 'reviews', 'orderedItems', 'games'));
-        }*/
+
+        return view('profile.edit', compact('user', 'address', 'photo'));
     }
 
     public function storeAddress(Request $request)

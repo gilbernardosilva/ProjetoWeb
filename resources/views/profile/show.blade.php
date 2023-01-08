@@ -1,172 +1,91 @@
 @extends('layouts.app')
 @section('content')
-
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<!-- FONTS -->
-<!-- Roboto, Yellowtail, and Montserrat -->
-<link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto:300,400|Yellowtail" rel="stylesheet">
-
-<!-- PAGE STUFF -->
-<div class="overlay">
-    <div class="abs-center overlay-card">
-        <div class="close">X</div>
-        <div class="floated overlay-image">
-            <div class="abs-center post-image">
-
-            </div>
-        </div>
-        <div class="floated overlay-desc">
-            <div class="rela-block desc-title"></div>
-            <div class="rela-block desc-author"></div>
-            <div class="rela-block desc-desc"></div>
-        </div>
-    </div>
-</div>
-<div class="rela-block container">
-    <div class="rela-block profile-card">
-        <div class="profile-pic" id="profile_pic">
-            <img src="{{ asset('storage/images/' . $photo->path) }}" alt="Profile Photo" class="rounded img-fluid" width="70"height="70">
-        </div>
-        <div class="rela-block profile-name-container">
-            <div class="rela-block user-name" id="user_name">{{$user->name}}</div>
-            <div class="rela-block user-desc" id="user_email">{{$user->email}}</div>
-            <!--<div class="rela-block user-desc" id="user_address">{{$address}}</div>-->
-        </div>
-        <div class="rela-block profile-card-buttons">
-            @if($hideWriteOwnReview != $userID)
-                <a class="btn btn-primary" href="{{ route('messages.create') }}">Create New Message</a>
-                <a class="btn btn-primary" href="{{ route('reviews.create', ['user'=>$user]) }}">Write a Review</a>
-            @endif
-            <a class="btn btn-primary" href="{{ route('profile.edit', compact('user', 'address', 'photo')) }}">Edit</a>
-        </div>
-    </div>
-    @if($role === 'seller' || $role === 'admin')
-        <div class="rela-block content">
-            <div class="rela-inline selling products">
-                <h1>Selling products</h1>
-                @foreach($sellingProducts as $product)
-                @php
-                        if ($product->discount > 0) {
-                            $sale = true;
-                        } else {
-                            $sale = false;
-                        }
-                    @endphp
-                    <div class="col mb-5">
-                        <div class="card h-100" style="border-top-radius:1.6rem">
-                            <!-- Sale badge-->
-                            @if ($sale)
-                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                                    Sale</div>
-                            @endif
-                            <!-- Product image-->
-                            <a href="{{ url('/products/show/' . $product->id . '/' . $product->user->id) }}">
-                                <img class="card-img-top" style="border-top-radius:1.7rem"
-                                    src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></a>
-
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ $product->game->name }} - [{{ $product->platform->name }}]</h5>
-
-                                    @if ($sale)
-                                        <!-- Product price-->
-                                        <span class="text-muted text-decoration-line-through">{{ $product->price }}€</span>
-                                        <span>{{ intval($product->price * 100 - $product->price * 100 * ($product->discount / 100)) / 100 }}€</span>
-                                    @else
-                                        {{ $product->price }}
-                                    @endif
-
-                                </div>
+    <section class="pt-5 pb-5">
+        <div class="container">
+                <h1 class="text-center mb-6"> Profile Edit </h1>
+                    <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-4">
+                        <div class="d-flex flex-column-reverse flex-grow-0 align-items-center votings ml-1">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <h4>{{ $average }}</h4>
+                        </div>
+                        <div class="d-flex flex-column ml-4">
+                            <div class="d-flex flex-row post-title">
+                                <h2 class="text-center">Reviews</h2><span class="ml-2"></span>
                             </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center">
-                                    <livewire:add-cart :product_id="$product->id" />
-                                </div>
+                            <div class="d-flex flex-row align-items-center align-content-center post-title">
+                                <span class="mr-2 comments">{{ count($reviews) }} reviews &nbsp;</span>
                             </div>
                         </div>
-                    </div> 
-                @endforeach
-            </div>
-            {{ $sellingProducts->links('pagination::bootstrap-5') }}
-            <div class="rela-inline products bought">
-                <h1>Products Bought</h1>
-                    @if(!empty($orderedItems))              
-                        @for($m = 0; $m < $i; $m++)                       
-                            @for($n = 0; $n < $j; $n++)           
-                                @if($orderedItems[$m][0]->game_id == $games[$n][0]->id)               
-                                    <div class="col mb-5">
-                                        <div class="card h-100" style="border-top-radius:1.6rem">
-                                            <!-- Product image -->
-                                            <div class="card-body p-4"><img class="card-img-top mb-5 mb-md-0" width="650" height="550"
-                                                src="{{ asset('storage/images/' . $games[$n][0]->photos[0]->path) }}" alt="..." /></div>
-
-                                            <!-- Product details -->
-                                            <div class="card-body p-4">
-                                                <div class="text-center">
-                                                    <!-- Product name and price -->
-                                                    <span class="fw-bolder">{{ $games[$n][0]->name }} - [{{ intval($orderedItems[$m][0]->final_price)/100 }}]€</span>
-                                                </div>
+                    </div>
+                    <form class="coment-bottom bg-white p-2 px-4">
+                        <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                            <img class="img-fluid img-responsive rounded-circle mr-2"
+                                src="{{ asset('storage/images/' . $userAuth->photo->path) }}" width="38">
+                            <input type="text" class="form-control mr-3" placeholder="Description">
+                            <button class="btn btn-primary" type="button">Review</button>
+                        </div>
+                        @forelse($reviews as $review)
+                            <div class="commented-section mt-2">
+                                <div class="d-flex flex-row align-items-center commented-user">
+                                    <h5 class="mr-2">{{ $review->user->name }}</h5>
+                                    <span>{{ $review->description }}</span>
+                                    <span class="mb-1 ml-2">{{ $review->updated_at }}</span>
+                                    <span class="float-right">{{ $review->rating }}</span>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="commented-section mt-2">
+                                <div class="comment-text-sm"><span>No Reviews Found</span></div>
+                            </div>
+                        @endforelse
+                        </form>
+                    <table id="shoppingCart" class="table table-condensed table-responsive mt-4">
+                        <thead>
+                            <tr>
+                                <th style="width:30%">Products</th>
+                                <th style="width:12%">Price</th>
+                                <th style="width:12%">Discount</th>
+                                <th style="width:10%">Discounted Price</th>
+                                <th style="width:8%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($sellingProducts as $product)
+                                <tr>
+                                    <td data-th="Product">
+                                        <div class="row">
+                                            <div class="col-md-3 text-left">
+                                                <img src="{{ asset('storage/images/' . $product->game->photos[0]->path) }}"
+                                                    alt="" class=" d-none  d-md-block rounded mb-2 shadow "
+                                                    width="75" height="60">
+                                            </div>
+                                            <div class="col-md-9 text-left mt-sm-2">
+                                                <h4>{{ $product->game->name }} - {{ $product->platform->name }}</h4>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif    
-                            @endfor
-                        @endfor
-                    @else
-                        <h3>No products bought</h3>
-                    @endif
-            </div>
-        </div>
-    @elseif($role === 'user')
-    <div class="rela-block content">
-            <div class="rela-inline product">
-                <h1>Products Bought</h1>
-                    @if(!empty($orderedItems))
-                        @for($n = 0; $n < $j; $n++)        
-                            @for($m = 0; $m < $i; $m++)
-                                @if($orderedItems[$m][0]->game_id == $games[$n][0]->id)
-                                    <div class="col mb-5">
-                                        <div class="card h-100" style="border-top-radius:1.6rem">
-                                            <!-- Product image -->
-                                            <div class="card-body p-4"><img class="card-img-top mb-5 mb-md-0" width="650" height="550"
-                                                src="{{ asset('storage/images/' . $games[$n][0]->photos[0]->path) }}" alt="..." /></div>
-
-                                            <!-- Product details -->
-                                            <div class="card-body p-4">
-                                                <div class="text-center">
-                                                    <!-- Product name and price -->
-                                                    <span class="fw-bolder">{{ $games[$n][0]->name }} - [{{ intval($orderedItems[$m][0]->final_price)/100 }}]€</span>
-                                                </div>
-                                            </div>
+                                    </td>
+                                    <td data-th="Price">{{ $product->price }}€</td>
+                                    <td data-th="Discount">{{ $product->discount }}%</td>
+                                    <td data-th="Discounted Price" class="text-center">
+                                        {{ $product->price - $product->price * ($product->discount / 100) }} </td>
+                                    <td class="actions" data-th="">
+                                        <div class="text-right">
+                                            <button class="btn btn-white border-secondary bg-white btn-md mb-2"
+                                                type="submit">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </div>
-                                    </div>
-                                @endif
-                            @endfor                        
-                        @endfor
-                    @else
-                        <h3>No products bought</h3>
-                    @endif
+                                    </td>
+                                </tr>
+                                </form>
+                            @empty
+                                <h5 class="text-center">No Products Found!</h5>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    @endif
-    <div class="rela-block content">
-        <div class="rela-inline product">
-            <h1>Reviews</h1>
-            @foreach($reviews as $review)
-                <!-- Rating -->
-                <div class="rating">{{$review->rating}}</div>
-                <!-- Description -->
-                <div class="description">{{$review->description}}</div>
-            @endforeach
-        </div>
-    </div>
-    {{ $reviews->links('pagination::bootstrap-5') }}
-</div>
+    </section>
 @endsection

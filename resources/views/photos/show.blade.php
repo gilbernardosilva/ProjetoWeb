@@ -3,8 +3,8 @@
     <div class="container mt-5">
         <div class="row mb-5">
             <div class="col-6 offset-3">
-                <h1 class="text-center mb-5 text-danger">Platform Show</h1>
-                <h2 class="text-secondary text-center">Platform Info</h2>
+                <h1 class="text-center mb-5 text-danger">Photo Show</h1>
+                <h2 class="text-secondary text-center">Photo Info</h2>
                 <form>
                     <div class="form-group">
                         <img src="{{ asset('storage/images/' . $photo->path) }}" alt="Profile Photo"

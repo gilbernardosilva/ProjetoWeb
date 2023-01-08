@@ -39,8 +39,8 @@
                                                 <div class="col-md-3 text-left">
                                                     <img src="{{ asset('storage/images/' . $product->options->path) }}"
                                                         alt=""
-                                                        class="img-fluid d-none d-md-block rounded mb-2 shadow "
-                                                        width="75" height="75">
+                                                        class=" d-none  d-md-block rounded mb-2 shadow "
+                                                        width="75" height="60">
                                                 </div>
                                                 <div class="col-md-9 text-left mt-sm-2">
                                                     <h4>{{ $product->name }}</h4>

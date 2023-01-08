@@ -1,21 +1,22 @@
 <?php
 
+use App\Http\Livewire\ProductsTable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\Shop\GameController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\PhotoController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Shop\OrdersController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\Auth\TwitterController;
 use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Auth\FacebookController;
-use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\PlatformController;
-use App\Http\Controllers\User\ReviewController;
-use App\Http\Livewire\ProductsTable;
 
 
 /*
@@ -104,7 +105,6 @@ Route::middleware('is_admin')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile/{user}', 'show')->name('profile.show');
-        Route::get('/profile/edit/{user}', 'edit')->name('profile.edit');
         Route::post('/profile/updateAddress', 'updateAddress')->name('profile.updateAddress');
         Route::post('/profile/storeAddress', 'storeAddress')->name('profile.storeAddress');
         Route::post('/profile/updatePhoto', 'updatePhoto')->name('profile.updatePhoto');
@@ -116,6 +116,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/profile/review/store', 'store')->name('reviews.store');
     });
 
+    Route::controller(OrdersController::class)->group(function () {
+        Route::get('/purchases', 'index')->name('orders.index');
+        Route::get('/purchases/{order}', 'show')->name('orders.show');
+});
     Route::controller(MessagesController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('messages.index');
         Route::get('/dashboard/create', 'create')->name('messages.create');
