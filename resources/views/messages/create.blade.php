@@ -21,7 +21,7 @@
 
                         @if ($users->count() > 0)
                              <div class="form-group">
-                                <select name="user_id" id="user_id" class="form-select">
+                                <select name="recipients" id="recipients" class="form-select">
                                     @foreach ($users as $user)
                                     @if($user->role == "seller")
                                         <option type="checkbox" name="recipients[]" value="{{ $user->id }}">

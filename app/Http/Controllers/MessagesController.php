@@ -57,18 +57,26 @@ class MessagesController extends Controller
         // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
 
         // don't show the current user in list
-        $userId = Auth::user()->id;
+        $userID = Auth::user()->id;
         //$users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
         
         //$participant = Participant::where('thread_id', $id)->get();
         //dd($participant);
         //$user = User::where('id', '!=', $participant->user)->get();
 
-        $users = User::all()->except($userId);
+        //$users = User::all()->except($userId);
         
+        $users = $thread->users;
+        $user = new User;
+        foreach($users as $User){
+            if($User->id != $userID){
+                $user = $User;
+            }
+        }
+        //dd($user);
         //$thread->markAsRead($userId);
 
-        return view('messages.show', compact('thread', 'users'));
+        return view('messages.show', compact('thread', 'user'));
     }
 
     /**
@@ -92,11 +100,11 @@ class MessagesController extends Controller
     {
         $input = Request::all();
 
-        if($input['user_id']){
+        /*if($input['user_id']){
             $user=User::find($input['user_id']);
         }else{
             $user = Auth::user()->id;
-        }
+        }*/
 
         $thread = Thread::create([
             'subject' => $input['subject'],
@@ -105,14 +113,14 @@ class MessagesController extends Controller
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => $user->id,
+            'user_id' => Auth::id(),
             'body' => $input['message'],
         ]);
 
         // Sender
         Participant::create([
             'thread_id' => $thread->id,
-            'user_id' => $user->id,
+            'user_id' => Auth::id(),
             'last_read' => new Carbon(),
         ]);
 
@@ -144,23 +152,23 @@ class MessagesController extends Controller
 
         $input = Request::all();
 
-        if($input['user_id']){
+        /*if($input['user_id']){
             $user=User::find($input['user_id']);
         }else{
             $user = Auth::user()->id;
-        }
+        }*/
 
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => $user->id,
+            'user_id' => Auth::id(),
             'body' => Request::input('message'),
         ]);
 
-        // Add replier as a participant
+        /* Add replier as a participant
         $participant = Participant::firstOrCreate([
             'thread_id' => $thread->id,
-            'user_id' => $user->id,
+            'user_id' => Auth::id(),
         ]);
         $participant->last_read = new Carbon();
         $participant->save();
@@ -168,7 +176,7 @@ class MessagesController extends Controller
         // Recipients
         if (Request::has('recipients')) {
             $thread->addParticipant(Request::input('recipients'));
-        }
+        }*/
 
         return redirect()->route('messages.show', $id);
     }
