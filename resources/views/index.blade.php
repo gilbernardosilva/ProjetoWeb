@@ -2,6 +2,7 @@
 @section('content')
     @livewireScripts()
     @include('partials.header')
+    <div style="background-image: url(https://cdn.discordapp.com/attachments/978618862100693004/1062759853854044231/856f31d9f475501c7552c97dbe727319.png);">
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <h1>New Products</h1>
@@ -106,5 +107,6 @@
             {{ $products->links('pagination::bootstrap-5') }}
         </div>
     </section>
+    </div>
     @include('partials.footer')
 @endsection

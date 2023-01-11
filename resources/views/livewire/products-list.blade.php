@@ -2,7 +2,7 @@
 @section('content')
     @livewireScripts
 
-
+<div style="background-image: url(https://cdn.discordapp.com/attachments/978618862100693004/1062759853854044231/856f31d9f475501c7552c97dbe727319.png);">
     <div class="container px-0 px-lg-0 mt-5">
         <div class="card-header bg-dark">
             <div class="d-flex justify-content-center">
@@ -28,7 +28,7 @@
     </div>
 
 
-    <section class="py-5">
+    <section class="py-5" >
         <div class="container px-4 px-lg-5 mt-5">
 
             <h1></h1>
@@ -95,5 +95,6 @@
     <br>
     <br>
     <br>
+    </div>
     @include('partials.footer')
 @endsection
