@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
+
 
 class ProductsTable extends Component
 {
@@ -190,6 +193,15 @@ class ProductsTable extends Component
             if ($order && $order->status === 'unpaid') {
                 $order->status = 'paid';
             }
+            $total = 0;           
+            $pdf = PDF::loadView('pdfFile.pdf', [
+                'cart'=>$cart, 
+                'order'=>$order,
+                'total'=>$total
+            ]);
+            $slug = Str::slug($order->created_at, '-');
+            $fileName = 'invoice_' .$slug. '.pdf';
+            $pdf->save(storage_path('app/public/invoices/'.$fileName));
             foreach ($cart as $product) {
                 $orderItem = new OrderItem();
                 $orderItem->order_id = $order->id;
@@ -199,15 +211,26 @@ class ProductsTable extends Component
                 $orderItem->save();
                 Product::destroy($product->id);
             }
-            $order->save();
+            $order->save();               
             Cart::destroy();
-            Mail::to(Auth::user()->email)->send(new OrderMail($cart));
+            Mail::to(Auth::user()->email)->send(new OrderMail($cart, $order));
 
             return view('checkout.success');
         } catch (\Exception $e) {
             throw new NotFoundHttpException();
         }
     }
+
+/*  public function pdf($cart, $order){ 
+        $total = 0;    
+        $pdf = PDF::loadView('pdfFile.pdf', [
+                'cart'=>$cart, 
+                'order'=>$order,
+                'total'=>$total
+        ]);
+        $pdf->save(public_path('invoices/invoice.pdf'));
+        return $pdf->download('invoice.pdf');
+    }*/
 
     public function cancel()
     {

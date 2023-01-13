@@ -24,8 +24,6 @@ class ProfileController extends Controller
         $photo = $user->photo;
         $userAuth = Auth::user();
         $reviews = Review::where('user_id', $user->id)->get();
-        //$order_items = OrderItem::where('user_id', $user->id)->get();
-        //$games = Game::where('id',$order_items->game_id);
         $average = round($reviews->average('rating'));
         $sellingProducts = Product::where('user_id', $user->id)->paginate(8);
         return view('profile.show',compact('user','photo','reviews','sellingProducts','userAuth','average'));

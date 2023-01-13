@@ -21,6 +21,9 @@
                         <td>{{ $order->totalPrice}}</td>
                         <td>
                                 <a class="btn btn-info" href="{{ route('orders.show', compact('order')) }}">Show</a>
+                                @if($order->status === 'paid')
+                                    <a class="btn btn-info" href="{{ route('pdfFile.download', ['order' => $order->id ]) }}" target="_blank">PDF</a>
+                                @endif
                         </td>
                     </tr>
                 @endforeach
@@ -29,5 +32,3 @@
         {{ $orders->links('pagination::bootstrap-5') }}
     </div>
 @endsection
-
-

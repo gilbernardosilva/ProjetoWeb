@@ -8,20 +8,25 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Support\Str;
+
 
 class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $cart;
+    public $order;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($cart)
+    public function __construct($cart, $order)
     {
         $this->cart = $cart;
+        $this->order = $order;
     }
 
     /**
@@ -54,10 +59,16 @@ class OrderMail extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array
+     * @return \Illuminate\Mail\Mailables\Attachment[]
      */
     public function attachments()
     {
-        return [];
+        $slug = Str::slug($this->order->created_at, '-');
+        $fileName = 'invoice_' .$slug. '.pdf';
+        return [
+            //Attachment::fromPath('storage/app/public/invoices'),
+            
+            storage_path('app/public/invoices/'.$fileName)
+        ];
     }
 }

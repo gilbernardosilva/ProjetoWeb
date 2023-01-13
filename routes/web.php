@@ -120,6 +120,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(OrdersController::class)->group(function () {
         Route::get('/purchases', 'index')->name('orders.index');
         Route::get('/purchases/{order}', 'show')->name('orders.show');
+        Route::get('/purchases/invoices/download/{order}', 'downloadPDF')->name('pdfFile.download');
 });
     Route::controller(MessagesController::class)->group(function () {
         Route::get('/messages', 'index')->name('messages.index');
@@ -149,7 +150,6 @@ Route::controller(ProductsTable::class)->group(function () {
     Route::post('/webhook', 'webhook')->name('checkout.webhook');
     Route::get('/products/show/{product}/{user}', 'show');
     Route::get('search', 'searchProducts');
-
 });
 
 

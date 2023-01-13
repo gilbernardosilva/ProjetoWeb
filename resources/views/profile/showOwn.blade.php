@@ -26,7 +26,7 @@
             @endphp
                 <div class="commented-section mt-2">
                     <div class="d-flex flex-row align-items-center commented-user">
-                        <h3 class="mr-2">{{ $game->name }} {{ $review->user->name }}</h3>
+                        <h3 class="mr-2">{{ $game->name }} by {{ $review->user->name }}</h3>
                         <span class ="ml-2">Price: {{ intval($order_item->final_price/100) }}</span>
                         <span class= "ml-2">Description: {{ $review->description }}</span>
                         <span class="ml-4">{{ $review->rating }}</span>
