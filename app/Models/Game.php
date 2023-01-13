@@ -32,4 +32,8 @@ class Game extends Model
         return $this->hasOne(Photo::class);
     }
 
+    public function order_items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

@@ -86,7 +86,7 @@ class ProductsTable extends Component
         return view('livewire.products-list', compact('searchProducts', 'category_id', 'platform_id'));
     }
 
-    public function show(Product $product)
+    public function show(Product $product, $userID)
     {
         $category = $product->game->category->id;
         $categoryName = Category::where($category);
@@ -96,7 +96,7 @@ class ProductsTable extends Component
         $cart = Cart::content();
 
         $sameProduct = Product::where('game_id', $product->game->id)->paginate(4);
-        return view('livewire.products-show', compact('cart'), ['product' => $product, 'similiarProducts' => $similiarProducts, 'sameProduct' => $sameProduct]);
+        return view('livewire.products-show', compact('cart', 'userID'), ['product' => $product, 'similiarProducts' => $similiarProducts, 'sameProduct' => $sameProduct]);
     }
 
 

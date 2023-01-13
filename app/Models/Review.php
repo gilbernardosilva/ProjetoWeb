@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\OrderItem;
 
 class Review extends Model
 {
@@ -20,13 +21,13 @@ class Review extends Model
         'rating',
         'description',
     ];
-    public function reviewer()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'reviewer_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function reviewed()
+    public function orderItem()
     {
-        return $this->belongsTo(User::class, 'reviewed_id');
+        return $this->belongsTo(OrderItem::class, 'order_item_id');
     }
 }

@@ -2,11 +2,13 @@
     <div class="container">
         <h1 class="text-center mb-6"> Profile Edit </h1>
 
+        <!--
         <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-4">
             <div class="d-flex flex-column-reverse flex-grow-0 align-items-center votings ml-1">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <h4>{{ $average }}</h4>
             </div>
+            
             <div class="d-flex flex-column ml-4 mt-4">
                 <div class="d-flex flex-row post-title">
                     <h2 class="text-center">Reviews</h2><span class="ml-2"></span>
@@ -35,8 +37,8 @@
                 <div class="comment-text-sm"><span>No Reviews Found</span></div>
             </div>
             @endforelse
-        </form>
-
+        </form>-->
+        
         <table id="shoppingCart" class="table table-condensed table-responsive mt-4">
             <thead>
                 <tr>

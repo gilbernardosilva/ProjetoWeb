@@ -25,12 +25,17 @@ $sale = false;
                     <div class="small mb-1">
                         <br>
                         Seller:<a class="small mb-1" href="{{ route('profile.show', ['user'=>$product->user]) }}"> {{ $product->user->name }}</a>
+                        <!--<a class="small mb-1" href="{{ route('messages.createToUser', ['user'=>$userID]) }}">Send a Message</a>-->
                     </div>
 
                     <p class="lead">{{ $product->game->description }}</p>
                     <div class="d-flex">
                         <livewire:add-cart :product_id="$product->id" />
                     </div>
+                    <br>
+                    <form method="get" action="{{ route('messages.createToUser', ['user'=>$userID]) }}">
+                        <button type="submit" class="btn btn-primary">Send a Message</button>
+                    </form>
                 </div>
             </div>
         </div>

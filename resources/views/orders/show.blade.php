@@ -20,6 +20,9 @@
                         <input type="text" class="form-control text-cent" id="name" name="name"
                             value="{{ old('name', intval($item->final_price/100))}}" disabled>
                     </div>
+                    <div class="form-group">
+                        <a class="btn btn-info" href="{{ route('reviews.create', ['order_item'=>$item, 'game'=>$game]) }}">Create a Review</a>
+                    </div>
                     @endforeach
                     <div class="form-group">
                         <label for="name">Final Price</label>

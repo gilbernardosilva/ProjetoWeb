@@ -84,6 +84,17 @@ class MessagesController extends Controller
     }
 
     /**
+     * Creates a new message thread to a specific user.
+     *
+     * @return mixed
+     */
+    public function createToUser($userID)
+    {
+        $user = User::find($userID);
+        return view('messages.createToUser', compact('user'));
+    }
+
+    /**
      * Stores a new message thread.
      *
      * @return mixed

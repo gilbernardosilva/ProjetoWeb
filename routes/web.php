@@ -113,8 +113,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::controller(ReviewController::class)->group(function () {
-            Route::get('/profile/review/create/{user}', 'create')->name('reviews.create');
-            Route::post('/profile/review/store', 'store')->name('reviews.store');
+            Route::get('/products/show/review/create/{order_item}/{game}', 'create')->name('reviews.create');
+            Route::post('/products/show/review/store', 'store')->name('reviews.store');
     });
 
     Route::controller(OrdersController::class)->group(function () {
@@ -124,6 +124,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(MessagesController::class)->group(function () {
         Route::get('/messages', 'index')->name('messages.index');
         Route::get('/messages/create', 'create')->name('messages.create');
+        Route::get('/messages/create/{user}', 'createToUser')->name('messages.createToUser');
         Route::get('/messages/{id}', 'show')->name('messages.show');
         Route::post('/messages', 'store')->name('messages.store');
         Route::post('/messages/{id}', 'update')->name('messages.update');

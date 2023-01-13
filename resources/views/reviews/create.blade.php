@@ -3,13 +3,15 @@
     <div class="container mt-5">
         <div class="row mb-5">
             <div class="col-6 offset-3">
-                <h1 class="text-center mb-5 text-danger">Creating a review for {{$user->name}}</h1>
+                <h1 class="text-center mb-5 text-danger">Review</h1>
                 <form method="post" action="{{ route('reviews.store') }}">
                     @csrf
                     <div class="form-group">
-                        <select name="user_id" id="user_id" class="form-select">
-                            <option value="{{ $user->id }}">Creating a review for {{ $user->name }}</option>
-                        </select>
+                        <input type="hidden" id="order_item_id" name="order_item_id" value="{{$order_item->id}}" />
+                        <h4>Creating a review for {{ $game->name }}</h4>
+                        <!--<select name="order_item_id" id="order_item_id" class="form-select">
+                            <option value="{{ $order_item->id }}">Creating a review for {{ $game->name }}</option>
+                        </select>-->
                         <span>Your rating</span>
                         <p class="stars">
                             <label for="rated-1"></label>
