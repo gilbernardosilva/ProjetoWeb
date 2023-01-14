@@ -19,7 +19,9 @@ jobs:
     - name: Copy .env
       run: cp .env.testing .env
     - name: Install Dependencies
-      run: composer install -q --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+      run: |
+        composer install -q --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+        composer update
     - name: Install NPM Dependencies
       run: npm install
     - name: Generate key
