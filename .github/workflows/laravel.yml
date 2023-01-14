@@ -34,4 +34,6 @@ jobs:
       env:
         DB_CONNECTION: pgsql
         DB_DATABASE: database/database.pgsql
-      run: vendor/bin/phpunit
+      run: |
+        php artisan migrate
+        vendor/bin/phpunit
