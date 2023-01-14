@@ -21,7 +21,7 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
     - name: Generate key
-      run: php artisan migrate
+      run: php artisan migrate --env=testing --seed --force
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
