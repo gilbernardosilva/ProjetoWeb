@@ -15,7 +15,7 @@ jobs:
       postgres:
         image: postgres:10.8
         env:
-          POSTGRES_USER: projetoweb
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 123
           POSTGRES_DB: projetoweb
         ports:
