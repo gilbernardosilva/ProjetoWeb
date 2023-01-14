@@ -22,8 +22,6 @@ jobs:
       run: composer install -q --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
     - name: Install NPM Dependencies
       run: npm install
-    - name: Remove composer file 
-      run: rm composer.lock
     - name: Generate key
       run: php artisan key:generate
     - name: Directory Permissions
