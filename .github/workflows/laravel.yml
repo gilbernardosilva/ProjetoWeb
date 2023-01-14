@@ -20,11 +20,6 @@ jobs:
       run: cp .env.testing .env
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
-    - name: Install front-end dependencies
-      run: |
-        npm install
-        npm run dev
-        npm fund
     - name: Generate key
       run: php artisan key:generate --ansi
     - name: Directory Permissions
