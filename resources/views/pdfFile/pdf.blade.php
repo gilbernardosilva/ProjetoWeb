@@ -15,7 +15,7 @@
           <p>Product: {{$product->name}}</p>
         </div>
         <div class="col-xl-2">
-          <p class="float-end">Price: {{intval($product->price - ($product->price * ($product->options->discount / 100)))}}€</p>
+          <p class="float-end">Price: {{intval($product->price - ($product->price * ($product->options->discount / 100)))/100}}€</p>
         </div>
         <hr>
       </div>
