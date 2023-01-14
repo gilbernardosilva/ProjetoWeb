@@ -20,6 +20,8 @@ jobs:
       run: cp .env.testing .env
     - name: Install Dependencies
       run: composer install -q --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+    - name: Install NPM Dependencies
+      run: npm install
     - name: Generate key
       run: php artisan key:generate
     - name: Directory Permissions
