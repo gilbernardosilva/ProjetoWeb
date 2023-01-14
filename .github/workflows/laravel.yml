@@ -11,6 +11,17 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: projetoweb
+          POSTGRES_PASSWORD: 123
+          POSTGRES_DB: projetoweb
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -30,10 +41,5 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.pgsql
-    - name: Execute tests (Unit and Feature tests) via PHPUnit still have to fix database 
-      env:
-        DB_CONNECTION: pgsql
-        DB_DATABASE: database/database.pgsql
-      run: |
-        php artisan migrate
-        vendor/bin/phpunit
+    - name: Execute tests (Unit and Feature tests) via PHPUnit
+      run: vendor/bin/phpunit
