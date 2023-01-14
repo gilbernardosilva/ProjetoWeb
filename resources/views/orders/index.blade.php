@@ -22,7 +22,7 @@
                         <td>
                                 <a class="btn btn-info" href="{{ route('orders.show', compact('order')) }}">Show</a>
                                 @if($order->status === 'paid')
-                                    <a class="btn btn-info" href="{{ route('pdfFile.download', ['order' => $order->id ]) }}" target="_blank">PDF</a>
+                                    <a class="btn btn-info" href="{{ route('pdfFile.download', ['order' => $order->id ]) }}" target="_blank" rel="noopener">PDF</a>
                                 @endif
                         </td>
                     </tr>
